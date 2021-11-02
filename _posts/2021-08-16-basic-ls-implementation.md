@@ -3,7 +3,7 @@ layout: post
 title: "Basic ls implementation and understanding how it works"
 description: "Uderstand how OS kernel interact with file system and how you can use it. We are making basic ls command implementation for learning purpose."
 ---
-**TL;DR** Here is the source code of implementation ([LINK]()), but I encourage you to read the whole article :)
+**TL;DR** Here is the source code of implementation ([LINK](https://github.com/Print3M/basic-ls-implementation)), but I encourage you to read the whole article :)
 
 ## Introduction
 Writing your own implementation of the classic `ls` is a great way to learn how Linux works in practice, or rather its interface to communicate with the filesystem through system calls. The Linux kernel, like the kernel of any serious operating system, provides certain functions (system calls) that are used to operate on files. This is a convenient abstraction for real file systems such such as _FAT32_, _ext3_, _ext4_, _NTFS_. Note that although Linux uses _ext4_ by default, it understands all of the above. When you plug in another drive, such as a flash drive with Microsoft's file system _NTFS_, the `ls` or `cat` command executed on files and directories in that file system will still work completely correctly. File systems were created to provide an abstraction for raw bytes on a storage medium such as an HDD, from then a few bytes became a file. Operating systems were created, among other things, to understand these file systems, to support them, and to provide for the programmer convenient tools to operate on them, without the need to know their implementation. Convenient, ah this humanity :')
