@@ -1,0 +1,54 @@
+# To-od list
+## Tools to check out
+* Powerful API endpoints discovery tool:
+  * https://github.com/assetnote/kiterunner
+  
+* Rust recon tool:
+  * https://github.com/epi052/feroxbuster
+  
+* Powerful tool for auto-discovering findings to define own rules and scan many URLs at once:
+  * https://github.com/projectdiscovery/nuclei
+  
+* Tool for auto-documenting API:
+  * https://github.com/alufers/mitmproxy2swagger
+  
+* HTTP parameters discovery tool:
+  * https://github.com/s0md3v/Arjun
+  
+* Fetch all URLs of domain from different sources:
+  * https://github.com/lc/gau
+
+## Resources to check out
+* Interesting security newsletter
+  * https://blog.intigriti.com/category/bugbytes/
+  
+* List of red-team tools and techniques
+  * https://github.com/ihebski/A-Red-Teamer-diaries
+
+* Interesting hacker recipes
+  * https://www.thehacker.recipes/
+
+## Things to learn
+* JDWP to RCE
+* RMI to RCE
+* Alternate Data Streams (NTFS)
+* JWT testing: 
+  * https://systemweakness.com/how-to-test-for-jwt-attacks-513da89abe94
+* Web cache poisoning
+  * https://crashtest-security.com/web-cache-poisoning/
+* DNS hacking
+  * https://thegrayarea.tech/a-deep-dive-into-dns-hijacking-71d4ec54b318
+* Edge Side Include injection
+  * https://www.acunetix.com/vulnerabilities/web/edge-side-include-injection/
+* CRLF header injection:
+  * https://www.invicti.com/blog/web-security/crlf-http-header/
+* Open redirect
+  * https://falkensmaze.medium.com/open-redirects-bug-bounties-28efffb635c
+* AD & Windows security (red-team)
+  * https://github.com/infosecn1nja/AD-Attack-Defense
+* DOM based XSS via misconfigured postMessage()
+  * https://medium.com/@armaanpathan/exploiting-dom-based-xss-via-misconfigured-postmessage-function-bfc794969a0a
+* Process Hollowing
+  * https://github.com/m0n0ph1/Process-Hollowing
+* DNS Zone Transfer
+  * https://security.stackexchange.com/questions/10452/dns-zone-transfer-attack

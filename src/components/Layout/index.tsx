@@ -102,7 +102,7 @@ const Mobile: FC<{}> = () => {
         router.events.on("routeChangeStart", handler)
 
         return () => router.events.off("routeChangeStart", handler)
-    }, [])
+    })
 
     return (
         <>
