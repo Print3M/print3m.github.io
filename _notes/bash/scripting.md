@@ -17,48 +17,48 @@ https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html - Official Bash
 
 ### Debugging (line by line)
 ```bash
-    # At the beginning of the script
-    set -x
-    trap read debug
+# At the beginning of the script
+set -x
+trap read debug
 ```
 
 ### Special variables
 ```bash
-    $?          # Exit code of last command
-    $#          # Number of arguments supplied
-    $0          # Current filename (first argument)
-    $1-$9       # Command line arguments (one by one)
-    $@          # Array of arguments
-    $$          # Current PID
+$?          # Exit code of last command
+$#          # Number of arguments supplied
+$0          # Current filename (first argument)
+$1-$9       # Command line arguments (one by one)
+$@          # Array of arguments
+$$          # Current PID
 ```
 
 ### Prologue
 ```bash
-    #!/usr/bin/env bash                     # Shebang: run with Bash shell
-    
-    # TL;DR
-    set -ueo pipefail
+#!/usr/bin/env bash                     # Shebang: run with Bash shell
 
-    # Exit if undefined variable has been found
-    set -u                                      
+# TL;DR
+set -ueo pipefail
 
-    # Exit if any exit code of executed functions is not equal zero
-    set -e
+# Exit if undefined variable has been found
+set -u                                      
 
-    # Break pipeline if our script failed
-    set -o pipefail                               
+# Exit if any exit code of executed functions is not equal zero
+set -e
+
+# Break pipeline if our script failed
+set -o pipefail                               
 ```
 
 ### Defining variables
+> **NOTE**: No spaces around equal sign!
 ```bash
-    # No spaces around equal sign!
-    var1=100                                # Number
-    var2="Number: $var1"                    # Double quotes == interpolation
-    var3='Number is stored in $var1'        # Single quotes == no interpolation
-    var4=$(cat test.txt)                    # Result of command
-    var5=("str1" "str2" "str3")             # Array of strings
-    var6=(1 5 9 43 23 43)                   # Array of numbers
-    read var7                               # Read variable from stdin
+var1=100                                # Number
+var2="Number: $var1"                    # Double quotes == interpolation
+var3='Number is stored in $var1'        # Single quotes == no interpolation
+var4=$(cat test.txt)                    # Result of command
+var5=("str1" "str2" "str3")             # Array of strings
+var6=(1 5 9 43 23 43)                   # Array of numbers
+read var7                               # Read variable from stdin
 ```
 
 ### If statement

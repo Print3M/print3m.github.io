@@ -63,7 +63,7 @@ export const treeWalk = async (
 }
 
 export const getNotesTree = async () => {
-    const tree = directoryTree(NOTES_PATH, { extensions: /\.md/ }) as Node_In
+    const tree = directoryTree(NOTES_PATH, { extensions: /\.md/, exclude: /^\..*/ }) as Node_In
     const slugs = new Set<string>()
     const updatedTree = await treeWalk(
         tree,
@@ -72,7 +72,8 @@ export const getNotesTree = async () => {
             const name = file.name.replace(/\.md$/, "")
             const slug = file.path.replace(`${NOTES_PATH}/`, "").replace(/.md$/, "")
 
-            if (!data.title || !slug) return undefined
+            // Exclude not-ready and hidden files
+            if (!data.title || !slug || name.startsWith(".")) return undefined
 
             slugs.add(slug)
 
@@ -82,10 +83,15 @@ export const getNotesTree = async () => {
                 title: data.title,
             } as File_Out
         },
-        async dir => ({
-            children: [],
-            name: dir.name === "_notes" ? "notes" : `${dir.name}`,
-        })
+        async dir => {
+            // Exclude hidden directories
+            if (dir.name.startsWith(".")) return undefined
+
+            return {
+                children: [],
+                name: dir.name === "_notes" ? "notes" : `${dir.name}`,
+            }
+        }
     )
 
     return {

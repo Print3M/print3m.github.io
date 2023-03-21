@@ -1,10 +1,10 @@
 ---
 slug: "first-post"
 date: "2023-01-30"
-title: "My first blog post My first blog post sssdfsds"
+title: "Test blog post"
 description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean porttitor neque velit, eget mattis elit fermentum at. Orci varius natoque penatibus et magnis d."
 ---
-Lorem *ipsum* dolor **sit** _amet_ __siema__ (siema)[http://facebook.com].
+Lorem *ipsum* dolor **sit** _amet_ __siema__ (siema)[http://example.com].
 Code:
 
 ```fragment of code```
@@ -45,7 +45,7 @@ Footnotes:
 [^2]: This is footnote 2
 
 
-```javascript showLineNumbers
+```javascript
 const test = 123
 console.log(test)
 ```

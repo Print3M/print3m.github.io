@@ -77,7 +77,6 @@ Repositories are defined in:
 - `/etc/apt/sources.list.d/`
 - `/etc/apt/sources.list`
 ```bash
-
 apt update                              # Update local pkgs DB
 
 apt install <pkg>                       # Install package
@@ -233,7 +232,7 @@ find <dir> -user <user>                 # Find <user> files
 find <dir> -group <group>               # Find <group> files
 
 mkdir -p dir1/dir2/dir3                 # Create nested dirs
-ln -s <original> <link>                 # Create symbolic link
+ln -s <original> <link>                 # Create soft symbolic link
 wc -l <file>                            # Count lines
 
 grep -- "-v"                            # Grep dash pattern

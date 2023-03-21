@@ -1,17 +1,34 @@
 import { Center, Container, Drawer, Flex, Stack } from "@mantine/core"
 import { FC, useEffect, useState } from "react"
 import { Divider, Navbar, NavLink, Space, Text } from "@mantine/core"
-import { IconMarkdown, IconNews } from "@tabler/icons-react"
+import { IconBrandGithub, IconHome, IconMarkdown, IconNews } from "@tabler/icons-react"
 import { Burger, MediaQuery, useMantineTheme } from "@mantine/core"
 import Link from "next/link"
 import { useRouter } from "next/router"
+
+const CustomNavLink: FC<{
+    icon: JSX.Element
+    href: string
+    title: string
+    children: string
+    targetBlank?: boolean
+}> = ({ icon, href, title, children, targetBlank }) => (
+    <Link
+        href={href}
+        style={{ textDecoration: "none" }}
+        title={title}
+        target={targetBlank ? "_blank" : "_self"}
+    >
+        <NavLink label={children} icon={icon} />
+    </Link>
+)
 
 const NavContent = () => (
     <>
         <Navbar.Section grow>
             <Space h="sm" />
-            <Center sx={{ fontSize: 36, fontWeight: 900 }}>
-                <Text sx={{ color: "#fff" }}>Print3M</Text>
+            <Center fz={36} fw={900}>
+                <Text c="#fff">Print3M</Text>
                 <Text
                     sx={{
                         color: "#0079d6",
@@ -24,18 +41,31 @@ const NavContent = () => (
                     {"'"}s hub
                 </Text>
             </Center>
+            <Space h="sm" />
+            <CustomNavLink
+                href="https://github.com/Print3M"
+                title="GitHub"
+                icon={<IconBrandGithub size={20} />}
+                targetBlank
+            >
+                GitHub
+            </CustomNavLink>
         </Navbar.Section>
 
         <Navbar.Section grow>
+            <CustomNavLink href="/" title="Home" icon={<IconHome size={20} />}>
+                Home
+            </CustomNavLink>
+            <Space h="md" />
             <Divider label="// IT security" />
             {/* <NavLink label="Files to loot" icon={<IconFile size={20} />} /> */}
             {/* <NavLink label="Checklists" icon={<IconList size={20} />} /> */}
-            <Link href="/notes" style={{ textDecoration: "none" }} title="Notes">
-                <NavLink label="Notes" icon={<IconMarkdown size={20} />} />
-            </Link>
-            <Link href="/blog" style={{ textDecoration: "none" }} title="Blog">
-                <NavLink label="Blog" icon={<IconNews size={20} />} />
-            </Link>
+            <CustomNavLink href="/notes" title="Notes" icon={<IconMarkdown size={20} />}>
+                Notes
+            </CustomNavLink>
+            <CustomNavLink href="/blog" title="Blog" icon={<IconNews size={20} />}>
+                Blog
+            </CustomNavLink>
         </Navbar.Section>
     </>
 )
@@ -122,9 +152,9 @@ const Mobile: FC<{}> = () => {
 const Layout: FC<{ children: JSX.Element }> = ({ children }) => (
     <>
         <Mobile />
-        <Flex>
+        <Container>
             <SideNav />
-            <Container p="sm" style={{ width: "100%" }}>
+            <Container p="sm" mih="100vh" w="100%" pb={100}>
                 <MediaQuery largerThan="sm" styles={{ display: "none" }}>
                     <Space h={50} />
                 </MediaQuery>
@@ -133,7 +163,7 @@ const Layout: FC<{ children: JSX.Element }> = ({ children }) => (
                 </MediaQuery>
                 {children}
             </Container>
-        </Flex>
+        </Container>
     </>
 )
 
