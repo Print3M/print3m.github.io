@@ -1,22 +1,11 @@
 # To-od list
 ## Tools to check out
-* Powerful API endpoints discovery tool:
-  * <https://github.com/assetnote/kiterunner>
-  
-* Rust recon tool:
-  * <https://github.com/epi052/feroxbuster>
-  
-* Powerful tool for auto-discovering findings to define own rules and scan many URLs at once:
-  * <https://github.com/projectdiscovery/nuclei>
-  
-* Tool for auto-documenting API:
-  * <https://github.com/alufers/mitmproxy2swagger>
-  
-* HTTP parameters discovery tool:
-  * <https://github.com/s0md3v/Arjun>
-  
-* Fetch all URLs of domain from different sources:
-  * <https://github.com/lc/gau>
+* [KiteRunner](https://github.com/assetnote/kiterunner) - powerful API endpoints discovery tool
+* [FeroxBuster](https://github.com/epi052/feroxbuster) - Rust recon tool
+* [Nuclei](https://github.com/projectdiscovery/nuclei) - powerful tool for auto-discovering findings to define own rules and scan many URLs at once
+* [MitmProxy2Swagger](https://github.com/alufers/mitmproxy2swagger) - tool for auto-documenting API
+* [Arjun](https://github.com/s0md3v/Arjun) - HTTP parameters discovery tool
+* [Gau](https://github.com/lc/gau) - fetch all URLs of domain from different sources
 
 ## Resources to check out
 * Interesting security newsletter

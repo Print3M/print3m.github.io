@@ -28,15 +28,15 @@ const NavContent = () => (
         <Navbar.Section grow>
             <Space h="sm" />
             <Center fz={36} fw={900}>
-                <Text c="#fff">Print3M</Text>
+                <Text c="white">Print3M</Text>
                 <Text
-                    sx={{
-                        color: "#0079d6",
+                    sx={t => ({
+                        color: t.colors.brand[4],
                         fontSize: 14,
                         marginTop: 16,
                         width: 48,
                         whiteSpace: "nowrap",
-                    }}
+                    })}
                 >
                     {"'"}s hub
                 </Text>
@@ -71,55 +71,45 @@ const NavContent = () => (
 )
 
 const SideNav = () => (
-    <Navbar
-        width={{ base: 240 }}
-        style={{ position: "fixed" }}
-        p="sm"
-        hiddenBreakpoint="sm"
-        hidden={true}
-    >
+    <Navbar width={{ base: 240 }} pos="sticky" top={0} p="sm" hiddenBreakpoint="sm" hidden={true}>
         <NavContent />
     </Navbar>
 )
 
-const TopNav: FC<{ isOpen: boolean; toggleIsOpen: () => void }> = ({ isOpen, toggleIsOpen }) => {
-    const theme = useMantineTheme()
-
-    return (
-        <MediaQuery largerThan="sm" styles={{ display: "none" }}>
-            <Container
-                sx={{
-                    backgroundColor: theme.colors.dark[9],
-                    display: "flex",
-                    position: "fixed",
-                    width: "100%",
-                    height: 40,
-                    alignItems: "center",
-                    fontWeight: 900,
-                }}
+const TopNav: FC<{ isOpen: boolean; toggleIsOpen: () => void }> = ({ isOpen, toggleIsOpen }) => (
+    <MediaQuery largerThan="sm" styles={{ display: "none" }}>
+        <Container
+            sx={t => ({
+                backgroundColor: t.colors.dark[9],
+                display: "flex",
+                position: "fixed",
+                width: "100%",
+                height: 40,
+                alignItems: "center",
+                fontWeight: 900,
+            })}
+        >
+            <Burger
+                opened={isOpen}
+                onClick={toggleIsOpen}
+                size="sm"
+                mr="xl"
+                sx={t => ({ color: t.colors.gray[5] })}
+            />
+            <Text c="white">Print3M</Text>
+            <Text
+                sx={t => ({
+                    color: t.colors.brand[4],
+                    fontSize: 14,
+                    marginTop: 4,
+                    whiteSpace: "nowrap",
+                })}
             >
-                <Burger
-                    opened={isOpen}
-                    onClick={toggleIsOpen}
-                    size="sm"
-                    color={theme.colors.gray[6]}
-                    mr="xl"
-                />
-                <Text sx={{ color: "#fff" }}>Print3M</Text>
-                <Text
-                    sx={{
-                        color: "#0079d6",
-                        fontSize: 14,
-                        marginTop: 4,
-                        whiteSpace: "nowrap",
-                    }}
-                >
-                    {"'"}s hub
-                </Text>
-            </Container>
-        </MediaQuery>
-    )
-}
+                {"'"}s hub
+            </Text>
+        </Container>
+    </MediaQuery>
+)
 
 const Mobile: FC<{}> = () => {
     const [isHamburgerOpen, setIsHamburgerOpen] = useState(false)
@@ -152,18 +142,18 @@ const Mobile: FC<{}> = () => {
 const Layout: FC<{ children: JSX.Element }> = ({ children }) => (
     <>
         <Mobile />
-        <Container>
+        <Flex>
             <SideNav />
             <Container p="sm" mih="100vh" w="100%" pb={100}>
                 <MediaQuery largerThan="sm" styles={{ display: "none" }}>
-                    <Space h={50} />
+                    <Space h={75} />
                 </MediaQuery>
                 <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
                     <Space h={35} />
                 </MediaQuery>
                 {children}
             </Container>
-        </Container>
+        </Flex>
     </>
 )
 

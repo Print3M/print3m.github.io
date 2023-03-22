@@ -193,7 +193,7 @@ CTRL-Z                                  # Stop job
 ```
 
 ## Cron
-Time generator: https://crontab.guru/
+[CRON time generator.](https://crontab.guru/)
 ```bash
 crontab -l                              # List cron entries
 crontab -e                              # Edit cron entries

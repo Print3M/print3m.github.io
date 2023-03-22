@@ -15,8 +15,7 @@ Format of _cmdlet_ command: **Verb**-**Noun**. Common verbs:
 * Out
 * Invoke
 
-All _cmdlet_ verbs:
-* <https://docs.microsoft.com/en-us/powershell/scripting/developer/cmdlet/approved-verbs-for-windows-powershell-commands?view=powershell-7>
+[All _cmdlet_ verbs.](https://docs.microsoft.com/en-us/powershell/scripting/developer/cmdlet/approved-verbs-for-windows-powershell-commands?view=powershell-7)
 
 ##### PowerShell scripts
 *Powershell ISE* is the Powershell Text Editor most often used to write longer PowerShell scripts. Most common extension of PowerShell files is `.ps1`.
@@ -109,7 +108,7 @@ if ($obj1 -<operator> $obj2) {
 ```
 
 ###### Operators
-Full list of operators: <https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_comparison_operators?view=powershell-7.3&viewFallbackFrom=powershell-6>
+[Full list of operators](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_comparison_operators?view=powershell-7.3&viewFallbackFrom=powershell-6)
 
 > NOTE: String comparisions are case-insensitive unless you use the explicit case-sensitive operator. To make a comparison operator case-sensitive, add a `c` after the `-` (`-ceq` is the case-sensitive version of `-eq`).
 

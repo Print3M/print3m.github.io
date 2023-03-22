@@ -33,7 +33,7 @@ On Windows file extensions are meaningful.
 - .dll - Dynamic Link Library. It's linked during run-time.
 - .lib - Library. It's linked during compilation.
 
-Permission tables (special and basic) for files and folders: https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-2000-server/bb727008(v=technet.10)?redirectedfrom=MSDN
+[Permission tables (special and basic) for files and folders](https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-2000-server/bb727008(v=technet.10)?redirectedfrom=MSDN)
 
 ### System environmental variables
 Environment variables store information about the operating system environment. This information includes details such as the operating system path, the number of processors used by the operating system, and the location of temporary folders.

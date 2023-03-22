@@ -27,7 +27,7 @@ Sysmon can log many default and custom events, e.g.:
 * File manipulation
 * Memory access
 
-More info: https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon
+[More info about Sysmon.](https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon)
 
 **Security**
 For red-teamer it is essential to know whether the Sysmon logging software is installed or not. It is important to avoid causing generating and alerting events.

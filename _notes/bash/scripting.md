@@ -13,7 +13,7 @@ if [[ ... ]] vs if [ ... ]
 ```
 
 ## Bash references
-https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html - Official Bash documentation (manual)
+[Official Bash documentation (manual)](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html)
 
 ### Debugging (line by line)
 ```bash
@@ -158,6 +158,12 @@ echo ${str,,}           => 'super'      # Lowercase
 # Split into variables
 str='1:2'
 IFS=: read -r var1 var2 <<< "$str"  =>  var1 == 1, var2 == 2 
+```
+
+### Math / arithmetic
+```bash
+$((1 + 1))                              # Math expression        
+$((x + y))                              # Variables math
 ```
 
 ### Arrays

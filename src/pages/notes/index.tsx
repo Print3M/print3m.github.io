@@ -17,7 +17,7 @@ const Notes: FC<{ tree: Node_Out | undefined }> = ({ tree }) => (
     <>
         <Title order={1}>Notes</Title>
         <Space h="xl" />
-        <Box sx={{ fontFamily: "monospace", lineHeight: 1.3 }}>
+        <Box lh={1.3} ff="monospace">
             {tree && <NotesTree tree={tree} />}
         </Box>
     </>

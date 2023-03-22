@@ -42,42 +42,38 @@ const Node: FC<{ node: Node_Out; nested: NestedData }> = ({ node, nested }) => {
     }
 }
 
-const File: FC<{ data: File_Out; nested: NestedData }> = ({ data, nested }) => {
-    return (
+const File: FC<{ data: File_Out; nested: NestedData }> = ({ data, nested }) => (
+    <div>
+        <span dangerouslySetInnerHTML={{ __html: getLines(nested) }} />{" "}
+        <Link href={`/notes/${data.slug}`}>{data.name}</Link>
+    </div>
+)
+
+const Directory: FC<{ data: Directory_Out; nested: NestedData }> = ({ data, nested }) => (
+    <div>
         <div>
-            <span dangerouslySetInnerHTML={{ __html: getLines(nested) }} />
-            {' '}<Link href={`/notes/${data.slug}`}>{data.name}</Link>
+            <span dangerouslySetInnerHTML={{ __html: getLines(nested) }} /> {data.name}
         </div>
-    )
-}
 
-const Directory: FC<{ data: Directory_Out; nested: NestedData }> = ({ data, nested }) => {
-    return (
-        <div>
-            <div>
-                <span dangerouslySetInnerHTML={{ __html: getLines(nested) }} /> {data.name}
-            </div>
+        <Flex direction="column" gap={0} mt={0}>
+            {data.children.map((item, i, arr) => (
+                <Node
+                    key={item.name}
+                    node={item}
+                    nested={{
+                        num: nested.num + 1,
+                        continued: isLast(i, arr)
+                            ? nested.continued
+                            : new Set([...nested.continued, nested.num]),
+                    }}
+                />
+            ))}
+        </Flex>
+        <span dangerouslySetInnerHTML={{ __html: getLines(nested, true) }} />
+    </div>
+)
 
-            <Flex direction="column" gap={0} sx={{ marginTop: 0 }}>
-                {data.children.map((item, i, arr) => (
-                    <Node
-                        key={item.name}
-                        node={item}
-                        nested={{
-                            num: nested.num + 1,
-                            continued: isLast(i, arr)
-                                ? nested.continued
-                                : new Set([...nested.continued, nested.num]),
-                        }}
-                    />
-                ))}
-            </Flex>
-            <span dangerouslySetInnerHTML={{ __html: getLines(nested, true) }} />
-        </div>
-    )
-}
-
-const NotesTree:FC<{tree: Node_Out}> = ({ tree }) => (
+const NotesTree: FC<{ tree: Node_Out }> = ({ tree }) => (
     <Node node={tree} nested={{ num: 0, continued: new Set() }} />
 )
 

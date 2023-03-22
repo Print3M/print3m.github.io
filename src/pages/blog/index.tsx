@@ -60,29 +60,23 @@ const Blog: FC<Props> = ({ posts, totalCount }) => {
             <div>All posts: {totalCount}</div>
 
             <div className={classes.itemsContainer}>
-                {posts.map(post => {
-                    return (
-                        <Container size="xs" key={post.slug}>
-                            <Link href={`/blog/${post.slug}`}>
-                                <Title order={3}>{post.title}</Title>
-                            </Link>
-                            <Text sx={{ textAlign: "justify", marginTop: 18 }}>
-                                {post.description}
-                            </Text>
-                            <Flex
-                                justify="space-between"
-                                align="center"
-                                sx={{ margin: "20px 0 22px" }}
-                            >
-                                <Text size="sm">{post.date}</Text>
-                                <span className="more">
-                                    <Link href={`/blog/${post.slug}`}>Read more...</Link>
-                                </span>
-                            </Flex>
-                            <Divider />
-                        </Container>
-                    )
-                })}
+                {posts.map(post => (
+                    <Container size="xs" key={post.slug}>
+                        <Link href={`/blog/${post.slug}`}>
+                            <Title order={3}>{post.title}</Title>
+                        </Link>
+                        <Text mt={18} ta="justify">
+                            {post.description}
+                        </Text>
+                        <Flex justify="space-between" align="center" sx={{ margin: "20px 0 22px" }}>
+                            <Text size="sm">{post.date}</Text>
+                            <span className="more">
+                                <Link href={`/blog/${post.slug}`}>Read more...</Link>
+                            </span>
+                        </Flex>
+                        <Divider />
+                    </Container>
+                ))}
             </div>
         </>
     )

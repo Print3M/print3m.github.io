@@ -17,11 +17,12 @@ const SubPageButton: FC<{ href: string; title: string; children: JSX.Element | s
 const Home = () => (
     <>
         <MediaQuery largerThan="sm" styles={{ display: "none" }}>
-            <Space h={100} />
+            <Space h={50} />
         </MediaQuery>
+        <Space h={50} />
         <Text sx={{ textAlign: "center", margin: "auto", maxWidth: 600 }}>
-            If I lose my memory or leave this world prematurely, something will remain of me for
-            posterity. 🧠
+            I write the notes for myself. I write the blog for people. I'm focused on IT security,
+            low-level, Linux and Windows topics. Have fun. 🧠
         </Text>
         <Space h="lg" />
         <Divider label="IT security" variant="dashed" labelPosition="center" />
