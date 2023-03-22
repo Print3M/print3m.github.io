@@ -14,7 +14,7 @@ What LDAP is:
 - LDAP is protocol that many different directory services and access management solutions can understand.
 - Relation between LDAP and AD is like HTTP and Apache. AD is directory server that uses the LDAP protocol.
 
-**LDAP Query**:
+#### LDAP Query
 - It's a command that asks a directory service (e.g. AD) for some information.
 
 ## IIS - Windows web server
@@ -25,16 +25,16 @@ MSRPC is protocol that uses the client-server model in order to allow one progra
     
 The RPC endpoint can be accessed through TCP and UDP port 135, via SMB with a null or authenticated session (TCP 139 and 445), and as a web service listening on TCP port 593.
 
-**Endpoint Mapper (EPM)**
+#### Endpoint Mapper (EPM)
 TBD
 
 ## NetBIOS Name Service (139)
 It's name service for name registration and resolution. Every machine has a name inside the NetBios network.
 
-**Security**:
+#### Security
 - Enumerating a NetBIOS service you can obtain the names the server is using and the its MAC address.
 
-**NetBIOS name vs domain Name vs DNS name vs hostname**
+#### NetBIOS name vs domain Name vs DNS name vs hostname
 Every computer on the internet has DNS name (network hostname). Every computer on the internet running Windows OS has NetBIOS name as well. It's the same as local computer name.
     
 Computer running Windows in an Active Directory domain has both:

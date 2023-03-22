@@ -14,7 +14,7 @@ Each AD domain is also a DNS domain, and each AD domain controller is also a DNS
 ## Active Directory
 AD is service used by Domain Controller to perform authentication, groups, users and security policies management. AD is not cross platform. AD supports both Kerberos and LDAP authentication. AD database file is called NTDS.dit and it's stored on Domain Controller server.
 
-**Security**:
+#### Security
 Even with low-privileged user an attacker can make useful enumeration and lateral movement.
 
 ## AD Domain Service (AD DS)
@@ -46,7 +46,7 @@ Types of AD Administrator accounts:
 ## Group Policy Objects (GPO)
 Collection of settings (rules) that can be applied to Organizational Unit (organized objects: users, hosts, etc.). GPOs are distributed to the network via a network share SYSVOL (stored in the DC) which points to path `C:\Windows\SYSVOL\sysvol\` on each of the DCs.
 
-**Security**: 
+##### Security
 Any AD account, no matter how low-privileged, can read the contents of the SYSVOL directory. It's nice way to check if provided domain credentials are correct.
 
 ## Distinguished Name (DN)
@@ -56,7 +56,7 @@ Collection of comma-separated key and value pairs used to identify unique AD rec
 * Common Name (CN)
 * others
 
-> **Example** of DN: "CN=Administrator,OU=Users,DC=amazon,DC=com" 
+> **Example** of DN: "CN=Administrator, OU=Users, DC=amazon, DC=com" 
 
 ## Local workgroup
 TBD

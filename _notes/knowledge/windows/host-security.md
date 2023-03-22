@@ -10,7 +10,7 @@ Common malware detection techniques:
 * **Heuristic-based detection** - most often engages machine learning to decide whether a file is malicious. It scans and statically analyses binary and behavior in real-time.
 * **Behavior-based detection** - AV monitors and examines the execution of binary to find suspicious and uncommon activities (e.g. register editing, process spawning).
 
-**Windows Defender**
+#### Windows Defender
 It is a pre-installed antivirus that runs on users' machine. MS defender runs in:
 * Active mode - when is used as primary AV software
 * Passive mode - when there is another 3rd party AV software installed
@@ -29,7 +29,7 @@ Sysmon can log many default and custom events, e.g.:
 
 [More info about Sysmon.](https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon)
 
-**Security**
+#### Security
 For red-teamer it is essential to know whether the Sysmon logging software is installed or not. It is important to avoid causing generating and alerting events.
 
 ## User Account Control (UAC)

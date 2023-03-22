@@ -26,7 +26,7 @@ The best Powershell interface to get CMI objects is the `Get-CimInstace` cmdlet.
 ### Microsoft Deployment Toolkit (MDT)
 This service automates the deployment of new images of Windows across the organisation. The base image can be maintained in a central location. It allows the IT team to preconfigure and manage boot images. If they need to configure a new machine, they just plug in a network cable and everyting happens automatically. They can pre-install default corpo-software like Office or anti-virus.
 
-**Preboot Execution Environment (PXE)**: 
+#### Preboot Execution Environment (PXE) 
 It allows new devices which are connected to the network to install the OS image directly over a network. MDT is used to create, manage and host PXE boot images. PXE image might be nice target for:
 - Injecting a privilege escalation vector (e.g. local admin account) or any other back-door things
 - Password scraping to recover AD credentials used during the installation from PXE boot file - Windows image extracton -> data extraction.
