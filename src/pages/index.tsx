@@ -21,7 +21,7 @@ const Home = () => (
         </MediaQuery>
         <Space h={50} />
         <Text sx={{ textAlign: "center", margin: "auto", maxWidth: 600 }}>
-            I write the notes for myself. I write the blog for people. I'm focused on IT security,
+            I write the notes for myself. I write the blog for people. I&apos;m focused on IT security,
             low-level, Linux and Windows topics. Have fun. 🧠
         </Text>
         <Space h="lg" />
