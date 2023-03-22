@@ -96,17 +96,18 @@ const TopNav: FC<{ isOpen: boolean; toggleIsOpen: () => void }> = ({ isOpen, tog
                 mr="xl"
                 sx={t => ({ color: t.colors.gray[5] })}
             />
-            <Text c="white">Print3M</Text>
-            <Text
-                sx={t => ({
-                    color: t.colors.brand[4],
-                    fontSize: 14,
-                    marginTop: 4,
-                    whiteSpace: "nowrap",
-                })}
-            >
-                {"'"}s hub
-            </Text>
+            <Flex align="flex-end">
+                <Text c="white">Print3M</Text>
+                <Text
+                    sx={t => ({
+                        color: t.colors.brand[4],
+                        fontSize: 14,
+                        whiteSpace: "nowrap",
+                    })}
+                >
+                    {"'"}s hub
+                </Text>
+            </Flex>
         </Container>
     </MediaQuery>
 )
