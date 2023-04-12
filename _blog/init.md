@@ -1,7 +1,12 @@
 ---
-title: init blog post
+slug: init-post
+title: Init blog post
 description: Test blog post
-published: 2023-01-30
+date: 1970-01-01
 ---
 
-# Test test
+## Test test
+
+```bash
+blog init
+```
