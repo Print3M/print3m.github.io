@@ -20,16 +20,16 @@ Even with low-privileged user an attacker can make useful enumeration and latera
 ## AD Domain Service (AD DS)
 It's catalogue that holds the information of all "objects" that exist on the network. An object might be: user, group, machine, printer, share, etc.
 
-**Users**:
+#### Users
 - most common object type in AD.
 - people - represents persons in the organisation
 - services - every service (IIS or MSSQL) requires a user to run. They only have privileges needed to run their specific service (ideally).
     
-**Machines**:
+#### Machines
 - represents every computer that joins the AD domain
 - every machine have Machine Account - local administrator on the computer, is not supposed to be accessed by anyone except the computer itself but it uses normal password (120 random chars). MA name is the computer's name + dollar sign: PC-1 (computer name) -> PC-1$ (MA name).
 
-**Security groups**:
+#### Security groups
 - group includes AD machines and AD users as members
 - group can include other groups
 - several groups are created by default in a domain, e.g. Domain Admins, Domain Users, Domain Computers, Domain Controllers.
