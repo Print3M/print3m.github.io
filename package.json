@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postbuild": "next-sitemap"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
@@ -26,6 +27,7 @@
     "gray-matter": "^4.0.3",
     "next": "13.2.3",
     "next-mdx-remote": "^4.4.1",
+    "next-sitemap": "^4.0.7",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "rehype-pretty-code": "^0.9.4",
