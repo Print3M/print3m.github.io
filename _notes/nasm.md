@@ -45,7 +45,7 @@ xor rax, rax        ; rax = 0
 and rbx, ~(1 << 57)
 
 ; Set 57 bit (counting from 0) in rbx register
-or  rbx, 
+or  rbx, ~(1 << 57)
 
 ; Toggle 57 bit (counting from 0) in rbx register
 xor rbx, (1 << 57)
