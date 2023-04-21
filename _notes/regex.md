@@ -3,7 +3,8 @@ title: Regex notes
 ---
 
 ##### Special characters
-```
+
+```bash
 ^                               # Beginning of the line
 $                               # End of the line
 .                               # Any character
@@ -17,7 +18,8 @@ $                               # End of the line
 ```
 
 ##### Letter selection
-```
+
+```bash
 [a-z]                           # Any letter from 'a' to 'z'
 [a-zA-Z0-9]                     # a-z or A-Z or 0-9
 [az]                            # 'a' or 'z'
@@ -25,7 +27,8 @@ $                               # End of the line
 ```
 
 ##### Repetition (after-sign)
-```
+
+```bash
 +                               # One or more times                          
 *                               # Zero or more times
 ?                               # Zero or one
@@ -33,8 +36,10 @@ $                               # End of the line
 {7,}                            # At least 7 times
 {7,9}                           # Between 7 to 9 times
 ```
+
 ##### Grouping (word-selection)
-```
+
+```bash
 (test)-\1                       # Parse `test-test`
 (ab)-\2 (cd)-\1                 # Parse `ab-cd cd-ab`
 (?:ab)-/1 (cd)                  # First group is not captured
@@ -42,7 +47,8 @@ $                               # End of the line
 ```
 
 ##### Lookahead / lookbehind
-```
+
+```bash
 # Lookahead (if something is after)
 \d(?=PM)                        # From `9AM 1PM` parse `1`
 \d(?!PM)                        # From `9AM 1PM` parse `9`
@@ -53,7 +59,8 @@ $                               # End of the line
 ```
 
 ##### Modifiers (flags)
-```
+
+```bash
 /test/g                         # Global (parse all matches)
 /test/m                         # Multiline (each line separately)
 /test/i                         # Case insensitive

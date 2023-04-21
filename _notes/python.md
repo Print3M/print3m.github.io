@@ -3,6 +3,7 @@ title: Python notes
 ---
 
 ## Threading
+
 ```python
 from multiprocessing.dummy import Pool as ThreadPool
 
@@ -16,10 +17,12 @@ pool.join()
 ```
 
 ## Unpack
+
 ```python
 ```
 
 ## Requests
+
 ```python
 import requests
 
@@ -43,5 +46,6 @@ resp.json()
 ```
 
 ## Beautiful-soup
+
 ```python
 ```

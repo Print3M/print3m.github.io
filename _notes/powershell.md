@@ -6,6 +6,7 @@ title: Powershell notes
 Powershell (PS) is the Windows Scripting Language built using the **.NET** framework. PS is able to execute .NET functions directly from its shell. PS commands are called **_cmdlets_** - most of them is written in .NET. The output of _cmdlets_ are **objects**. This approach makes PS shell modular - it's easy to apply some actions on the output objects or pass them to another _cmdlet_.
 
 Format of _cmdlet_ command: **Verb**-**Noun**. Common verbs:
+
 * Get
 * Start
 * Stop
@@ -17,10 +18,10 @@ Format of _cmdlet_ command: **Verb**-**Noun**. Common verbs:
 
 [All _cmdlet_ verbs.](https://docs.microsoft.com/en-us/powershell/scripting/developer/cmdlet/approved-verbs-for-windows-powershell-commands?view=powershell-7)
 
-##### PowerShell scripts
-*Powershell ISE* is the Powershell Text Editor most often used to write longer PowerShell scripts. Most common extension of PowerShell files is `.ps1`.
+### PowerShell scripts
+_Powershell ISE_ is the Powershell Text Editor most often used to write longer PowerShell scripts. Most common extension of PowerShell files is `.ps1`.
 
-##### What is a cmdlet?
+### What is a cmdlet?
 Cmdlets (pronounced: command-lets) are native PS commands, not stand-alone executables. Cmdlets are collected into **PowerShell modules** that can be loaded on demand. They can be written in any compiled .NET language or in the PS scripting language itself.  
 
 ## Pipeline
@@ -55,7 +56,7 @@ Operators:
 
 ## Commands / cmdlets
 > **NOTE**: Cmdlets and their parameters are case-insensitive. However, Microsoft generally recommends entering a PowerShell cmdlet (or a parameter with the first letter of each word capitalized.
- 
+
 ```powershell
 Get-Help <command>                          # Get help about :command
 Get-Help <command> -Examples                # Get usage examples with params
@@ -96,23 +97,28 @@ Get-CimInstace Win32_Process                # List running processes
 ```
 
 ## Scripting
+
 ### Variables
+
 ```powershell
 $var = Get-NetTCPConnection                 # Save returned object into var
 ```
+
 ### If statement
+
 ```powershell
 if ($obj1 -<operator> $obj2) {
     # Do something
 }
 ```
 
-###### Operators
+#### Operators
 [Full list of operators](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_comparison_operators?view=powershell-7.3&viewFallbackFrom=powershell-6)
 
 > NOTE: String comparisions are case-insensitive unless you use the explicit case-sensitive operator. To make a comparison operator case-sensitive, add a `c` after the `-` (`-ceq` is the case-sensitive version of `-eq`).
 
 Most common:
+
 ```powershell
 -eq, -ne                                  # Equal / not equal
 -gt, -ge                                  # Greater than / greater or equal
@@ -123,7 +129,8 @@ Most common:
 -match, -notmatch                         # String regex matching     
 ```
 
-### Loops   
+### Loops
+
 ```powershell
 # Iterate over set of objects
 foreach ($item in $items) {

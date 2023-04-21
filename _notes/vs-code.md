@@ -3,7 +3,8 @@ title: VS Code notes
 ---
 
 ## Shortcuts
-```
+
+```text
 ctrl + shft + p                     # Open command line
 > settings.json                     # Settings file
 > theme                             # Select theme

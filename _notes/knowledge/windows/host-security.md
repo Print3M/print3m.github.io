@@ -6,12 +6,14 @@ title: Host security measures
 In the background scanning, the antivirus software works in real-time and scans all open and used files in the background. Full system scan is usually performed during the installation of the antivirus.
 
 Common malware detection techniques:
+
 * **Signature-based detection** - AV compares the scanned file with a database of known signatures for possible attacks and malware.
 * **Heuristic-based detection** - most often engages machine learning to decide whether a file is malicious. It scans and statically analyses binary and behavior in real-time.
 * **Behavior-based detection** - AV monitors and examines the execution of binary to find suspicious and uncommon activities (e.g. register editing, process spawning).
 
-#### Windows Defender
+### Windows Defender
 It is a pre-installed antivirus that runs on users' machine. MS defender runs in:
+
 * Active mode - when is used as primary AV software
 * Passive mode - when there is another 3rd party AV software installed
 
@@ -22,6 +24,7 @@ It's main purpose is to control the inbound and outbound traffic that goes throu
 Sysmon is a service and device driver - one of the MS Sysinternals suites. It's not installed by default. This logging system helps system administrators and blue teamers to detect and investigate malicious activity.
 
 Sysmon can log many default and custom events, e.g.:
+
 * Process creation and termination
 * Network connections
 * File manipulation
@@ -29,7 +32,8 @@ Sysmon can log many default and custom events, e.g.:
 
 [More info about Sysmon.](https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon)
 
-#### Security
+### Security
+
 For red-teamer it is essential to know whether the Sysmon logging software is installed or not. It is important to avoid causing generating and alerting events.
 
 ## User Account Control (UAC)

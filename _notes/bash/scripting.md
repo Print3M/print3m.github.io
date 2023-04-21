@@ -3,11 +3,13 @@ title: Bash scripting notes
 ---
 
 ## Differences between Bash and sh features
-- https://www.gnu.org/software/bash/manual/html_node/Major-Differences-From-The-Bourne-Shell.html
+
+- <https://www.gnu.org/software/bash/manual/html_node/Major-Differences-From-The-Bourne-Shell.html>
 
 Bash is superset of sh. Sh is POSIX compliant, bash is not. Bash has many extra features which improve readability and speed of programming. Almost everything what does work on sh would be working on Bash as well, but not the other way.
 
-#### Major differences (Bash vs sh)
+### Major differences (Bash vs sh)
+
 ```bash
 if [[ ... ]] vs if [ ... ]
 ```
@@ -16,6 +18,7 @@ if [[ ... ]] vs if [ ... ]
 [Official Bash documentation (manual)](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html)
 
 ### Debugging (line by line)
+
 ```bash
 # At the beginning of the script
 set -x
@@ -23,6 +26,7 @@ trap read debug
 ```
 
 ### Special variables
+
 ```bash
 $?          # Exit code of last command
 $#          # Number of arguments supplied
@@ -33,6 +37,7 @@ $$          # Current PID
 ```
 
 ### Prologue
+
 ```bash
 #!/usr/bin/env bash                     # Shebang: run with Bash shell
 
@@ -51,6 +56,7 @@ set -o pipefail
 
 ### Defining variables
 > **NOTE**: No spaces around equal sign!
+
 ```bash
 var1=100                                # Number
 var2="Number: $var1"                    # Double quotes == interpolation
@@ -62,6 +68,7 @@ read var7                               # Read variable from stdin
 ```
 
 ### If statement
+
 ```bash
 # If statements (spaces around expression matter)
 if [ "$var" = "Test value" ]; then
@@ -97,6 +104,7 @@ if [[ $v1 = $v2  && $v1 != $v3 ]]       # And
 ```
 
 ### Loops
+
 ```bash
 # For loops
 for number in {1..12}; do
@@ -130,6 +138,7 @@ done < file.txt
 ### Functions
 Arguments are not named. They are only positional. Same convention as for the
 script parameters.
+
 ```bash
 function func1() {
     echo $1                             # Echo 1st argument
@@ -140,6 +149,7 @@ func1 "test-argument" 234               # Call a function
 ```
 
 ### Strings
+
 ```bash
 var='super'
 echo ${var:0:1} OR ${var::1}  => 's'    # Get substring of a string
@@ -161,12 +171,14 @@ IFS=: read -r var1 var2 <<< "$str"  =>  var1 == 1, var2 == 2
 ```
 
 ### Math / arithmetic
+
 ```bash
 $((1 + 1))                              # Math expression        
 $((x + y))                              # Variables math
 ```
 
 ### Arrays
+
 ```bash
 arr=("1" "2" "3")                       # Define array
 arr[3]="4"                              # Define item
@@ -176,6 +188,7 @@ echo ${arr[@]}                          # Get all items
 ```
 
 ### Regex
+
 ```bash
 # Check matching and group extraction
 exp='123(.*)456'

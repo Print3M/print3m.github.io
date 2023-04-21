@@ -3,11 +3,13 @@ title: Linux terminal notes
 ---
 
 ## Configuration
+
 ```bash
 /etc/default/*                          # Configs of OS boot services
 ```
 
 ## Compression and archives
+
 ```bash
 tar -xf <arch.tar.gz>                   # Decompress and extract files
 tar -cf <arch.tar> <file1> <file2>      # Create archive
@@ -16,6 +18,7 @@ tar -tvf <arch.tar>                     # List content (verbosely)
 ```
 
 ## Processes
+
 ```bash
 pidof <name>                            # Get PID(s) of process(es)
 pidof -s <name>                         # Get single PID of process
@@ -28,6 +31,7 @@ kill -9 <PID>                           # Kill process
 ```
 
 ## Users
+
 ```bash
 # /etc/passwd schema:
 #   username:password:UID:GID:comment:home:shell
@@ -47,6 +51,7 @@ sudo <username> <command>               # Exec command as other user
 ```
 
 ## Groups
+
 ```bash
 # /etc/group schema:
 #   groupname:password:GID:group members
@@ -60,6 +65,7 @@ gpasswd -d <username <group>            # Remove user from group
 
 ## Permissions
 Permissions priority: User -> Group -> Other
+
 ```bash
 ls -l                                  # Check permissions
 stat <file>                            # Info about access
@@ -74,8 +80,10 @@ chmod ug=rw <file>                     # Change file permissionss
 
 ## Package management
 Repositories are defined in:
+
 - `/etc/apt/sources.list.d/`
 - `/etc/apt/sources.list`
+
 ```bash
 apt update                              # Update local pkgs DB
 
@@ -101,6 +109,7 @@ dpkg -L <pkg>                           # List files installed by pkg
 ```
 
 ## Network
+
 ```bash
 ip a                                    # Show network interfaces
 ip link set <iface> down                # Disable interface
@@ -124,6 +133,7 @@ ssh -L <lport>:<lhost>:<rport> <ruser>@<rhost> -fN
 ```
 
 ## Systemd
+
 ```bash
 systemctl list-unit-files               # List all unit files
 systemctl cat <service>                 # Show unit file
@@ -140,6 +150,7 @@ journalctl -u <service>                 # Show logs
 ```
 
 ## Sound / speakers
+
 ```bash
 # With this tool you can set overall levels of sound card
 alsamixer                               # ALSA driver mixer
@@ -149,6 +160,7 @@ alsactl store                           # Persist changes
 ```
 
 ## Disks
+
 ```bash
 cfdisk                                  # User-friendly partition tool
 lsblk -fp                               # List disks with partitions
@@ -158,12 +170,14 @@ du <dir|file> -hs                       # Show size of file or dir
 ```
 
 ## Memory
+
 ```bash
 free -h                                 # Show memory stats
 watch -n <secs> free -h                 # Show mem stats every N secs
 ```
 
 ## GPU
+
 ```bash
 lspci -k | grep -EA3 'VGA|3D|Display'   # List available GPUs
 nvidia-smi                              # Nvidia GPU & driver info
@@ -171,11 +185,13 @@ nvidia-settings                         # GUI Nvidia settings
 ```
 
 ## Clock
+
 ```bash
 timedatectl                             # Show OS datetime settings
 ```
 
 ## Environment variables
+
 ```bash
 env                                     # List all envs
 printenv <env-name>                     # Print env value
@@ -184,6 +200,7 @@ unset <env-name>                        # Unset env
 ```
 
 ## Job control
+
 ```bash
 jobs                                    # List all jobs
 bg <id>                                 # Place job in bg (running)
@@ -194,23 +211,27 @@ CTRL-Z                                  # Stop job
 
 ## Cron
 [CRON time generator.](https://crontab.guru/)
+
 ```bash
 crontab -l                              # List cron entries
 crontab -e                              # Edit cron entries
 ```
 
 ## Cryptography
+
 ```bash
 openssl genrsa 2048 > rsa.key           # Generate RSA private key
 ```
 
 ## Text file manipulation
+
 ```bash
 # Exclude lines present in both files and save them into :file-3
 comm -3 <file-1> <file-2> > <file-3>
 ```
 
 ## Common commands
+
 ```bash
 shutdown -r now                         # Reboot now
 shutdown -P now                         # Shutdown now

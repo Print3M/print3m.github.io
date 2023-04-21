@@ -3,6 +3,7 @@ title: Perl one-liners notes
 ---
 
 ## Manual
+
 ```bash
 # Basic flags
 -e <code>               # Execute one-liner
@@ -66,7 +67,8 @@ perl -F: -lnE 'say $F[1]'
 perl -E '$words = `wc -w text.txt`; say $words'
 ```
 
-##### Regex
+## Regex
+
 ```bash
 # /REGEXP/FLAGS is a shortcut for $_ =~ m/REGEXP/FLAGS
 # !/REGEXP/FLAGS is a shortcut for $_ !~ m/REGEXP/FLAGS
@@ -81,6 +83,7 @@ perl -lne '/(\d+):(\w+)/; print $1, $2'
 ```
 
 ## Examples
+
 ```bash
 # List all users with corresponding groups
 perl -F: -ne 'print("$. $F[0] | ", `groups $F[0]`)' /etc/passwd
