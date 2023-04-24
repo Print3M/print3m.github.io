@@ -4,7 +4,7 @@ title: Bash scripting notes
 
 ## Differences between Bash and sh features
 
-- <https://www.gnu.org/software/bash/manual/html_node/Major-Differences-From-The-Bourne-Shell.html>
+- [GNU Majo differences from the bourne shell](https://www.gnu.org/software/bash/manual/html_node/Major-Differences-From-The-Bourne-Shell.html)
 
 Bash is superset of sh. Sh is POSIX compliant, bash is not. Bash has many extra features which improve readability and speed of programming. Almost everything what does work on sh would be working on Bash as well, but not the other way.
 

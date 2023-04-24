@@ -2,17 +2,21 @@
 title: Network authentication protocols
 ---
 
-Using Windows domains, all credentials are stored in the DC. Every authentication is performed via DC, using one of two protocols:
+Using Windows domains, all credentials are stored in the DC. Every authentication is performed via DC, using (usually) one of two protocols:
 
 - Kerberos
 - NTLM
 
-There is also internal (third-party to DC) method: LDAP auth.
+## LDAP
+LDAP is used to communicate with directory services (e.g. Active Directory). It provides built-in basic LDAP authentication mechanism (username and password) but it is rarely used. Most often enterprise networks want to use more convenient (and secure) auth methods. LDAP protocol supports _pluggable_ external authentication methods. This feature is called SASL (_Simple Authentication and Security Layer_). When Active Directory service is installed, Kerberos or NTLM authentication over LDAP is implemented for sure.
+
+### Anonymous bind
+Sometimes it is possible to perform LDAP anonymous bind (no authentication), execute LDAP queries and retrieve interesting data. LDAP anonymous bind should be disabled.
 
 ## NTLM (aka Net-NTML)
 NTLM was the default authentication protocol used in old Windows versions. If for any reason Kerberos fails, NTLM will be used instead.
 
-### Workflow of AD authentication
+### Workflow of NTLM authentication
 CLIENT => SERVER => DOMAIN CONTROLER
 
 1. The _client_ sends an authentication request to the _server_.
@@ -35,9 +39,6 @@ Security advantages over NTLM:
 
 - More secure: No password stored locally or sent over the net.
 - Supports MFA (Multi Factor Authentication).
-
-## LDAP
-LDAP is another method of AD authentication. It is similar to NTLM auth but the application directly verifies the user's credentials (don't neeed to pass them to AD for verification). Popular mechanism with third-party applications which integrate with AD. E.g. Gitlab, Jenkins, printers, etc. It's more like auth mechanism between third-party service and DC.
 
 ### Security
 LDAP application which is exposed on the internet might be password-sprayed good as standard NTLM auth. But that app has its own credentials for LDAP quering DC. They are used to check if our credentials are correct. Now we don't have to hack users AD credentials. We might just hack the app AD credentials - one more vector to attack. App's credentials are most often stored in the plain text on the app's server (config files).

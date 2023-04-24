@@ -18,9 +18,9 @@ WMI session might be established using one of the following protocols:
 
 CIM defines 3 levels of classes:
 
-* Core - classes that applay to all management areas.
-* Common - classes that applay to specific management areas.
-* Extended - classes that applay to technology-specific additions to the common classes.
+* Core - classes that apply to all management areas.
+* Common - classes that apply to specific management areas.
+* Extended - classes that apply to technology-specific additions to the common classes.
 
 ### CIM vs WMI
 The best Powershell interface to get CMI objects is the `Get-CimInstace` cmdlet. The `Get-WmiObject` cmdlet (**WMI** is the Microsoft implementation of CIM for the Windows platform) works almost the same but the first one should be used (Microsoft said). The latter might be deprecated someday, it is slower and it has less capabilities. The big drawback to the WMI cmdlets is that they use DCOM to access remote machines. DCOM isn’t firewall friendly, can be blocked by networking equipment, and gives some arcane errors when things go wrong.
