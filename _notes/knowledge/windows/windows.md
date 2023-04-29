@@ -46,9 +46,3 @@ Environment variables store information about the operating system environment. 
 - %TEMP% / %TMP%    -> C:\Windows\TEMP
 - %windir%          -> C:\Windows
 - %USERNAME%        -> Current username
-
-## LSASS
-TBD
-
-## SAM file
-TBD

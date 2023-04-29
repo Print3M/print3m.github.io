@@ -7,17 +7,6 @@ _Services_ are _daemons_ in the Linux world.
 ## SNMP (Simple Network Management Protocol)
 SNMP is widely used in network management for network monitoring. It exposes management data in the form of variables on the managed systems organized in a management information base (MIB). These data can then be remotely queried and, in some circumstances, manipulated.
 
-## LDAP - Lightweight Directory Access Protocol
-What LDAP is:
-
-- LDAP is TCP/IP open and cross platform protocol.
-- LDAP is one way of speaking to Active Directory.
-- LDAP is protocol that many different directory services and access management solutions can understand.
-- Relation between LDAP and AD is like HTTP and Apache. AD is directory server that uses the LDAP protocol.
-
-### LDAP Query
-It's a command that asks a directory service (e.g. AD) for some information.
-
 ## IIS - Windows web server
 IIS stands for Internet Information Services. It's just web server for Windows.It's included in most Windows versions, except home editions. Usually there is a new IIS version for every new OS.
 

