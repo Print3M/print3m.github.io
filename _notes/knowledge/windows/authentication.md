@@ -13,6 +13,9 @@ LDAP is used to communicate with directory services (e.g. Active Directory). It 
 ### Anonymous bind
 Sometimes it is possible to perform LDAP anonymous bind (no authentication), execute LDAP queries and retrieve interesting data. LDAP anonymous bind should be disabled.
 
+### LDAP Pass-back attack
+If we can alter the LDAP configuration in the application (e.g. printer config), we can force device to try to authenticate with the attacker IP, instead of DC LDAP server. We can intercept this auth attempt and recover the LDAP credentials.
+
 ## NTLM (aka Net-NTML)
 NTLM was the default authentication protocol used in old Windows versions. If for any reason Kerberos fails, NTLM will be used instead.
 
@@ -40,8 +43,11 @@ Security advantages over NTLM:
 - More secure: No password stored locally or sent over the net.
 - Supports MFA (Multi Factor Authentication).
 
+### Key Distribution Center (KDC)
+KDC is a service usually installed on the Domain Controller. Its main task is to create Kerberos tickets on the network.
+
+### Ticket Granting Ticket (TGT)
+TGT was designed to avoid asking the user for a password all the time. TGT works like a authorization token to ask for other services - if you have TGT, you are authorized. TGT is symmetrically encrypted using the `krbtgt` account's password hash. TGT includes a **Session Key** (value used to identify single logon session) so the KDC doesn't need to store the Session Key (it can be rocovered by decrypting the TGT).
+
 ### Security
 LDAP application which is exposed on the internet might be password-sprayed good as standard NTLM auth. But that app has its own credentials for LDAP quering DC. They are used to check if our credentials are correct. Now we don't have to hack users AD credentials. We might just hack the app AD credentials - one more vector to attack. App's credentials are most often stored in the plain text on the app's server (config files).
-
-### LDAP Pass-back attack
-If we can alter the LDAP configuration in the application (e.g. printer config), we can force device to try to authenticate with the attacker IP, instead of DC LDAP server. We can intercept this auth attempt and recover the LDAP credentials.

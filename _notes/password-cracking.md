@@ -1,5 +1,5 @@
 ---
-title: Default passwords lists
+title: Password cracking notes
 ---
 
 ## Default password resources

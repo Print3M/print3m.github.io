@@ -29,6 +29,14 @@ Administrator has following privileges:
 ### Guest
 TBD
 
+## Account's privileges
+Every account (user) sometimes has to do something with OS. Here is [the list of possible privileges](https://learn.microsoft.com/en-us/windows/win32/secauthz/privilege-constants).
+
+```powershell
+# List privileges of the current user
+whoami /priv
+```
+
 ## Files and folders
 On Windows file extensions are meaningful.
 

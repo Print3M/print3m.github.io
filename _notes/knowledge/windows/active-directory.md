@@ -67,3 +67,6 @@ Collection of comma-separated key and value pairs used to identify unique AD rec
 
 ## Local workgroup
 TBD
+
+## Active Directory Certificate Services (AD CS)
+AD CS is a Microsoft's implementation of Public Key Infrastructure.
