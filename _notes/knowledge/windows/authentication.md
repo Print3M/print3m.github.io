@@ -19,6 +19,8 @@ If we can alter the LDAP configuration in the application (e.g. printer config),
 ## NTLM (aka Net-NTML)
 NTLM was the default authentication protocol used in old Windows versions. If for any reason Kerberos fails, NTLM will be used instead.
 
+> **NOTE**: NTLM (v1 or v2) is the protocol, not the hash!
+
 ### Workflow of NTLM authentication
 CLIENT => SERVER => DOMAIN CONTROLER
 
@@ -29,11 +31,18 @@ CLIENT => SERVER => DOMAIN CONTROLER
 5. The _DC_ compares the _challenge_ and the _response_ and sends the result to the _server_.  
 6. The server forwards result to the _client_.
 
-## Security
+### Security
 
 - NTLM uses a challenge/response mechanism, which exposes its password to offline cracking when responding to the challenge.
 - NTLMv1 hashes could be cracked in seconds with today’s computing. They are always the same length and are not salted.
 - NTLMv2 is a little better, since it variables length and salted hash. Even though hash it's salted before it's sent, it's saved unsalted in a machine’s memory.
+
+### Hashes
+Windows store user's account password using two hashes. These hashes are stored in the local SAM database or the domain NTDS file.
+
+**LM hash** (_Lan Manager_) is a very weak hash function used for storing users' passwords. If enabled, it's stored along with NT hash in the format `LM-hash:NT-hash`. Nowadays, most often it's disabled (it's highly recommended) and only the NT hash is generated. LM hash requires a short password and can be cracked within seconds.
+
+**NT hash** is often called misleadingly an `NTLM` hash. NT hash is the way users' passwords are stored on modern Windows OS. It is the one used to **pass-the-hash**. NTLMv1, NTLMv2 and Kerberos all use the NT hash.
 
 ## Kerberos
 Kerberos is the authentication protocol. It’s the default authentication protocol on Windows versions above Windows 2000, replacing the NTLM.
@@ -47,7 +56,11 @@ Security advantages over NTLM:
 KDC is a service usually installed on the Domain Controller. Its main task is to create Kerberos tickets on the network.
 
 ### Ticket Granting Ticket (TGT)
-TGT was designed to avoid asking the user for a password all the time. TGT works like a authorization token to ask for other services - if you have TGT, you are authorized. TGT is symmetrically encrypted using the `krbtgt` account's password hash. TGT includes a **Session Key** (value used to identify single logon session) so the KDC doesn't need to store the Session Key (it can be rocovered by decrypting the TGT).
+TGT was designed to avoid asking the user for a password all the time. It works like a authorization token to ask for other services - if you have TGT, you are authorized.
+
+User sends a timestamp symetrically encrypted with the **Key** derived from the user's password. KDC has this Key as well so both sides are able to verify each other. It's used in during the pre-authentication process (it might be disabled making Kerberos prone to _Kerberoast_ attack).
+
+When the requester's identity is verified, The KDC generates a TGT. The TGT is symmetrically encrypted using the `krbtgt` account's password hash and it includes a **Session Key** (value used to identify single logon session) so the KDC doesn't need to store the Session Key (it can be rocovered by decrypting the TGT).
 
 ### Security
 LDAP application which is exposed on the internet might be password-sprayed good as standard NTLM auth. But that app has its own credentials for LDAP quering DC. They are used to check if our credentials are correct. Now we don't have to hack users AD credentials. We might just hack the app AD credentials - one more vector to attack. App's credentials are most often stored in the plain text on the app's server (config files).

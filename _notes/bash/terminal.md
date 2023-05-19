@@ -220,7 +220,7 @@ crontab -e                              # Edit cron entries
 ## Cryptography
 
 ```bash
-openssl genrsa 2048 > rsa.key           # Generate RSA private key
+openssl genrsa 2048 > rsa.key           # Generate RSA key
 ```
 
 ## Text file manipulation

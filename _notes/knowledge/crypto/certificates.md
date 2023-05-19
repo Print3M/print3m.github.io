@@ -2,7 +2,7 @@
 title: Certificates notes
 ---
 
-## Digitial signature
+## Digital signature
 
 A digital signature is the way of ensuring two things:
 
@@ -45,14 +45,14 @@ Simplified structure of X.509 certificate:
 * Signature - the certificate hash + CA's private key
 
 ### Certification Authority (CA)
-CA is an entity that verifies and issues digitial certificates. CA ensures that the public key has definitely been issued by that organization. The CA is responsible for saying "yes, this person is who they say they are, this is its public key, and we, the CA, certify that". The server sends its certificate (issued by a CA) to the client and the client can be sure that the public key, which is included in the certificate, is not forged.
+CA is an entity that verifies and issues digital certificates. CA ensures that the public key has been definitely issued by that organization. The CA is responsible for saying "yes, this person is who they say they are, this is its public key, and we, the CA, certify that". The server sends its certificate (issued by a CA) to the client and the client can be sure that the public key, which is included in the certificate, is not forged.
 
 #### Root CA
 Root CA issues a root certificate with its own public key (self-signed certificate). There is no higher authority to certify a Root CA. It's the root of the chain of trust (client cert -> CA -> Root CA). Usually, client software - e.g. browsers or operating systems - include a pre-installed set of trusted Root CA certificates. Root CAs are strictly controlled by different companies to ensure the reliability and security of the certificates they issue. Firefox has around 150 built-in certificates represeting around 50 Root CAs.
 
 #### Chain of Trust
 
-Typical TLS chain of trust contains three certificates. Root CA certificates have usually very long term of validation (usually 20-30 years). Because of that Root CA often creates intermediate CA to improve security and flexibility in their certificate issuance process. Root CA's priv-key singing is very complicated process due to security measures and it's better to issue a shorter-term intermediate CA certificate.
+Typical TLS chain of trust contains three certificates. Root CA certificates have usually very long term of validation (usually 20-30 years). Because of that Root CA often creates intermediate CA to improve security and flexibility in their certificate issuance process. Root CA's priv-key signing is a very complicated process due to security measures and it's better to issue a shorter-term intermediate CA certificate.
 
 ```text
                 Root CA <------------ CA <------------ End-user
@@ -70,7 +70,7 @@ Signed with:   GlobalSign's |    GlobalSign's    |   GlobalSign CA's
 ### File format
 X.509 certificates, public keys, private keys and other data are usually stored in a file format called PEM (_Privacy-Enhanced Main_). The [RFC 7468](https://datatracker.ietf.org/doc/html/rfc7468) defines labels and encoding of different cryptographic data stored in a PEM format.
 
-Textual representation of X.509 certificates is base64(DER(ASN.1)) structure. It looks like the following:
+Textual representation of X.509 certificates is `base64(DER(ASN.1))` structure. It looks like the following:
 
 ```text
 -----BEGIN CERTIFICATE-----

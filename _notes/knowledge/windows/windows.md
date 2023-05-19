@@ -54,3 +54,13 @@ Environment variables store information about the operating system environment. 
 - %TEMP% / %TMP%    -> C:\Windows\TEMP
 - %windir%          -> C:\Windows
 - %USERNAME%        -> Current username
+
+## Path formats
+
+### Universal Naming Convention (UNC)
+UNC paths are used to access network resources. The server name can be a NetBIOS machine name, IP or FQDN address.
+
+```powershell
+# List network share
+dir \\<server>\<share>\
+```

