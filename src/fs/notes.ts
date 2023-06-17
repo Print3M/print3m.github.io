@@ -62,13 +62,20 @@ export const treeWalk = async (
     return await fileAction(node)
 }
 
+export interface NoteItem {
+    content: string
+    path: string
+}
+
 export const getNotesTree = async () => {
     const tree = directoryTree(NOTES_PATH, { extensions: /\.md/, exclude: /^\..*/ }) as Node_In
     const slugs = new Set<string>()
+    const notes: NoteItem[] = []
     const updatedTree = await treeWalk(
         tree,
         async file => {
-            const { data } = matter(fs.readFileSync(file.path, "utf8"))
+            const rawContent = fs.readFileSync(file.path, "utf8")
+            const { data } = matter(rawContent)
             const name = file.name.replace(/\.md$/, "")
             const slug = file.path.replace(`${NOTES_PATH}/`, "").replace(/.md$/, "")
 
@@ -76,6 +83,10 @@ export const getNotesTree = async () => {
             if (!data.title || !slug || name.startsWith(".")) return undefined
 
             slugs.add(slug)
+            notes.push({
+                content: rawContent,
+                path: slug,
+            })
 
             return {
                 name,
@@ -93,6 +104,12 @@ export const getNotesTree = async () => {
             }
         }
     )
+
+    // TODO: Write it better
+    fs.writeFile(".next/static/notes.json", JSON.stringify({ notes }), function (err) {
+        if (err) throw err
+        console.log("Saved!")
+    })
 
     return {
         slugs: [...slugs],

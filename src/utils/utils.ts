@@ -1,0 +1,1 @@
+export const getPageTitle = (text: string) => `${text} | Print3M`

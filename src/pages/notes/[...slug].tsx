@@ -1,8 +1,10 @@
 import MDArticle from "components/MDArticle"
 import { getNoteBySlug, getNotesTree } from "fs/notes"
+import Head from "next/head"
 import path from "path"
 import { FC } from "react"
 import { MDXSource } from "utils/types"
+import { getPageTitle } from "utils/utils"
 
 export const getStaticPaths = async () => {
     const { slugs } = await getNotesTree()
@@ -26,7 +28,6 @@ export const getStaticProps = async ({
 }
 
 interface Props {
-    lastUpdate: string
     meta: {
         title: string
         date: string
@@ -34,14 +35,12 @@ interface Props {
     mdxSource: MDXSource
 }
 
-const Note: FC<Props> = ({ meta, mdxSource, lastUpdate }) => (
+const Note: FC<Props> = ({ meta, mdxSource }) => (
     <>
-        <MDArticle
-            returnHref="/notes"
-            title={meta.title}
-            source={mdxSource}
-            info={`Last update: ${lastUpdate}`}
-        />
+        <Head>
+            <title>{getPageTitle(meta.title)}</title>
+        </Head>
+        <MDArticle returnHref="/notes" title={meta.title} source={mdxSource} />
     </>
 )
 

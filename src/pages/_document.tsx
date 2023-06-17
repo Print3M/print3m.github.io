@@ -10,6 +10,7 @@ export default class _Document extends Document {
         return (
             <Html>
                 <Head>
+                    <meta name="description" content="IT security, low-level, red-team, Linux, Windows, programming - personal notes, cheat-sheets and blog." />
                     <meta
                         name="google-site-verification"
                         content="PyNPHvUlr8W_Gw-y2349IW1mlsKlfSi6qHeRw2Jx4Cw"

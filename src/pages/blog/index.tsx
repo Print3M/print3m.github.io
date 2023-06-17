@@ -1,7 +1,9 @@
 import { Container, createStyles, Divider, Flex, Text, Title } from "@mantine/core"
 import { getAllBlogPostSlugs, getBlogPostBySlug } from "fs/blog"
+import Head from "next/head"
 import Link from "next/link"
 import { FC } from "react"
+import { getPageTitle } from "utils/utils"
 
 const useStyles = createStyles(_ => ({
     itemsContainer: {
@@ -56,6 +58,9 @@ const Blog: FC<Props> = ({ posts, totalCount }) => {
 
     return (
         <>
+            <Head>
+                <title>{getPageTitle("IT Blog")}</title>
+            </Head>
             <Title>Blog</Title>
             <div>All posts: {totalCount}</div>
 

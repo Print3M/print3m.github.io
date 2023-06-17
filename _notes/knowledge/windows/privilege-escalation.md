@@ -43,3 +43,82 @@ openssl pkcs12 -in <cert.pem> -keyex -CSP "Microsoft Enhanced Cryptographic Prov
 > **RESOURCES**: [Awesome BlackHat explanation](https://www.youtube.com/watch?v=ejmAIgxFRgM), [corresponding blog post](https://posts.specterops.io/certified-pre-owned-d95910965cd2)
 
 Most `impacket` tools are able to work with TGT authentication.
+
+## Misconfigurations
+
+### Scheduled tasks
+If an attacker is able to modify the `Task To Run` file, he can run a code with `Run As User` privileges.
+
+```powershell
+# List all scheduled tasks
+schtasks /query /tn <task-name> /fo list /v
+
+# Check file permissions
+icacl <path>
+```
+
+### Services
+
+### AlwaysInstallElevated
+`.msi` files are used to install applications on the system. They usually run with the privileges of the current user but sometimes it might be configured to run installation files with higher privileges from any user account. Malicious `.msi` files can be generated using `msfvenom` tool.
+
+```powershell
+# Check if AlwaysInstallElevated is set
+reg query HKCU\SOFTWARE\Policies\Microsoft\Windows\Installer
+reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\Installer
+
+# Execute an .msi file
+msiexec /quiet /qn /i <path>
+```
+
+## Credentials looting
+
+### Files
+
+#### IIS configuration
+Configuration files of the IIS web server might store some credentials.
+
+```cmd
+C:\inetpub\wwwroot\web.config
+C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Config\web.config
+```
+
+#### Unattended Windows installations
+If the OS is installed remotely (unattended installation) there is a chance that the installation config file is still somwhere in the file system. It might include credentials.
+
+```cmd
+C:\Unattend.xml
+C:\Windows\Panther\Unattend.xml
+C:\Windows\Panther\Unattend\Unattend.xml
+C:\Windows\system32\sysprep.inf
+C:\Windows\system32\sysprep\sysprep.xml
+```
+
+### Shell history
+
+```powershell
+# To read history from cmd.exe
+type %userprofile%\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt
+```
+
+```powershell
+# To read history from Powershell
+type $Env:userprofile\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt
+```
+
+### Memory-saved credentials
+
+```powershell
+# Show saved credentials and accounts in a memory
+cmdkey /list
+```
+
+> **NOTE**: Even if the credentials are not shown, you can use the `runas /savecred /user:<user> cmd.exe` command in order to use them from a memory.
+
+### SSH software
+PuTTY is propably the most common SSH client for Windows in use. It often stores session parameters (e.g. proxy configuration) in the Windows registry.
+
+```powershell
+# Show PuTTY configuration
+reg query HKEY_CURRENT_USER\Software\SimonTatham\PuTTY\Sessions\ /f "Proxy" /s
+```

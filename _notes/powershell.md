@@ -55,7 +55,7 @@ Operators:
 ```
 
 ## Commands / cmdlets
-> **NOTE**: Cmdlets and their parameters are case-insensitive. However, Microsoft generally recommends entering a PowerShell cmdlet (or a parameter with the first letter of each word capitalized.
+> **NOTE**: Cmdlets and their parameters are case-insensitive. However, Microsoft generally recommends entering a PowerShell cmdlet (or a parameter) with the first letter of each word capitalized.
 
 ```powershell
 Get-Help <command>                          # Get help about :command

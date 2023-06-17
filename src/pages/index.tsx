@@ -1,4 +1,5 @@
-import { Button, Center, Divider, Flex, MediaQuery, Space, Text } from "@mantine/core"
+import { Button, Divider, Flex, MediaQuery, Space, Text } from "@mantine/core"
+import Head from "next/head";
 import Link from "next/link"
 import { FC } from "react"
 
@@ -16,6 +17,9 @@ const SubPageButton: FC<{ href: string; title: string; children: JSX.Element | s
 
 const Home = () => (
     <>
+        <Head>
+            <title>Print3M&apos;s Hub</title>
+        </Head>
         <MediaQuery largerThan="sm" styles={{ display: "none" }}>
             <Space h={50} />
         </MediaQuery>

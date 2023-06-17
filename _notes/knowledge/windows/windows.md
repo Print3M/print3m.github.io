@@ -37,6 +37,12 @@ Every account (user) sometimes has to do something with OS. Here is [the list of
 whoami /priv
 ```
 
+Any user with administrative privileges will be part of the _Administrators_ group. Standard users are part of the _Users_ group. There are some special built-in accounts created, used and managed by the OS:
+
+- SYSTEM (Local System) - the account used to perform internal tasks. It has all possible privileges to all resources. It's more privileged than administrators.
+- Local Service - the account used to run Windows services with minimum privileges sufficient to work properly. It uses anonymous connections over the network.
+- Network Service - same as Local Service but it uses computer's credentials to authenticate in the network.
+
 ## Files and folders
 On Windows file extensions are meaningful.
 
