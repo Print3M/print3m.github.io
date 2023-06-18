@@ -1,5 +1,6 @@
 ---
 title: Radars and how they works - notes
+hidden: true
 ---
 
 Radar waves == radio waves.

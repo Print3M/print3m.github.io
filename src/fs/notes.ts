@@ -76,7 +76,8 @@ export const getNotesTree = async () => {
             const slug = file.path.replace(`${NOTES_PATH}/`, "").replace(/.md$/, "")
 
             // Exclude not-ready and hidden files
-            if (!data.title || !slug || name.startsWith(".")) return undefined
+            if (!data.title || !slug || data.hidden || name.startsWith("."))
+                return undefined
 
             slugs.add(slug)
             notes.push({
