@@ -5,6 +5,7 @@ import fs from "fs"
 import matter from "gray-matter"
 import rehypePrettyCode from "rehype-pretty-code"
 import { NOTES_PATH } from "./consts"
+import { NoteItem } from "components/pages/Notes/SearchBar/types"
 
 export interface Directory_In {
     path: string
@@ -62,11 +63,6 @@ export const treeWalk = async (
     return await fileAction(node)
 }
 
-export interface NoteItem {
-    content: string
-    path: string
-}
-
 export const getNotesTree = async () => {
     const tree = directoryTree(NOTES_PATH, { extensions: /\.md/, exclude: /^\..*/ }) as Node_In
     const slugs = new Set<string>()
@@ -105,10 +101,9 @@ export const getNotesTree = async () => {
         }
     )
 
-    // TODO: Write it better
-    fs.writeFile(".next/static/notes.json", JSON.stringify({ notes }), function (err) {
+    // Save all notes in one JSON file
+    fs.writeFile(".next/static/notes.json", JSON.stringify({ notes }), err => {
         if (err) throw err
-        console.log("Saved!")
     })
 
     return {
