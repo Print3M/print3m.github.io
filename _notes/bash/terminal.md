@@ -86,6 +86,7 @@ Repositories are defined in:
 
 ```bash
 apt update                              # Update local pkgs DB
+apt list --upgradable                   # Show packages to be upgraded
 
 apt install <pkg>                       # Install package
 apt remove <pkg> --purge                # Remove package
@@ -182,6 +183,13 @@ watch -n <secs> free -h                 # Show mem stats every N secs
 lspci -k | grep -EA3 'VGA|3D|Display'   # List available GPUs
 nvidia-smi                              # Nvidia GPU & driver info
 nvidia-settings                         # GUI Nvidia settings
+```
+
+## Kernel
+
+```bash
+uname -a                                # Show current kernel version
+dpkg -l | grep linux-image              # List installed kernels
 ```
 
 ## Clock

