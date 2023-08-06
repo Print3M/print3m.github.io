@@ -2,7 +2,11 @@
 title: ACPI - Advanced Configuration and Power Interface
 ---
 
-## RSDP - Root System Description Pointer
+- [1. RSDP - Root System Description Pointer](#1-rsdp---root-system-description-pointer)
+- [2. SDT - System Description Tables](#2-sdt---system-description-tables)
+  - [2.1. MADT - Multiple APIC Description Table](#21-madt---multiple-apic-description-table)
+
+## 1. RSDP - Root System Description Pointer
 > **More**: ACPI Specification, chapter 5.2.5.
 RSDP is the first data structure that OS developer must touch to do anything more with ACPI.
 
@@ -22,7 +26,7 @@ The RSDP structure can be aditionally verified with `signature` (should be "RSD 
 
 There are two versions of ACPI: 1.0 and 2.0. The latter is backward compatible with version 1.0. It does not appear to have any significant new features. It is probably not even supported by Qemu and everything works.
 
-## SDT - System Description Tables
+## 2. SDT - System Description Tables
 > **More**: ACPI Specification, chapter 5.1 and 5.2.
 
 Architecture of SDTs:
@@ -75,7 +79,7 @@ Header header;      // SDT header
 u32 sdt_tables[];   // 32-bit pointers to other tables
 ```
 
-### MADT - Multiple APIC Description Table
+### 2.1. MADT - Multiple APIC Description Table
 > **More**: ACPI Specification, chapter 5.2.12.
 
 It's one of the most important SDTs. It provides information necessary for operation on systems with APIC (Advanced Programmable Interrupt Controller).

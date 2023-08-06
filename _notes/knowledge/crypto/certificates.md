@@ -2,7 +2,15 @@
 title: Certificates notes
 ---
 
-## Digital signature
+- [1. Digital signature](#1-digital-signature)
+- [2. Certificates](#2-certificates)
+  - [2.1. Standard X.509](#21-standard-x509)
+  - [2.2. Certification Authority (CA)](#22-certification-authority-ca)
+    - [2.2.1. Root CA](#221-root-ca)
+    - [2.2.2. Chain of Trust](#222-chain-of-trust)
+  - [2.3. File format](#23-file-format)
+
+## 1. Digital signature
 
 A digital signature is the way of ensuring two things:
 
@@ -27,30 +35,30 @@ A digital signature is the way of ensuring two things:
 
 The hash of a message is encrypted using a sender's private key. It can be decrypted only with correspoding public key (it ensures the sender identity). The hash is calculated twice: on the sender side and verified by a receiver. Even if the signature was decrypted along the way (in order to change the message and the hash), it could not be changed and encrypted once again, because the private key is secret.
 
-## Certificates
+## 2. Certificates
 
 The problem with asymmetric encryption is "how I can be sure that the public key really belongs to the sender?". If the public key was substituted, the signature could be decrypted along the way (man-in-the-middle attack) and changed using the attacker's private key. There must be a way to prove the correlation between the sender and its public key. And this is where certificates come is.
 
 Certificate is a standarized way to prove the correlation between sender and its public key.
 
-### Standard X.509
+### 2.1. Standard X.509
 Standard X.509 defines the format of public key certificates. It's the most common certificate format in the world. X.509 certificate binds an identity (organization, domain etc.) to a public key using a digital signature. Certificates are issued by Certification Authority.
 
 Simplified structure of X.509 certificate:
 
-* Issuer Name - who certifies the public key.
-* Subject Name - whose public key is certified.
-* Validity Period - start and end date of the certificate validity.
-* Public Key - subject's public key.
-* Signature - the certificate hash + CA's private key
+- Issuer Name - who certifies the public key.
+- Subject Name - whose public key is certified.
+- Validity Period - start and end date of the certificate validity.
+- Public Key - subject's public key.
+- Signature - the certificate hash + CA's private key
 
-### Certification Authority (CA)
+### 2.2. Certification Authority (CA)
 CA is an entity that verifies and issues digital certificates. CA ensures that the public key has been definitely issued by that organization. The CA is responsible for saying "yes, this person is who they say they are, this is its public key, and we, the CA, certify that". The server sends its certificate (issued by a CA) to the client and the client can be sure that the public key, which is included in the certificate, is not forged.
 
-#### Root CA
+#### 2.2.1. Root CA
 Root CA issues a root certificate with its own public key (self-signed certificate). There is no higher authority to certify a Root CA. It's the root of the chain of trust (client cert -> CA -> Root CA). Usually, client software - e.g. browsers or operating systems - include a pre-installed set of trusted Root CA certificates. Root CAs are strictly controlled by different companies to ensure the reliability and security of the certificates they issue. Firefox has around 150 built-in certificates represeting around 50 Root CAs.
 
-#### Chain of Trust
+#### 2.2.2. Chain of Trust
 
 Typical TLS chain of trust contains three certificates. Root CA certificates have usually very long term of validation (usually 20-30 years). Because of that Root CA often creates intermediate CA to improve security and flexibility in their certificate issuance process. Root CA's priv-key signing is a very complicated process due to security measures and it's better to issue a shorter-term intermediate CA certificate.
 
@@ -67,7 +75,7 @@ Signed with:   GlobalSign's |    GlobalSign's    |   GlobalSign CA's
                priv-key     |    priv-key        |   priv-key
 ```
 
-### File format
+### 2.3. File format
 X.509 certificates, public keys, private keys and other data are usually stored in a file format called PEM (_Privacy-Enhanced Main_). The [RFC 7468](https://datatracker.ietf.org/doc/html/rfc7468) defines labels and encoding of different cryptographic data stored in a PEM format.
 
 Textual representation of X.509 certificates is `base64(DER(ASN.1))` structure. It looks like the following:

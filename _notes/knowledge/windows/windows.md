@@ -1,13 +1,26 @@
 ---
 title: Windows environment notes
 ---
-## Scheduled tasks
+
+- [1. Scheduled tasks](#1-scheduled-tasks)
+- [2. Accounts](#2-accounts)
+  - [2.1. SYSTEM](#21-system)
+  - [2.2. Administrator](#22-administrator)
+  - [2.3. Guest](#23-guest)
+- [3. Account's privileges](#3-accounts-privileges)
+- [4. Files and folders](#4-files-and-folders)
+- [5. System environmental variables](#5-system-environmental-variables)
+  - [5.1. Standard variables](#51-standard-variables)
+- [6. Path formats](#6-path-formats)
+  - [6.1. Universal Naming Convention (UNC)](#61-universal-naming-convention-unc)
+
+## 1. Scheduled tasks
 _Scheduled tasks_ are _cron jobs_ in the Linux world.  
 
-## Accounts
+## 2. Accounts
 To show GUI with all users and groups run: `lusrmgr.msc`
 
-### SYSTEM
+### 2.1. SYSTEM
 SYSTEM is internal account which doesn't show up in User Manager.
 
 - the highest privilege level in the Windows user model.
@@ -16,7 +29,7 @@ SYSTEM is internal account which doesn't show up in User Manager.
 
 If the computer is joined to a domain, processes running as SYSTEM can access domain servers in the context of the computer's domain account without credentials.
 
-### Administrator
+### 2.2. Administrator
 Every computer has Administrator account. It's the first account that is created during the Windows installation. Processes running as Administrator have no access to domain computers unless the credentials are explicitly provided.
 
 Administrator has following privileges:
@@ -26,10 +39,10 @@ Administrator has following privileges:
 - can't be deleted or locked out, but it can be renamed or disabled.
 - it's member of the Adminitrators group and it can't be removed from the Administrators group but it can be renamed.
 
-### Guest
+### 2.3. Guest
 TBD
 
-## Account's privileges
+## 3. Account's privileges
 Every account (user) sometimes has to do something with OS. Here is [the list of possible privileges](https://learn.microsoft.com/en-us/windows/win32/secauthz/privilege-constants).
 
 ```powershell
@@ -43,7 +56,7 @@ Any user with administrative privileges will be part of the _Administrators_ gro
 - Local Service - the account used to run Windows services with minimum privileges sufficient to work properly. It uses anonymous connections over the network.
 - Network Service - same as Local Service but it uses computer's credentials to authenticate in the network.
 
-## Files and folders
+## 4. Files and folders
 On Windows file extensions are meaningful.
 
 - .bat - Batch script. Equivalent of bash scripts for Linux.
@@ -52,18 +65,18 @@ On Windows file extensions are meaningful.
 
 [Permission tables (special and basic) for files and folders](https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-2000-server/bb727008(v=technet.10)?redirectedfrom=MSDN)
 
-## System environmental variables
+## 5. System environmental variables
 Environment variables store information about the operating system environment. This information includes details such as the operating system path, the number of processors used by the operating system, and the location of temporary folders.
 
-### Standard variables
+### 5.1. Standard variables
 
 - %TEMP% / %TMP%    -> C:\Windows\TEMP
 - %windir%          -> C:\Windows
 - %USERNAME%        -> Current username
 
-## Path formats
+## 6. Path formats
 
-### Universal Naming Convention (UNC)
+### 6.1. Universal Naming Convention (UNC)
 UNC paths are used to access network resources. The server name can be a NetBIOS machine name, IP or FQDN address.
 
 ```powershell

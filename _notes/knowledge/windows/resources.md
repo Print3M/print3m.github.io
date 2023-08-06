@@ -7,3 +7,5 @@ title: Windows red-team, pentest useful resources
 * [haax.fr - offensive security cheatsheets](https://cheatsheet.haax.fr/windows-systems/) - interesting, well-grouped offensive security notes.
 
 * [infosecn1nja - Red-Teaming Toolkit](https://github.com/infosecn1nja/Red-Teaming-Toolkit) - tons of red-team tools.
+
+* [PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Windows%20-%20Privilege%20Escalation.md) - privesc, persistence, mimikatz etc.

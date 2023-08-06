@@ -2,7 +2,11 @@
 title: Perl one-liners notes
 ---
 
-## Manual
+- [1. Basics](#1-basics)
+- [2. Regex](#2-regex)
+- [3. Examples](#3-examples)
+
+## 1. Basics
 
 ```bash
 # Basic flags
@@ -67,7 +71,7 @@ perl -F: -lnE 'say $F[1]'
 perl -E '$words = `wc -w text.txt`; say $words'
 ```
 
-## Regex
+## 2. Regex
 
 ```bash
 # /REGEXP/FLAGS is a shortcut for $_ =~ m/REGEXP/FLAGS
@@ -82,7 +86,7 @@ perl -lne 'print if $_ !~ m/e/'
 perl -lne '/(\d+):(\w+)/; print $1, $2'
 ```
 
-## Examples
+## 3. Examples
 
 ```bash
 # List all users with corresponding groups

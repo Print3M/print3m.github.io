@@ -2,7 +2,14 @@
 title: Regex notes
 ---
 
-##### Special characters
+- [1. Special characters](#1-special-characters)
+- [2. Char selection](#2-char-selection)
+- [3. Repetition (after-sign)](#3-repetition-after-sign)
+- [4. Grouping (word-selection)](#4-grouping-word-selection)
+- [5. Lookahead / lookbehind](#5-lookahead--lookbehind)
+- [6. Modifiers (flags)](#6-modifiers-flags)
+
+## 1. Special characters
 
 ```bash
 ^                               # Beginning of the line
@@ -17,7 +24,7 @@ $                               # End of the line
 \S                              # Non-space
 ```
 
-##### Letter selection
+## 2. Char selection
 
 ```bash
 [a-z]                           # Any letter from 'a' to 'z'
@@ -26,7 +33,7 @@ $                               # End of the line
 [^az]                           # not 'a' and not 'z' 
 ```
 
-##### Repetition (after-sign)
+## 3. Repetition (after-sign)
 
 ```bash
 +                               # One or more times                          
@@ -37,7 +44,7 @@ $                               # End of the line
 {7,9}                           # Between 7 to 9 times
 ```
 
-##### Grouping (word-selection)
+## 4. Grouping (word-selection)
 
 ```bash
 (test)-\1                       # Parse `test-test`
@@ -46,7 +53,7 @@ $                               # End of the line
 (test|TeSt)                     # `test` or `TeSt`
 ```
 
-##### Lookahead / lookbehind
+## 5. Lookahead / lookbehind
 
 ```bash
 # Lookahead (if something is after)
@@ -58,7 +65,7 @@ $                               # End of the line
 (?<!\$)\d                       # From `PLN5 $2` parse `5`
 ```
 
-##### Modifiers (flags)
+## 6. Modifiers (flags)
 
 ```bash
 /test/g                         # Global (parse all matches)

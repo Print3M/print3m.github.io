@@ -1,0 +1,7 @@
+{
+    "editor.wordWrap": "on",
+    "[markdown]": {
+        "editor.wordWrap": "wordWrapColumn"
+    },
+    "editor.rulers": [80]
+}

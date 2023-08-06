@@ -2,22 +2,39 @@
 title: Bash scripting notes
 ---
 
-## Differences between Bash and sh features
+- [1. Differences between Bash and sh features](#1-differences-between-bash-and-sh-features)
+  - [1.1. Major differences (Bash vs sh)](#11-major-differences-bash-vs-sh)
+- [2. Bash references](#2-bash-references)
+  - [2.1. Debugging (line by line)](#21-debugging-line-by-line)
+  - [2.2. Comments](#22-comments)
+  - [2.3. Special variables](#23-special-variables)
+  - [2.4. Prologue](#24-prologue)
+  - [2.5. Defining variables](#25-defining-variables)
+  - [2.6. If statement](#26-if-statement)
+  - [2.7. Loops](#27-loops)
+  - [2.8. Functions](#28-functions)
+  - [2.9. Strings](#29-strings)
+  - [2.10. Math / arithmetic](#210-math--arithmetic)
+  - [2.11. Arrays](#211-arrays)
+  - [2.12. Regex](#212-regex)
+  - [2.13. Quick tips](#213-quick-tips)
+
+## 1. Differences between Bash and sh features
 
 - [GNU Majo differences from the bourne shell](https://www.gnu.org/software/bash/manual/html_node/Major-Differences-From-The-Bourne-Shell.html)
 
 Bash is superset of sh. Sh is POSIX compliant, bash is not. Bash has many extra features which improve readability and speed of programming. Almost everything what does work on sh would be working on Bash as well, but not the other way.
 
-### Major differences (Bash vs sh)
+### 1.1. Major differences (Bash vs sh)
 
 ```bash
 if [[ ... ]] vs if [ ... ]
 ```
 
-## Bash references
+## 2. Bash references
 [Official Bash documentation (manual)](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html)
 
-### Debugging (line by line)
+### 2.1. Debugging (line by line)
 
 ```bash
 # At the beginning of the script
@@ -25,7 +42,9 @@ set -x
 trap read debug
 ```
 
-### Special variables
+### 2.2. Comments
+
+### 2.3. Special variables
 
 ```bash
 $?          # Exit code of last command
@@ -36,7 +55,7 @@ $@          # Array of arguments
 $$          # Current PID
 ```
 
-### Prologue
+### 2.4. Prologue
 
 ```bash
 #!/usr/bin/env bash                     # Shebang: run with Bash shell
@@ -54,7 +73,7 @@ set -e
 set -o pipefail                               
 ```
 
-### Defining variables
+### 2.5. Defining variables
 > **NOTE**: No spaces around equal sign!
 
 ```bash
@@ -67,7 +86,7 @@ var6=(1 5 9 43 23 43)                   # Array of numbers
 read var7                               # Read variable from stdin
 ```
 
-### If statement
+### 2.6. If statement
 
 ```bash
 # If statements (spaces around expression matter)
@@ -103,7 +122,7 @@ if [[ $v1 = $v2  || $v1 != $v3 ]]       # Or
 if [[ $v1 = $v2  && $v1 != $v3 ]]       # And
 ```
 
-### Loops
+### 2.7. Loops
 
 ```bash
 # For loops
@@ -116,13 +135,10 @@ done
 for file in /bin/*                      # Iterate over files
 for num in {1..12..2}                   # {start..end..step}
 for num in 1 9 4 3 3                    # Interate over list of items
+for item in "${arr[@]}"                 # Spread array to list of items (above)
 for (( i=0; i<5; i++ ))                 # C-like for loop
 for name in $(cat names.txt)            # Line by line output of a command
-
-# Iterate over array elements
-for item in "${arr[@]}"; do
-    echo "$item"
-done
+for arg in "$@"                         # Iterate over arguments
 
 # Iterate over lines of variable
 while read -r line; do
@@ -135,7 +151,7 @@ while read -r line; do
 done < file.txt
 ```
 
-### Functions
+### 2.8. Functions
 Arguments are not named. They are only positional. Same convention as for the
 script parameters.
 
@@ -148,7 +164,7 @@ function func1() {
 func1 "test-argument" 234               # Call a function
 ```
 
-### Strings
+### 2.9. Strings
 
 ```bash
 var='super'
@@ -170,14 +186,14 @@ str='1:2'
 IFS=: read -r var1 var2 <<< "$str"  =>  var1 == 1, var2 == 2 
 ```
 
-### Math / arithmetic
+### 2.10. Math / arithmetic
 
 ```bash
 $((1 + 1))                              # Math expression        
 $((x + y))                              # Variables math
 ```
 
-### Arrays
+### 2.11. Arrays
 
 ```bash
 arr=("1" "2" "3")                       # Define array
@@ -187,7 +203,7 @@ echo ${arr[3]}                          # Get item
 echo ${arr[@]}                          # Get all items
 ```
 
-### Regex
+### 2.12. Regex
 
 ```bash
 # Check matching and group extraction
@@ -196,4 +212,11 @@ if [[ $var1 =~ $exp ]]; then
     echo $BASH_REMATCH[0]               # Entire regex match
     echo $BASH_REMATCH[1]               # First group
 fi
+```
+
+### 2.13. Quick tips
+
+```bash
+echo $RANDOM                            # Get random number
+date +%s%N                              # Get UNIX timestamp (nanoseconds)
 ```

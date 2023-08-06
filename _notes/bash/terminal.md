@@ -2,13 +2,35 @@
 title: Linux terminal notes
 ---
 
-## Configuration
+- [1. Configuration](#1-configuration)
+- [2. Compression and archives](#2-compression-and-archives)
+- [3. Processes](#3-processes)
+- [4. Users](#4-users)
+- [5. Groups](#5-groups)
+- [6. Permissions](#6-permissions)
+- [7. Package management](#7-package-management)
+- [8. Network](#8-network)
+- [9. Systemd](#9-systemd)
+- [10. Sound / speakers](#10-sound--speakers)
+- [11. Disks](#11-disks)
+- [12. Memory](#12-memory)
+- [13. GPU](#13-gpu)
+- [14. Kernel](#14-kernel)
+- [15. Clock](#15-clock)
+- [16. Environment variables](#16-environment-variables)
+- [17. Job control](#17-job-control)
+- [18. Cron](#18-cron)
+- [19. Cryptography](#19-cryptography)
+- [20. Text file manipulation](#20-text-file-manipulation)
+- [21. Common commands](#21-common-commands)
+
+## 1. Configuration
 
 ```bash
 /etc/default/*                          # Configs of OS boot services
 ```
 
-## Compression and archives
+## 2. Compression and archives
 
 ```bash
 tar -xf <arch.tar.gz>                   # Decompress and extract files
@@ -17,7 +39,7 @@ tar -caf <arch.tar.gz> <f1> <f2>        # Compress and create archive
 tar -tvf <arch.tar>                     # List content (verbosely)
 ```
 
-## Processes
+## 3. Processes
 
 ```bash
 pidof <name>                            # Get PID(s) of process(es)
@@ -30,7 +52,7 @@ kill -l                                 # List all signals
 kill -9 <PID>                           # Kill process
 ```
 
-## Users
+## 4. Users
 
 ```bash
 # /etc/passwd schema:
@@ -50,7 +72,7 @@ su <username>                           # Switch to user
 sudo <username> <command>               # Exec command as other user
 ```
 
-## Groups
+## 5. Groups
 
 ```bash
 # /etc/group schema:
@@ -63,7 +85,7 @@ usermod -aG <group> <username>          # Add user to group
 gpasswd -d <username <group>            # Remove user from group
 ```
 
-## Permissions
+## 6. Permissions
 Permissions priority: User -> Group -> Other
 
 ```bash
@@ -78,7 +100,7 @@ chmod u=rwx,g=r,o= <file>              # Change file permissions
 chmod ug=rw <file>                     # Change file permissionss
 ```
 
-## Package management
+## 7. Package management
 Repositories are defined in:
 
 - `/etc/apt/sources.list.d/`
@@ -109,7 +131,7 @@ dpkg -l                                 # List all installed pkgs
 dpkg -L <pkg>                           # List files installed by pkg
 ```
 
-## Network
+## 8. Network
 
 ```bash
 ip a                                    # Show network interfaces
@@ -133,7 +155,7 @@ lsof -i                                 # Show open network connections
 ssh -L <lport>:<lhost>:<rport> <ruser>@<rhost> -fN 
 ```
 
-## Systemd
+## 9. Systemd
 
 ```bash
 systemctl list-unit-files               # List all unit files
@@ -150,7 +172,7 @@ systemctl disable <serivce>             # Stop service at boot
 journalctl -u <service>                 # Show logs
 ```
 
-## Sound / speakers
+## 10. Sound / speakers
 
 ```bash
 # With this tool you can set overall levels of sound card
@@ -160,7 +182,7 @@ alsamixer                               # ALSA driver mixer
 alsactl store                           # Persist changes
 ```
 
-## Disks
+## 11. Disks
 
 ```bash
 cfdisk                                  # User-friendly partition tool
@@ -170,14 +192,14 @@ df -hT                                  # Show disk space
 du <dir|file> -hs                       # Show size of file or dir
 ```
 
-## Memory
+## 12. Memory
 
 ```bash
 free -h                                 # Show memory stats
 watch -n <secs> free -h                 # Show mem stats every N secs
 ```
 
-## GPU
+## 13. GPU
 
 ```bash
 lspci -k | grep -EA3 'VGA|3D|Display'   # List available GPUs
@@ -185,20 +207,20 @@ nvidia-smi                              # Nvidia GPU & driver info
 nvidia-settings                         # GUI Nvidia settings
 ```
 
-## Kernel
+## 14. Kernel
 
 ```bash
 uname -a                                # Show current kernel version
 dpkg -l | grep linux-image              # List installed kernels
 ```
 
-## Clock
+## 15. Clock
 
 ```bash
 timedatectl                             # Show OS datetime settings
 ```
 
-## Environment variables
+## 16. Environment variables
 
 ```bash
 env                                     # List all envs
@@ -207,7 +229,7 @@ export <name>=<value>                   # Set env
 unset <env-name>                        # Unset env
 ```
 
-## Job control
+## 17. Job control
 
 ```bash
 jobs                                    # List all jobs
@@ -217,7 +239,7 @@ fg <id>                                 # Place job in fg
 CTRL-Z                                  # Stop job
 ```
 
-## Cron
+## 18. Cron
 [CRON time generator.](https://crontab.guru/)
 
 ```bash
@@ -225,20 +247,20 @@ crontab -l                              # List cron entries
 crontab -e                              # Edit cron entries
 ```
 
-## Cryptography
+## 19. Cryptography
 
 ```bash
 openssl genrsa 2048 > rsa.key           # Generate RSA key
 ```
 
-## Text file manipulation
+## 20. Text file manipulation
 
 ```bash
 # Exclude lines present in both files and save them into :file-3
 comm -3 <file-1> <file-2> > <file-3>
 ```
 
-## Common commands
+## 21. Common commands
 
 ```bash
 shutdown -r now                         # Reboot now

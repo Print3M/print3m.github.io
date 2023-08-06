@@ -2,7 +2,9 @@
 title: VS Code notes
 ---
 
-## Shortcuts
+## 1. Linux
+
+### 1.1. Shortcuts
 
 ```text
 ctrl + shft + p                     # Open command line
