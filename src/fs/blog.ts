@@ -24,6 +24,8 @@ export const getAllBlogPostSlugs = () => {
     const slugs: string[] = []
 
     for (const file of files) {
+        if (file.startsWith(".")) continue
+
         const slug = file.replace(/\.md$/, "")
         slugs.push(slug)
     }
