@@ -22,7 +22,8 @@ title: Linux terminal notes
 - [18. Cron](#18-cron)
 - [19. Cryptography](#19-cryptography)
 - [20. Text file manipulation](#20-text-file-manipulation)
-- [21. Common commands](#21-common-commands)
+- [21. Tmux](#21-tmux)
+- [22. Common commands](#22-common-commands)
 
 ## 1. Configuration
 
@@ -260,7 +261,15 @@ openssl genrsa 2048 > rsa.key           # Generate RSA key
 comm -3 <file-1> <file-2> > <file-3>
 ```
 
-## 21. Common commands
+## 21. Tmux
+
+```python
+:new                                    # New tab
+ctrl + b (                              # Previous tab
+ctrl + b )                              # Next tab
+```
+
+## 22. Common commands
 
 ```bash
 shutdown -r now                         # Reboot now
