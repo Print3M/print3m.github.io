@@ -2,6 +2,13 @@
 title: Network security notes
 ---
 
+- [1. IDS vs IPS](#1-ids-vs-ips)
+  - [1.1. Evading](#11-evading)
+    - [1.1.1. Protocol Manipulation](#111-protocol-manipulation)
+    - [1.1.2. Payload Manipulation](#112-payload-manipulation)
+    - [Route Manipulation](#route-manipulation)
+    - [Tactical Denial of Service](#tactical-denial-of-service)
+
 ## 1. IDS vs IPS
 **Intrusion Detection System** (IDS) is a system that monitors network activity and detects network or system intrusions. IDS is just a monitoring - it only alerts about suspicious activities but cannot stop them. **Intrusion Prevention System** (IPS) can also actively prevent the malicious actions. These systems can be host-based (monitoring the traffic going in and out of the host) or network-based (monitoring the traffic in the entire network).
 
@@ -48,4 +55,3 @@ An IDS requires a high processing power as the number of rules and traffic grows
 
 - Generate a huge amount of legit traffic that would overload the processing capacity of the system.
 - Generate a huge amount of false-positive traffic. It can exceed logging capacity, disk space etc.
-

@@ -15,7 +15,7 @@ title: Windows management services
 WinRM is a web-based protocol used to send Powershell commands to Windows hosts remotely. Ports: 5985/TCP (HTTP) and 5986/TCP (HTTPS). Most Windows Server machines have WinRM enabled by default.
 
 ## 2. Windows Management Instrumentation (WMI)
-WMI is Windows implementation of _Web-Based Enterprise Management_ (WBEM) standard for accessing management information across devices. WMI allows administrators to perform standard management tasks. System administrators can use WMI in all Windows-based applications. It's most useful in enterprise applications and administrative scripts.
+WMI is Windows implementation of _Web-Based Enterprise Management_ (WBEM) standard for accessing management information across devices. WMI allows administrators to perform standard management tasks. System administrators can use WMI in all Windows-based applications. WMI allows you to query and manipulate system settings, receive notifications about system events, and perform various management tasks programmatically. It offers a set of APIs containing information about various aspects of the system, such as hardware, software, network configuration, and more. Built-in `wmic` (WMI Command-line) tool is a command-line interface to access the WMI functionalities.
 
 WMI session might be established using one of the following protocols:
 

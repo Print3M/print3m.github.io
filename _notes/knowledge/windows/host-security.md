@@ -1,5 +1,5 @@
 ---
-title: Host security measures
+title: Host security measures and evasion
 ---
 
 - [1. Antivirus (AV)](#1-antivirus-av)
@@ -7,6 +7,8 @@ title: Host security measures
   - [1.2. Windows Defender](#12-windows-defender)
 - [2. Endpoint Detection and Response (EDR)](#2-endpoint-detection-and-response-edr)
 - [3. Firewall](#3-firewall)
+  - [3.1. Evasion during network scan](#31-evasion-during-network-scan)
+    - [3.1.1. Controlling the Source MAC/IP/Port](#311-controlling-the-source-macipport)
 - [4. System Monitor (Sysmon)](#4-system-monitor-sysmon)
 - [5. User Account Control (UAC)](#5-user-account-control-uac)
 
@@ -38,7 +40,34 @@ It is a pre-installed antivirus that runs on users' machine. MS defender runs in
 EDR software provides real-time protection based on behavioral analytics. EDR monitors various security aspects in the target machine, including memory, network connections, executed commands, processes and Windows registry.
 
 ## 3. Firewall
-It's main purpose is to control the inbound and outbound traffic that goes through the device's interface. A firewall acts as control access at the network layer. It is capable of allowing and denying network packets. Advanced firewalls also can inspect other ISO/OSI layers, such as application layers (HTTP, etc.) - e.g. they can detect and block SQL injection or reflected XSS payloads.
+It's main purpose is to control the inbound and outbound traffic that goes through the device's interface. A firewall acts as control access at the network layer. It is capable of allowing and denying network packets. It can be a seperate physical device (usually very expensive) or a software. `Windows Defender Firewall` and `Linux Iptables` are examples of software firewalls. A firewall compares the packets against a set of rules before passing or blocking it. It might block TCP packets sent to a certain port or packets from a certain host.
+
+Most often firewalls focus on layer 3 (IPv4, IPv6) and 4 (TCP, UDP). Advanced firewalls also can inspect other ISO/OSI layers, such as application layers (HTTP, FTP, SMTP, etc.) - e.g. they can detect and block SQL injection or reflected XSS payloads.
+
+### 3.1. Evasion during network scan
+
+#### 3.1.1. Controlling the Source MAC/IP/Port
+
+**Decoy**
+`Nmap` has an option to hide IP of the attacker's host using decoys - sending many packets with spoofed IPs. Because of the flood of different IPs, it's difficult for the firewall to find out where the scan is coming from. Also it can exhaust the blue team resources to investigate all IPs.
+
+```bash
+# Specified IPs
+nmap <IP> -D <decoy-IPs-comma-seperated>
+
+# Random IPs + one specific
+nmap <IP> -D RND,RND,RND,192.168.1.25
+```
+
+**MAC Spoofing**
+Spofing the MAC address (`--spoof-mac <MAC>`) works only if your system is on the same network sagment. The target system is going to reply to a spoofed MAC address. If you are not on the same network segment, sharing the same Ethernet, you won’t be able to capture and read the responses.
+
+**IP Spoofing**
+Spoofing the IP address (`-S <IP>`) works only if your system is on the subnetwork. This technique can be used to exploit trust relationships on the network based on IP addresses.
+
+**IP Packet fragmentation**
+`-f` (8 bytes) and `-ff` (16 bytes) options in Nmap allow to split IP packet into smaller packets. Using `--mtu <number>` parameter you can specify the maximum packet size (IP data). One IP packet can be divided into multiple smaller packets carring legit TCP connection but evading the firewall.
+
 
 ## 4. System Monitor (Sysmon)
 Sysmon is a service and device driver - one of the MS Sysinternals suites. It's not installed by default. This logging system helps system administrators and blue teamers to detect and investigate malicious activity.
