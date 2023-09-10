@@ -76,5 +76,7 @@ User sends a timestamp symetrically encrypted with the **Key** derived from the 
 
 When the requester's identity is verified, The KDC generates a TGT. The TGT is symmetrically encrypted using the `krbtgt` account's password hash and it includes a **Session Key** (value used to identify single logon session) so the KDC doesn't need to store the Session Key (it can be rocovered by decrypting the TGT).
 
+> **NOTE**: `krbtgt` account acts as the service account for the KDC service, which handles all Kerberos ticket requests.
+
 ### 4.3. Security
 LDAP application which is exposed on the internet might be password-sprayed good as standard NTLM auth. But that app has its own credentials for LDAP quering DC. They are used to check if our credentials are correct. Now we don't have to hack users AD credentials. We might just hack the app AD credentials - one more vector to attack. App's credentials are most often stored in the plain text on the app's server (config files).

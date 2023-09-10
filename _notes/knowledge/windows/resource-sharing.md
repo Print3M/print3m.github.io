@@ -10,7 +10,7 @@ title: Windows resource sharing services
 - [3. FTP - File Transfer Protocol](#3-ftp---file-transfer-protocol)
 
 ## 1. SMB - Server Message Block (139, 445)
-SMB is a client-server protocol that regulates access to files and entire directories and other network resources. An SMB server can provide arbitrary parts of its local file system as shares. Access rights are defined by Access Control Lists (ACL). SMB can be used only within LOCAL networks, it's not routable.
+SMB is a client-server protocol that regulates access to files and entire directories and other network resources. An SMB server can provide arbitrary parts of its local file system as shares. Access rights are defined by ACL. SMB can be used only within LOCAL networks, it's not routable.
 
 ### 1.1. Security
 SMB most often uses NTLM to authentication. NTLM challenge might be sniffed and cracked offline. Cracking NTLM challenge is slower than cracking the hash directly, but it's still possible. SMB is very widely used by services in LAN, so there are usually a lot of these challanges flying on the network.

@@ -19,10 +19,10 @@ Linux is an open-source OS, so the core API used to write drivers is open-source
 ## 3. Devices in Unix-world
 Every piece of hardware, with a driver associated to it, is represented in the Unix-world as a device file. These files are accessible from user-space in the `/dev/` directory. There are two types of them:
 
-- Character device files (`c`) - sequential, byte-oriented interface for accessing devices. An user can read and write to the file one character at a time, without buffering.
-- Block device files (`b`)- block-oriented interface for accessing devices. An user can read and write to the file fixed-size blocks of data. There is also a random access allowed and a buffering mechanism implemented.
+- Character device files (`c`) - sequential, byte-oriented interface for accessing devices. A user can read and write to the file one character at a time, without buffering.
+- Block device files (`b`)- block-oriented interface for accessing devices. A user can read and write to the file fixed-size blocks of data. There is also a random access allowed and a buffering mechanism implemented.
 
-The device files are created by the driver successfully attached to the device. Performing operations on these files is actualy interacting with the drivers. The drives have implemented functions what to do if an user wants to read the keyboard dev-file and so on.
+The device files are created by the driver successfully attached to the device. Performing operations on these files is actualy interacting with the drivers. The drives have implemented functions what to do if a user wants to read the keyboard dev-file and so on.
 
 ## 4. Frameworks and subsystems
 There is a problem. The driver creates the device file and the driver is responsible for handling any operation performed on the dev-file, so how we can be sure that every keyboard dev-file has the same interface and understands the same structure of data. This is where Linux frameworks come into play. The thing is that Linux developers noticed that huge part of an avarage driver is a boilerplate code. For example, there is no need to reinvent the sysfs-based interface for controlling LEDs all the time. There is a LED framework, which have unified approach to interact with LEDs, already implemented in the Linux kernel.

@@ -13,7 +13,7 @@ title: High Precision Even Timer
   - [4.2. Periodic mode](#42-periodic-mode)
 
 ## 1. What is HPET?
-HPET is a hardware timer developed by Intel and Microsoft, incorporated in chipsets since 2005. The main reason for its introduction was to replace older, less efficient and accurate timers such as PIT (Programmable Interval Timer).
+HPET is a hardware timer developed by Intel and Microsoft, incorporated in chipsets since 2005. The main reason for its introduction was to replace older, less efficient and less accurate timers such as PIT (Programmable Interval Timer).
 
 ## 2. Architecture
 > **More**: HPET Sepcification

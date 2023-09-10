@@ -16,7 +16,7 @@ _Services_ are _daemons_ in the Linux world. They are managed by the **Service C
 
 SCM executable is located in: `%SystemRoot%\System32\services.exe`.
 
-Each service has an associated executable that is run by the SCM when a service is started. Because of special interface to perform communication with the SCM, not every executable can be started as a service. Each service specifies the account under which the service runs and Discretionary Access Control List (DACL), which indicates who has permission to start, stop, pause, query status and reconfigure the service. DACL can be seen from `Process Hacker`.
+Each service has an associated executable that is run by the SCM when a service is started. Because of special interface to perform communication with the SCM, not every executable can be started as a service. Each service specifies the account under which the service runs and its DACL (indicates who has permission to start, stop, pause, query status and reconfigure the service). DACL can be seen from `Process Hacker`.
 
 Services configurations are stored in the registry: `HKLM\SYSTEM\CurrentControlSet\Services\`.
 

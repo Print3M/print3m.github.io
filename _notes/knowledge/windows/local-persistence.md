@@ -166,7 +166,7 @@ schtasks /create /sc minute /mo 1 /tn <TASK_NAME> /tr "<COMMAND_PAYLOAD>" /ru SY
 schtasks /query /tn <TASK_NAME>
 ```
 
-An attacker can make a scheduled task invisible by deleting its _Security Descriptor_ (SD). If an user is not allowed to query a scheduled task, he won't be able to see it anymore. Deleting the SD disallows ALL users to access the scheduled task.
+An attacker can make a scheduled task invisible by deleting its _Security Descriptor_ (SD). If a user is not allowed to query a scheduled task, he won't be able to see it anymore. Deleting the SD disallows ALL users to access the scheduled task.
 
 ```powershell
 # Run regedit as SYSTEM
