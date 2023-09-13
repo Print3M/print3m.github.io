@@ -1,18 +1,18 @@
 ---
-title: Network security notes
+title: Network monitoring and evasion
 ---
 
 - [1. IDS vs IPS](#1-ids-vs-ips)
-  - [1.1. Evading](#11-evading)
-    - [1.1.1. Protocol Manipulation](#111-protocol-manipulation)
-    - [1.1.2. Payload Manipulation](#112-payload-manipulation)
-    - [Route Manipulation](#route-manipulation)
-    - [Tactical Denial of Service](#tactical-denial-of-service)
+- [2. Evading](#2-evading)
+  - [2.1. Protocol Manipulation](#21-protocol-manipulation)
+  - [2.2. Payload Manipulation](#22-payload-manipulation)
+  - [2.3. Route Manipulation](#23-route-manipulation)
+  - [2.4. Tactical Denial of Service](#24-tactical-denial-of-service)
 
 ## 1. IDS vs IPS
 **Intrusion Detection System** (IDS) is a system that monitors network activity and detects network or system intrusions. IDS is just a monitoring - it only alerts about suspicious activities but cannot stop them. **Intrusion Prevention System** (IPS) can also actively prevent the malicious actions. These systems can be host-based (monitoring the traffic going in and out of the host) or network-based (monitoring the traffic in the entire network).
 
-### 1.1. Evading
+## 2. Evading
 IDS performs signature-based detection using predefined rules. Each IDS/IPS has a certain syntax to define its rules. Example of Snort IDS/IPS rule:
 
 ```text
@@ -26,7 +26,7 @@ There is couple of techniques how to evade signature-based detection:
 - route manipulation
 - tactical Denial of Service
 
-#### 1.1.1. Protocol Manipulation
+### 2.1. Protocol Manipulation
 
 **Different protocol**
 Most of the rules are defined to monitor specific protocols. You can assume that DNS or HTTPS protocols are not so intrusively controlled because most of the normal traffic uses these protocols. It might take some testing to define which protocols are less restrictive.
@@ -42,15 +42,15 @@ The idea is that if you break the malicious packet into smaller packets, you wil
 **Invalid Packets**
 It's possible that invalid TCP packets (e.g. invalid flags, fields values, checksum) would be ignored by IDS.
 
-#### 1.1.2. Payload Manipulation
+### 2.2. Payload Manipulation
 
 **Obfuscation, Encoding and Encryption**
 IDS rules are pretty specific so using payload obfuscation, encoding or encryption we can avoid detection.
 
-#### Route Manipulation
+### 2.3. Route Manipulation
 Source routing and proxy servers can be used to force the packets to use a certain route to the destination. Some routes in the network might be filtered by IDS.
 
-#### Tactical Denial of Service
+### 2.4. Tactical Denial of Service
 An IDS requires a high processing power as the number of rules and traffic grows. Moreover, the primary response is most of the time logging traffic information matching the signature. There are two options:
 
 - Generate a huge amount of legit traffic that would overload the processing capacity of the system.

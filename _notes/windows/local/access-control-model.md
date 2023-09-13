@@ -19,6 +19,13 @@ title: Windows Access Control Model
     - [2.2.1. Security Identifier (SID)](#221-security-identifier-sid)
     - [2.2.2. Rights (privileges)](#222-rights-privileges)
     - [2.2.3. Token Type](#223-token-type)
+- [3. User Account Control (UAC)](#3-user-account-control-uac)
+  - [3.1. UAC Elevation](#31-uac-elevation)
+  - [3.2. Integrity Levels](#32-integrity-levels)
+- [4. Special accounts](#4-special-accounts)
+  - [4.1. SYSTEM](#41-system)
+  - [4.2. Administrator](#42-administrator)
+  - [4.3. Guest](#43-guest)
 
 ## 1. Securable objects
 A securable object is an object that can have a Security Descriptor:
@@ -139,3 +146,47 @@ Tokens can be categorized as _Primary Tokens_ or _Impersonation Tokens_:
 
 - Primary Token - represents the original security context of a user or process. It is created during the logon process.
 - Impersonation Token - is issued when a process temporarily assumes the security context of another user. Impersonation allows a process to perform actions on behalf of a different user but with restricted privileges.
+
+## 3. User Account Control (UAC)
+UAC is mechanism introduced in Windows Vista. UAC is a security feature that forces any new process to run in the security context of a non-privileged account by default.
+
+For example, when a **local** user logs into a system, the current session doesn't run with full administrator permissions even if the user is a member of the _Administrators_ group (almost every user by default). When UAC is enabled, a running application doesn't inherit access token privileges of the privileged user by default. Same situation occurs when local account is connected via RPC, SMB or WinRM, etc. The only local account that will get full privileges by default is the default local **Administrator** account itself.
+
+AD account (AD), which is a member of the AD _Administrators_ group, will run with a full administrator acces and UAC won't be in effect.
+
+### 3.1. UAC Elevation
+When an operation requires higher privileges, the user will be prompted to confirm if they permit to elevate privileges for that particual application. It is done in a form of yellow popup (GUI) with `yes` or `no` question. `Run as administrator` option requests elevation.
+
+### 3.2. Integrity Levels
+UAC works on a basis of _Mandatory Integrity Control_ (MIC). MIC is a concept of additional security control over resources taking into account their **Integrity Level** (IL). Integrity Level is an attribute of processes and users. In general, a user with a higher IL can use processes with lower or equal ILs. IL of a process can be checked using `Process Hacker`. IL of the current user can be checked using `whoami /groups` (_Mandatory Label_).
+
+- LOW - very limited permissions.
+- MEDIUM - assigned to standard users and members of the _Administrators_ group.
+- HIGH - used by elevated tokens if UAC is enabled. If UAC is disabled, all administrators use this IL by default.
+- SYSTEM - reserved for system use.
+
+During logon, non-administrators receive a single access token with medium IL. Administrators receive so-called _Filtered Token_ used for regular operations (medium IL) and _Elevated Token_ with full admin privileges (high IL).
+
+## 4. Special accounts
+
+### 4.1. SYSTEM
+SYSTEM is internal account which doesn't show up in User Manager.
+
+- the highest privilege level in the Windows user model.
+- used by the OS and by services running under Windows.
+- can't be added to any groups and cannot have user rights assigned to it.
+
+If the computer is joined to a domain, processes running as SYSTEM can access domain servers in the context of the computer's domain account without credentials.
+
+### 4.2. Administrator
+Every computer has Administrator account. It's the first account that is created during the Windows installation. Processes running as Administrator have no access to domain computers unless the credentials are explicitly provided.
+
+Administrator has following privileges:
+
+- full control of the files, directories, services, and other resources on the local computer.
+- creation of other local users, assign user rights, and assign permissions.
+- can't be deleted or locked out, but it can be renamed or disabled.
+- it's member of the Adminitrators group and it can't be removed from the Administrators group but it can be renamed.
+
+### 4.3. Guest
+TBD

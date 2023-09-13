@@ -1,5 +1,5 @@
 ---
-title: Python notes
+title: Python cheat-sheet
 ---
 
 ## Threading

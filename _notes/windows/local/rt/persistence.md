@@ -1,5 +1,5 @@
 ---
-title: Windows local-persistence notes
+title: Windows local persistence 
 ---
 
 - [1. Resources](#1-resources)

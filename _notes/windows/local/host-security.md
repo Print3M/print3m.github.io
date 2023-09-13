@@ -10,12 +10,6 @@ title: Host security measures and evasion
   - [3.1. Evasion during network scan](#31-evasion-during-network-scan)
     - [3.1.1. Controlling the Source MAC/IP/Port](#311-controlling-the-source-macipport)
 - [4. System Monitor (Sysmon)](#4-system-monitor-sysmon)
-- [5. User Account Control (UAC)](#5-user-account-control-uac)
-  - [5.1. UAC Elevation](#51-uac-elevation)
-  - [5.2. Integrity Levels](#52-integrity-levels)
-  - [5.3. Bypassing UAC](#53-bypassing-uac)
-    - [5.3.1. Auto-elevation](#531-auto-elevation)
-    - [5.3.2. Scheduled tasks \& environment vars](#532-scheduled-tasks--environment-vars)
 
 ## 1. Antivirus (AV)
 Antivirus software works in real-time scanning all open and used files in the background. Full system scan is usually performed during the installation of the antivirus. AV software performs scanning, detecting and removing malicious files. Traditionally, it works only with files.
@@ -86,32 +80,3 @@ Sysmon can log many default and custom events, e.g.:
 [More info about Sysmon.](https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon)
 
 > **NOTE**: For a red-teamer it is essential to know whether the Sysmon logging software is installed or not. It is important to avoid causing generating and alerting events.
-
-## 5. User Account Control (UAC)
-UAC is mechanism introduced in Windows Vista. UAC is a security feature that forces any new process to run in the security context of a non-privileged account by default.
-
-For example, when a **local** user logs into a system, the current session doesn't run with full administrator permissions even if the user is a member of the _Administrators_ group (almost every user by default). When UAC is enabled, a running application doesn't inherit access token privileges of the privileged user by default. Same situation occurs when local account is connected via RPC, SMB or WinRM, etc. The only local account that will get full privileges by default is the default local **Administrator** account itself.
-
-AD account (AD), which is a member of the AD _Administrators_ group, will run with a full administrator acces and UAC won't be in effect.
-
-### 5.1. UAC Elevation
-When an operation requires higher privileges, the user will be prompted to confirm if they permit to elevate privileges for that particual application. It is done in a form of yellow popup (GUI) with `yes` or `no` question. `Run as administrator` option requests elevation.
-
-### 5.2. Integrity Levels
-UAC works on a basis of _Mandatory Integrity Control_ (MIC). MIC is a concept of additional security control over resources taking into account their **Integrity Level** (IL). Integrity Level is an attribute of processes and users. In general, a user with a higher IL can use processes with lower or equal ILs. IL of a process can be checked using `Process Hacker`. IL of the current user can be checked using `whoami /groups` (_Mandatory Label_).
-
-- LOW - very limited permissions.
-- MEDIUM - assigned to standard users and members of the _Administrators_ group.
-- HIGH - used by elevated tokens if UAC is enabled. If UAC is disabled, all administrators use this IL by default.
-- SYSTEM - reserved for system use.
-
-During logon, non-administrators receive a single access token with medium IL. Administrators recive so-called _Filtered Token_ used for regular operations (medium IL) and _Elevated Token_ with full admin privileges (high IL).
-
-### 5.3. Bypassing UAC
-[UACMe - tool to check different UAC bypass techniques](https://github.com/hfiref0x/UACME).
-
-#### 5.3.1. Auto-elevation
-Some executables can auto-elevate to high IL by default, without any user interaction. This applies to most of the Control Panel's functionality and some other built-in executables. To auto-elevate the executable must be signed by the Windows Publisher and must be contained in a trusted directory like `%SystemRoot%/System32` or `%ProgramFiles%/`. Sometimes it must declare `autoElevate` property in the exec manifest file.
-
-#### 5.3.2. Scheduled tasks & environment vars
-TBD

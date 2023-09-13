@@ -31,7 +31,7 @@ Sometimes it is possible to perform LDAP anonymous bind (no authentication), exe
 If we can alter the LDAP configuration in the application (e.g. printer config), we can force device to try to authenticate with the attacker IP, instead of DC LDAP server. We can intercept this auth attempt and recover the LDAP credentials.
 
 ## 3. NTLM (aka Net-NTML)
-NTLM was the default authentication protocol used in old Windows versions. If for any reason Kerberos fails, NTLM will be used instead.
+NTLM was the default authentication protocol used in old Windows versions. If for any reason Kerberos fails, NTLM will be used instead. It's still commonly used especially in large networks due to backward compatibility and smaller infrastructure overhead.
 
 > **NOTE**: NTLM (v1 or v2) is the protocol, not the hash!
 
@@ -79,4 +79,4 @@ When the requester's identity is verified, The KDC generates a TGT. The TGT is s
 > **NOTE**: `krbtgt` account acts as the service account for the KDC service, which handles all Kerberos ticket requests.
 
 ### 4.3. Security
-LDAP application which is exposed on the internet might be password-sprayed good as standard NTLM auth. But that app has its own credentials for LDAP quering DC. They are used to check if our credentials are correct. Now we don't have to hack users AD credentials. We might just hack the app AD credentials - one more vector to attack. App's credentials are most often stored in the plain text on the app's server (config files).
+LDAP application which is exposed on the internet might be password-sprayed as good as standard NTLM auth. But that app has its own credentials for LDAP quering DC. They are used to check if our credentials are correct. Now we don't have to hack users AD credentials. We might just hack the app AD credentials - one more vector to attack. App's credentials are most often stored in the plain text on the app's server (config files).

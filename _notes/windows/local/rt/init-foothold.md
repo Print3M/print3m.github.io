@@ -1,5 +1,5 @@
 ---
-title: Windows machine (user-OS) initial access
+title: Windows initial foothold notes
 ---
 
 - [1. Windows Scripting Host (WSH)](#1-windows-scripting-host-wsh)
