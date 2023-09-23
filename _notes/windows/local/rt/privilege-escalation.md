@@ -6,31 +6,20 @@ title: Windows local privilege-escalation
 - [2. Misconfigurations](#2-misconfigurations)
   - [2.1. Scheduled tasks](#21-scheduled-tasks)
   - [2.2. Services](#22-services)
-    - [2.2.1. Executable permissions](#221-executable-permissions)
-    - [2.2.2. Unquoted paths](#222-unquoted-paths)
-    - [2.2.3. Service permissions](#223-service-permissions)
   - [2.3. AlwaysInstallElevated](#23-alwaysinstallelevated)
   - [2.4. Users](#24-users)
-    - [2.4.1. SeBackup and SeRestore](#241-sebackup-and-serestore)
-    - [2.4.2. SeTakeOwnership](#242-setakeownership)
-    - [2.4.3. SeImpersonate and SeAssignPrimaryToken](#243-seimpersonate-and-seassignprimarytoken)
-    - [2.4.4. Unpatched software](#244-unpatched-software)
 - [3. Credentials looting](#3-credentials-looting)
   - [3.1. Files](#31-files)
-    - [3.1.1. IIS configuration](#311-iis-configuration)
-    - [3.1.2. Unattended Windows installations](#312-unattended-windows-installations)
   - [3.2. Shell history](#32-shell-history)
   - [3.3. Credential Manager](#33-credential-manager)
   - [3.4. SSH software](#34-ssh-software)
   - [3.5. Credentials keylogging](#35-credentials-keylogging)
 - [4. NT hash extraction](#4-nt-hash-extraction)
   - [4.1. From local SAM](#41-from-local-sam)
-    - [4.1.1. Mimiktaz](#411-mimiktaz)
-    - [4.1.2. SAM dumping and offline hashes extraction](#412-sam-dumping-and-offline-hashes-extraction)
   - [4.2. From LSASS memory](#42-from-lsass-memory)
-- [5.3. Bypassing UAC](#53-bypassing-uac)
-  - [5.3.1. Auto-elevation](#531-auto-elevation)
-  - [5.3.2. Scheduled tasks \& environment vars](#532-scheduled-tasks--environment-vars)
+- [5. Bypassing UAC](#5-bypassing-uac)
+  - [5.1. Auto-elevation](#51-auto-elevation)
+  - [5.2. Scheduled tasks \& environment vars](#52-scheduled-tasks--environment-vars)
 
 ## 1. Automatic tools
 
@@ -310,11 +299,11 @@ If there is no LSA, the LSASS memory can be dumped using `Sysinternals Suite` (i
 procdump.exe -accepteula -ma lsass.exe <DUMP_FILE>
 ```
 
-## 5.3. Bypassing UAC
+## 5. Bypassing UAC
 [UACMe - tool to check different UAC bypass techniques](https://github.com/hfiref0x/UACME).
 
-### 5.3.1. Auto-elevation
+### 5.1. Auto-elevation
 Some executables can auto-elevate to high IL by default, without any user interaction. This applies to most of the Control Panel's functionality and some other built-in executables. To auto-elevate the executable must be signed by the Windows Publisher and must be contained in a trusted directory like `%SystemRoot%/System32` or `%ProgramFiles%/`. Sometimes it must declare `autoElevate` property in the exec manifest file.
 
-### 5.3.2. Scheduled tasks & environment vars
+### 5.2. Scheduled tasks & environment vars
 TBD

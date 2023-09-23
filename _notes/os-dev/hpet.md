@@ -5,8 +5,6 @@ title: High Precision Even Timer
 - [1. What is HPET?](#1-what-is-hpet)
 - [2. Architecture](#2-architecture)
   - [2.1. Timer](#21-timer)
-    - [2.1.1. Counter](#211-counter)
-    - [2.1.2. Comparators](#212-comparators)
 - [3. MMIO configuration](#3-mmio-configuration)
 - [4. Interrupts](#4-interrupts)
   - [4.1. Non-Periodic mode](#41-non-periodic-mode)

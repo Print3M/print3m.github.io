@@ -2,9 +2,9 @@
 title: Bash scripting notes
 ---
 
-- [1. Differences between Bash and sh features](#1-differences-between-bash-and-sh-features)
-  - [1.1. Major differences (Bash vs sh)](#11-major-differences-bash-vs-sh)
-- [2. Bash references](#2-bash-references)
+- [1. Bash vs sh](#1-bash-vs-sh)
+  - [1.1. Major differences](#11-major-differences)
+- [2. Bash manual](#2-bash-manual)
   - [2.1. Debugging (line by line)](#21-debugging-line-by-line)
   - [2.2. Comments](#22-comments)
   - [2.3. Special variables](#23-special-variables)
@@ -19,19 +19,19 @@ title: Bash scripting notes
   - [2.12. Regex](#212-regex)
   - [2.13. Quick tips](#213-quick-tips)
 
-## 1. Differences between Bash and sh features
+## 1. Bash vs sh
 
 - [GNU Majo differences from the bourne shell](https://www.gnu.org/software/bash/manual/html_node/Major-Differences-From-The-Bourne-Shell.html)
 
 Bash is superset of sh. Sh is POSIX compliant, bash is not. Bash has many extra features which improve readability and speed of programming. Almost everything what does work on sh would be working on Bash as well, but not the other way.
 
-### 1.1. Major differences (Bash vs sh)
+### 1.1. Major differences
 
 ```bash
 if [[ ... ]] vs if [ ... ]
 ```
 
-## 2. Bash references
+## 2. Bash manual
 [Official Bash documentation (manual)](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html)
 
 ### 2.1. Debugging (line by line)
@@ -43,6 +43,20 @@ trap read debug
 ```
 
 ### 2.2. Comments
+
+```bash
+# This is a single-line comment
+```
+
+Multi-line comments are also available using some convention/trick. A _herodoc notation_ string is redirected to a _null command (`:`). In general, it's recommended to use multiple single-line comments.
+
+```bash
+: << COMMENT
+This is bash
+multi-line
+comment
+COMMENT
+```
 
 ### 2.3. Special variables
 

@@ -3,7 +3,7 @@ import { Directory_Out, File_Out, Node_Out } from "fs/notes"
 import Link from "next/link"
 import { FC } from "react"
 
-const INDENT = 3
+const INDENT = 2
 
 const isDir = (obj: Node_Out): obj is Directory_Out => "children" in obj
 const isLast = (index: number, list: any[]) => index === list.length - 1

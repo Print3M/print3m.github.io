@@ -21,7 +21,7 @@ title: Windows lateral movement notes
 - [7. Kerberos](#7-kerberos)
   - [7.1. Pass-the-Ticket](#71-pass-the-ticket)
   - [7.2. Pass-the-Key](#72-pass-the-key)
-    - [7.2.1. Overpass-the-Hash](#721-overpass-the-hash)
+  - [7.3. Overpass-the-Hash](#73-overpass-the-hash)
 - [8. RDP hijacking](#8-rdp-hijacking)
 
 ## 1. Process spawning via PsExec
@@ -248,8 +248,8 @@ When a user requests a TGT it must prove its identity to the KDC. The key derive
 
 > **NOTE**: Available algorithms: `rc4`, `aes128`, `aes256`.
 
-#### 7.2.1. Overpass-the-Hash
-If the RC4 algorithm is used, the RC4 key is equal to the NT hash of a user. It means that if an attacker is able to steal the NT hash, he would be able to request the TGT even if the NTLM authentication is disabled.
+### 7.3. Overpass-the-Hash
+Related to _pass-the-key_ attack. If the RC4 algorithm is used, the RC4 key is equal to the NT hash of a user. It means that if an attacker is able to steal the NT hash, he would be able to request the TGT even if the NTLM authentication is disabled.
 
 ## 8. RDP hijacking
 TBD

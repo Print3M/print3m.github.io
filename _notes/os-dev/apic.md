@@ -6,13 +6,7 @@ title: Advanced Programmable Interrupt Controller
 - [2. What is it?](#2-what-is-it)
 - [3. Architecture](#3-architecture)
   - [3.1. Local APIC](#31-local-apic)
-    - [3.1.1. Local APIC ID](#311-local-apic-id)
-    - [3.1.2. Spurious interrupt vector](#312-spurious-interrupt-vector)
-    - [3.1.3. How does fixed interrupt handling work?](#313-how-does-fixed-interrupt-handling-work)
-    - [3.1.4. Return from interrupt](#314-return-from-interrupt)
   - [3.2. I/O APIC](#32-io-apic)
-    - [3.2.1. Configuration](#321-configuration)
-    - [3.2.2. How does it work?](#322-how-does-it-work)
 - [4. Additional resources](#4-additional-resources)
 
 ## 1. Terminology

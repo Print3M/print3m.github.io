@@ -5,7 +5,6 @@ title: Active Directory overview
 - [1. Domain Controller](#1-domain-controller)
   - [1.1. DC Synchronisation](#11-dc-synchronisation)
 - [2. Active Directory \& LDAP](#2-active-directory--ldap)
-  - [2.1. Security](#21-security)
 - [3. AD Domain Service (AD DS)](#3-ad-domain-service-ad-ds)
   - [3.1. Users](#31-users)
   - [3.2. Machines](#32-machines)
@@ -13,7 +12,6 @@ title: Active Directory overview
 - [4. Users / accounts](#4-users--accounts)
 - [5. Local Administrator Password Solution (LAPS)](#5-local-administrator-password-solution-laps)
 - [6. Group Policy Objects (GPO)](#6-group-policy-objects-gpo)
-  - [6.1. Security](#61-security)
 - [7. Organizational Unit](#7-organizational-unit)
 - [8. Distinguished Name (DN)](#8-distinguished-name-dn)
 - [9. User Principal Name (UPN)](#9-user-principal-name-upn)
@@ -38,8 +36,7 @@ Typical organization has more than one DC per domain. Each domain controller run
 ## 2. Active Directory & LDAP
 AD is service used by Domain Controller to perform authentication, groups, users and security policies management. It is not cross-platform commercial implementation of open and cross-platform **LDAP** (_Lightweight Directory Access Protocol_) used for accessing and maintaining distributed directory information services over IP network. LDAP query is a command that asks a directory service (e.g. Active Directory) for some information.
 
-### 2.1. Security
-Even with low-privileged user an attacker can make useful enumeration and lateral movement.
+**Security**: Even with low-privileged user an attacker can make useful enumeration and lateral movement.
 
 ## 3. AD Domain Service (AD DS)
 It's catalogue that holds the information of all "objects" that exist on the network. An object might be: user, group, machine, printer, share, etc.
@@ -79,8 +76,7 @@ GPOs are collections of settings and configurations that can be applied to users
 
 GPOs are distributed to the network via a network share SYSVOL (stored in the DC) which points to path `C:\Windows\SYSVOL\sysvol\` on each of the DCs.
 
-### 6.1. Security
-Any AD account, no matter how low-privileged, can read the contents of the SYSVOL directory. It's nice way to check if provided domain credentials are correct.
+**Security**: Any AD account, no matter how low-privileged, can read the contents of the SYSVOL directory. It's nice way to check if provided domain credentials are correct.
 
 ## 7. Organizational Unit
 TBD

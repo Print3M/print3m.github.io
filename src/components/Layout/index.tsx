@@ -1,4 +1,4 @@
-import { Center, Container, Drawer, Flex, Stack } from "@mantine/core"
+import { Center, Container, Drawer, Flex, Footer, Stack } from "@mantine/core"
 import { FC, useEffect, useState } from "react"
 import { Divider, Navbar, NavLink, Space, Text } from "@mantine/core"
 import { IconBrandGithub, IconHome, IconMarkdown, IconNews } from "@tabler/icons-react"
@@ -145,7 +145,7 @@ const Layout: FC<{ children: JSX.Element }> = ({ children }) => (
         <Mobile />
         <Flex>
             <SideNav />
-            <Container p="sm" mih="100vh" w="100%" pb={100}>
+            <Container p="sm" mih="100vh" w="100%">
                 <MediaQuery largerThan="sm" styles={{ display: "none" }}>
                     <Space h={75} />
                 </MediaQuery>
@@ -153,6 +153,11 @@ const Layout: FC<{ children: JSX.Element }> = ({ children }) => (
                     <Space h={35} />
                 </MediaQuery>
                 {children}
+                <Footer height={20} ta="center" mt={100}>
+                    <Text pt="xs" pb="xs">
+                        Print3M&apos;s hub © {new Date().getFullYear()}
+                    </Text>
+                </Footer>
             </Container>
         </Flex>
     </>

@@ -8,7 +8,6 @@ title: Host security measures and evasion
 - [2. Endpoint Detection and Response (EDR)](#2-endpoint-detection-and-response-edr)
 - [3. Firewall](#3-firewall)
   - [3.1. Evasion during network scan](#31-evasion-during-network-scan)
-    - [3.1.1. Controlling the Source MAC/IP/Port](#311-controlling-the-source-macipport)
 - [4. System Monitor (Sysmon)](#4-system-monitor-sysmon)
 
 ## 1. Antivirus (AV)
@@ -44,8 +43,6 @@ It's main purpose is to control the inbound and outbound traffic that goes throu
 Most often firewalls focus on layer 3 (IPv4, IPv6) and 4 (TCP, UDP). Advanced firewalls also can inspect other ISO/OSI layers, such as application layers (HTTP, FTP, SMTP, etc.) - e.g. they can detect and block SQL injection or reflected XSS payloads.
 
 ### 3.1. Evasion during network scan
-
-#### 3.1.1. Controlling the Source MAC/IP/Port
 
 **Decoy**
 `Nmap` has an option to hide IP of the attacker's host using decoys - sending many packets with spoofed IPs. Because of the flood of different IPs, it's difficult for the firewall to find out where the scan is coming from. Also it can exhaust the blue team resources to investigate all IPs.

@@ -24,8 +24,6 @@ const findNotes = (notes: NoteItem[], v: string, max: number) => {
     const foundNotes: FoundNote[] = []
 
     for (const note of notes) {
-        // if (max-- == 0) break
-
         // Only valid regex is allowed
         let regexp = null
         try {

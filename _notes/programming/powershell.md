@@ -6,12 +6,9 @@ title: Powershell notes
   - [1.1. PowerShell scripts](#11-powershell-scripts)
   - [1.2. What is a cmdlet?](#12-what-is-a-cmdlet)
 - [2. Pipeline](#2-pipeline)
-- [3. Commands / cmdlets](#3-commands--cmdlets)
-- [4. Scripting](#4-scripting)
-  - [4.1. Variables](#41-variables)
-  - [4.2. If statement](#42-if-statement)
-    - [4.2.1. Operators](#421-operators)
-  - [4.3. Loops](#43-loops)
+- [3. Variables](#3-variables)
+- [4. If statement](#4-if-statement)
+- [5. Loops](#5-loops)
 
 ## 1. What is Powershell & cmdlets?
 Powershell (PS) is the Windows Scripting Language built using the **.NET** framework. PS is able to execute .NET functions directly from its shell. PS commands are called **_cmdlets_** - most of them is written in .NET. The output of _cmdlets_ are **objects**. This approach makes PS shell modular - it's easy to apply some actions on the output objects or pass them to another _cmdlet_.
@@ -34,6 +31,8 @@ _Powershell ISE_ is the Powershell Text Editor most often used to write longer P
 
 ### 1.2. What is a cmdlet?
 Cmdlets (pronounced: command-lets) are native PS commands, not stand-alone executables. Cmdlets are collected into **PowerShell modules** that can be loaded on demand. They can be written in any compiled .NET language or in the PS scripting language itself.  
+
+> **NOTE**: Cmdlets and their parameters are case-insensitive. However, Microsoft generally recommends entering a PowerShell cmdlet (or a parameter) with the first letter of each word capitalized.
 
 ## 2. Pipeline
 To pass output from one cmdlet to another the pipline is used. Instead of passing text, PowerShell passes an object to next cmdlet. Object contains methods and properties. Objects returned by the last command in a chain are printed out on the screen.
@@ -65,57 +64,13 @@ Operators:
 <command> | Measure-Object
 ```
 
-## 3. Commands / cmdlets
-> **NOTE**: Cmdlets and their parameters are case-insensitive. However, Microsoft generally recommends entering a PowerShell cmdlet (or a parameter) with the first letter of each word capitalized.
-
-```powershell
-Get-Help <command>                          # Get help about :command
-Get-Help <command> -Examples                # Get usage examples with params
-Get-Command                                 # Get all commands          
-Get-Command <verb>-*                        # Get all commands with :verb
-Get-ChildItem                               # List files and folders
-Get-Service                                 # List running services
-Get-Process                                 # List running processes
-Get-ScheduledTask                           # List scheduled tasks
-Get-Location                                # Get current working directory
-Get-Content <file>                          # Get :file content
-Get-FileHash -Algorithm <alg> <file>        # Get :file hash
-Test-Path <path>                            # Check if path exists
-Invoke-WebRequest                           # Get content from a web resource
-Get-LocalUser                               # List all local users
-Get-LocalGroup                              # List all local groups
-Get-NetIPAddress                            # List all network interfaces
-Get-NetTCPConnection                        # List open TCP ports (connections)
-Get-HotFix                                  # List Windows patches installed
-Select-String                               # Find text in strings and files
-Get-Acl                                     # Get ACL of a file/folder
-Get-Alias                                   # List all command aliasses
-
-# Find file
-Get-Childitem 
-    -Path C:\
-    -Recurse 
-    -ErrorAction SilentlyContinue 
-    -File
-    -Include *<file-name>*
-
-# CIM interface
-Get-CimInstace <class-name>                 # List CIM objects of :class
-Get-CimClass *Process | select CimClassName # List all CIM Process classes
-Get-CimInstance Win32_Product               # List installed software
-Get-CimInstace Win32_Service                # List running services
-Get-CimInstace Win32_Process                # List running processes
-```
-
-## 4. Scripting
-
-### 4.1. Variables
+## 3. Variables
 
 ```powershell
 $var = Get-NetTCPConnection                 # Save returned object into var
 ```
 
-### 4.2. If statement
+## 4. If statement
 
 ```powershell
 if ($obj1 -<operator> $obj2) {
@@ -123,7 +78,6 @@ if ($obj1 -<operator> $obj2) {
 }
 ```
 
-#### 4.2.1. Operators
 [Full list of operators](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_comparison_operators?view=powershell-7.3&viewFallbackFrom=powershell-6)
 
 > NOTE: String comparisions are case-insensitive unless you use the explicit case-sensitive operator. To make a comparison operator case-sensitive, add a `c` after the `-` (`-ceq` is the case-sensitive version of `-eq`).
@@ -140,7 +94,7 @@ Most common:
 -match, -notmatch                         # String regex matching     
 ```
 
-### 4.3. Loops
+## 5. Loops
 
 ```powershell
 # Iterate over set of objects

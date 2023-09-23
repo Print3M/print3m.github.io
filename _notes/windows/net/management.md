@@ -7,9 +7,9 @@ title: Windows management services
 - [3. Common Information Model (CMI)](#3-common-information-model-cmi)
   - [3.1. CIM vs WMI](#31-cim-vs-wmi)
   - [3.2. Microsoft Deployment Toolkit (MDT)](#32-microsoft-deployment-toolkit-mdt)
-    - [3.2.1. Preboot Execution Environment (PXE)](#321-preboot-execution-environment-pxe)
-  - [3.3. System Center Configuration Manager (SCCM)](#33-system-center-configuration-manager-sccm)
-  - [3.4. Windows Imaging Format (WIM)](#34-windows-imaging-format-wim)
+  - [3.3. Preboot Execution Environment (PXE)](#33-preboot-execution-environment-pxe)
+  - [3.4. System Center Configuration Manager (SCCM)](#34-system-center-configuration-manager-sccm)
+  - [3.5. Windows Imaging Format (WIM)](#35-windows-imaging-format-wim)
 
 ## 1. Windows Remote Management (WinRM)
 WinRM is a web-based protocol used to send Powershell commands to Windows hosts remotely. Ports: 5985/TCP (HTTP) and 5986/TCP (HTTPS). Most Windows Server machines have WinRM enabled by default.
@@ -37,14 +37,14 @@ The best Powershell interface to get CMI objects is the `Get-CimInstace` cmdlet.
 ### 3.2. Microsoft Deployment Toolkit (MDT)
 This service automates the deployment of new images of Windows across the organisation. The base image can be maintained in a central location. It allows the IT team to preconfigure and manage boot images. If they need to configure a new machine, they just plug in a network cable and everyting happens automatically. They can pre-install default corpo-software like Office or anti-virus.
 
-#### 3.2.1. Preboot Execution Environment (PXE)
+### 3.3. Preboot Execution Environment (PXE)
 It allows new devices which are connected to the network to install the OS image directly over a network. MDT is used to create, manage and host PXE boot images. PXE image might be nice target for:
 
 - Injecting a privilege escalation vector (e.g. local admin account) or any other back-door things
 - Password scraping to recover AD credentials used during the installation from PXE boot file - Windows image extracton -> data extraction.
 
-### 3.3. System Center Configuration Manager (SCCM)
+### 3.4. System Center Configuration Manager (SCCM)
 This service can be seen as the big brother to MDT. It manages the software after installation. It allows the IT team to remotely install updates to all software across the organization.
 
-### 3.4. Windows Imaging Format (WIM)
+### 3.5. Windows Imaging Format (WIM)
 Bootable images of Windows OS. It's a file-based disk image format.

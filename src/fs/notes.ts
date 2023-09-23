@@ -6,6 +6,7 @@ import matter from "gray-matter"
 import rehypePrettyCode from "rehype-pretty-code"
 import { NOTES_PATH } from "./consts"
 import { NoteItem } from "components/pages/Notes/SearchBar/types"
+import rehypeAutolinkHeadings from "rehype-autolink-headings"
 
 export interface Directory_In {
     path: string
@@ -46,10 +47,11 @@ export const treeWalk = async (
         const newNode = await dirAction(node)
 
         if (!newNode) return undefined
+
         newNode.children = []
 
         // Iterate over directory nodes
-        for (const [i, child] of node.children.entries()) {
+        for (const child of node.children) {
             const newChild = await treeWalk(child, fileAction, dirAction)
 
             if (newChild !== undefined) {
@@ -76,8 +78,7 @@ export const getNotesTree = async () => {
             const slug = file.path.replace(`${NOTES_PATH}/`, "").replace(/.md$/, "")
 
             // Exclude not-ready and hidden files
-            if (!data.title || !slug || data.hidden || name.startsWith("."))
-                return undefined
+            if (!data.title || !slug || data.hidden || name.startsWith(".")) return undefined
 
             slugs.add(slug)
             notes.push({
@@ -118,6 +119,7 @@ export const getNoteBySlug = async (slug: string) => {
     const stats = fs.statSync(fullPath)
     const fileContents = fs.readFileSync(fullPath, "utf8")
     const { data, content } = matter(fileContents)
+
     const mdxSource = await serialize(content, {
         mdxOptions: { rehypePlugins: [rehypePrettyCode] },
     })

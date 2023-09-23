@@ -4,21 +4,9 @@ title: Windows Access Control Model
 
 - [1. Securable objects](#1-securable-objects)
   - [1.1. Security Descriptor](#11-security-descriptor)
-    - [1.1.1. Access Control List (ACL)](#111-access-control-list-acl)
-      - [1.1.1.1. Discretionary Access Control List (DACL)](#1111-discretionary-access-control-list-dacl)
-        - [1.1.1.1.1. Access Control Entry (ACE)](#11111-access-control-entry-ace)
-      - [1.1.1.2. System Access Control List (SACL)](#1112-system-access-control-list-sacl)
-    - [1.1.2. Owner SID](#112-owner-sid)
 - [2. Security principal](#2-security-principal)
   - [2.1. Logon process](#21-logon-process)
-    - [2.1.1. Interactive Logon](#211-interactive-logon)
-    - [2.1.2. Remote Interactive Logon](#212-remote-interactive-logon)
-    - [2.1.3. Network Logon](#213-network-logon)
-    - [2.1.4. Service Logon](#214-service-logon)
   - [2.2. Security (Access) Token](#22-security-access-token)
-    - [2.2.1. Security Identifier (SID)](#221-security-identifier-sid)
-    - [2.2.2. Rights (privileges)](#222-rights-privileges)
-    - [2.2.3. Token Type](#223-token-type)
 - [3. User Account Control (UAC)](#3-user-account-control-uac)
   - [3.1. UAC Elevation](#31-uac-elevation)
   - [3.2. Integrity Levels](#32-integrity-levels)
@@ -55,16 +43,12 @@ Security descriptor includes:
 Get-Acl <object>
 ```
 
-#### 1.1.1. Access Control List (ACL)
-ACL is more abstract term. It consists of DACL and SACL (optionally) within a security descriptor.
+**Access Control List** (ACL) is more abstract term. It consists of DACL and SACL (optionally) within a security descriptor.
 
-##### 1.1.1.1. Discretionary Access Control List (DACL)
+#### 1.1.1. Discretionary Access Control List (DACL)
 DACL is responsible for specifying which users or groups are allowed or denied to access a particular object and the specific permissions granted or denied to them. It governs who and how can access and manipulate this object on the system.
 
-DACL contains Access Control Entries (ACEs).
-
-###### 1.1.1.1.1. Access Control Entry (ACE)
-ACEs are fundamental components of DACL. ACE specifies permissions granted to a user or group. Each ACE defines:
+DACL contains **Access Control Entries** (ACEs). ACEs are fundamental components of DACL. They specify permissions granted to a user or group. Each ACE defines:
 
 - ACE Type - _allow_ (explicitly grant permissions) or _deny_ ()
 - Security Principal - a user or group to which the permissions apply.
@@ -73,12 +57,12 @@ ACEs are fundamental components of DACL. ACE specifies permissions granted to a 
 
 The order of ACEs matters. _Deny_ ACEs are evaluated first, followed by _Allow_ ACEs. The first applicable ACE encountered determines whether access is allowed or denied.
 
-##### 1.1.1.2. System Access Control List (SACL)
+#### 1.1.2. System Access Control List (SACL)
 SACL is used for auditing purposes. It specifies which types of access attempts on the object should be logged and audited. It does not control access but provides a record of access-related events.
 
 ACEs of SACL define the audit and logging policy for specific users, groups and actions. For example, they can define that an access to the object done by specific group of users needs to be logged.
 
-#### 1.1.2. Owner SID
+#### 1.1.3. Owner SID
 That identifies the security principal who owns or has primary control over a securable object. The owner of an object can modify ACL and transfer ownership. Basically the owner has full control over the object.
 
 ## 2. Security principal

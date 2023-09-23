@@ -9,10 +9,9 @@ title: Windows services notes
 - [5. Endpoint Mapper (EPM)](#5-endpoint-mapper-epm)
 - [6. NetBIOS Name Service (139)](#6-netbios-name-service-139)
   - [6.1. Security](#61-security)
-  - [6.2. NetBIOS name vs domain Name vs DNS name vs hostname](#62-netbios-name-vs-domain-name-vs-dns-name-vs-hostname)
+  - [6.2. NetBIOS/domain/DNS/hostname](#62-netbiosdomaindnshostname)
 - [7. Resource sharing](#7-resource-sharing)
   - [7.1. SMB - Server Message Block (139, 445)](#71-smb---server-message-block-139-445)
-    - [7.1.1. Security](#711-security)
   - [7.2. NFS - Network File System](#72-nfs---network-file-system)
   - [7.3. FTP - File Transfer Protocol](#73-ftp---file-transfer-protocol)
 
@@ -51,7 +50,7 @@ It's name service for name registration and resolution. Every machine has a name
 ### 6.1. Security
 By enumerating a NetBIOS service you can obtain names the server is using and the its MAC address.
 
-### 6.2. NetBIOS name vs domain Name vs DNS name vs hostname
+### 6.2. NetBIOS/domain/DNS/hostname
 Every computer on the internet has DNS name (network hostname). Every computer on the internet running Windows OS has NetBIOS name as well. It's the same as local computer name.
 
 Computer running Windows in an Active Directory domain has both:
@@ -64,8 +63,7 @@ Computer running Windows in an Active Directory domain has both:
 ### 7.1. SMB - Server Message Block (139, 445)
 SMB is a client-server protocol that regulates access to files and entire directories and other network resources. An SMB server can provide arbitrary parts of its local file system as shares. Access rights are defined by ACL. SMB can be used only within LOCAL networks, it's not routable.
 
-#### 7.1.1. Security
-SMB most often uses NTLM to authentication. NTLM challenge might be sniffed and cracked offline. Cracking NTLM challenge is slower than cracking the hash directly, but it's still possible. SMB is very widely used by services in LAN, so there are usually a lot of these challanges flying on the network.
+**Security**: SMB most often uses NTLM to authentication. NTLM challenge might be sniffed and cracked offline. Cracking NTLM challenge is slower than cracking the hash directly, but it's still possible. SMB is very widely used by services in LAN, so there are usually a lot of these challanges flying on the network.
 
 ### 7.2. NFS - Network File System
 By NFS protocol, you can transfer files between computers running Windows and other non-Windows OS. NFS in Windows Server includes Server for NFS and Client for NFS.

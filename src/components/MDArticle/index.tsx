@@ -3,14 +3,16 @@ import {
     createStyles,
     Flex,
     Space,
+    Text,
     Title,
     TypographyStylesProvider,
 } from "@mantine/core"
-import { IconArrowBackUp } from "@tabler/icons-react"
+import { IconArrowBackUp, IconLink } from "@tabler/icons-react"
 import { MDXRemote } from "next-mdx-remote"
 import Link from "next/link"
 import { FC } from "react"
 import { MDXSource } from "utils/types"
+import { slugify } from "utils/utils"
 
 const Return: FC<{ href: string }> = ({ href }) => (
     <Link href={href}>
@@ -21,25 +23,13 @@ const Return: FC<{ href: string }> = ({ href }) => (
     </Link>
 )
 
-interface MDArticleProps {
-    returnHref: string
-    title: string
-    source: MDXSource
-    info?: JSX.Element | string
-}
-
 const useStyles = createStyles(() => ({
     markdown: {
         textAlign: "justify",
-        fontFamily: "monospace",
-        fontSize: "0.95rem",
-
-        "h2, h3, h3, h4, h5, h6": {
-            marginTop: 14,
-            marginBottom: 10,
-        },
+        fontFamily: "Helvetica",
         ul: {
-            marginTop: 0,
+            marginLeft: 16,
+            paddingLeft: 0,
         },
         blockquote: {
             fontSize: "1rem",
@@ -47,8 +37,55 @@ const useStyles = createStyles(() => ({
         p: {
             marginBottom: 10,
         },
+        code: {
+            fontSize: "0.92em",
+        },
     },
 }))
+
+const getHeading = (h: "h1" | "h2" | "h3" | "h4", text: string) => {
+    const anchor = slugify(text)
+
+    const h1 = (children: JSX.Element) => <h1 id={anchor}>{children}</h1>
+    const h2 = (children: JSX.Element) => <h2 id={anchor}>{children}</h2>
+    const h3 = (children: JSX.Element) => <h3 id={anchor}>{children}</h3>
+    const h4 = (children: JSX.Element) => <h4 id={anchor}>{children}</h4>
+
+    const a = (
+        <a aria-hidden="true" tabIndex={-1} href={`#${anchor}`}>
+            <Text display="inline" ml={6} sx={{ verticalAlign: "middle" }}>
+                <IconLink size={18} />
+            </Text>
+        </a>
+    )
+
+    const content = (
+        <>
+            {text}
+            {a}
+        </>
+    )
+
+    switch (h) {
+        case "h1":
+            return h1(content)
+        case "h2":
+            return h2(content)
+        case "h3":
+            return h3(content)
+        case "h4":
+            return h4(content)
+        default:
+            return <></>
+    }
+}
+
+interface MDArticleProps {
+    returnHref: string
+    title: string
+    source: MDXSource
+    info?: JSX.Element | string
+}
 
 const MDArticle: FC<MDArticleProps> = ({ source, returnHref, title, info }) => {
     const { classes } = useStyles()
@@ -64,7 +101,15 @@ const MDArticle: FC<MDArticleProps> = ({ source, returnHref, title, info }) => {
             </Container>
             <Space h="sm" />
             <TypographyStylesProvider className={classes.markdown}>
-                <MDXRemote {...source} />
+                <MDXRemote
+                    {...source}
+                    components={{
+                        h1: props => getHeading("h1", props.children?.toString() || ""),
+                        h2: props => getHeading("h2", props.children?.toString() || ""),
+                        h3: props => getHeading("h3", props.children?.toString() || ""),
+                        h4: props => getHeading("h4", props.children?.toString() || ""),
+                    }}
+                />
             </TypographyStylesProvider>
         </div>
     )

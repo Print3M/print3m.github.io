@@ -8,7 +8,6 @@ title: USB - Universal Serial Bus
   - [2.2. Configuration Descriptor](#22-configuration-descriptor)
   - [2.3. Interface Descriptor](#23-interface-descriptor)
   - [2.4. Endpoint Descriptor](#24-endpoint-descriptor)
-    - [2.4.1. Endpoint 0](#241-endpoint-0)
 
 ## 1. Overview
 USB is a huge protocol. It's basicaly a whole stack of technology. A lot of the complexity lies in the hardware, hidden from the software point of view.
