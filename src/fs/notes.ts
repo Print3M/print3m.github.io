@@ -6,7 +6,6 @@ import matter from "gray-matter"
 import rehypePrettyCode from "rehype-pretty-code"
 import { NOTES_PATH } from "./consts"
 import { NoteItem } from "components/pages/Notes/SearchBar/types"
-import rehypeAutolinkHeadings from "rehype-autolink-headings"
 
 export interface Directory_In {
     path: string
