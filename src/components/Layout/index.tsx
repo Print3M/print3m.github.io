@@ -145,7 +145,7 @@ const Layout: FC<{ children: JSX.Element }> = ({ children }) => (
         <Mobile />
         <Flex>
             <SideNav />
-            <Container p="sm" mih="100vh" w="100%">
+            <Container p="sm" mih="100vh" w="100%" sx={{ overflow: "hidden" }}>
                 <MediaQuery largerThan="sm" styles={{ display: "none" }}>
                     <Space h={75} />
                 </MediaQuery>

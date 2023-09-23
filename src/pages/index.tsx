@@ -1,5 +1,5 @@
 import { Button, Divider, Flex, MediaQuery, Space, Text } from "@mantine/core"
-import Head from "next/head";
+import Head from "next/head"
 import Link from "next/link"
 import { FC } from "react"
 
@@ -25,8 +25,8 @@ const Home = () => (
         </MediaQuery>
         <Space h={50} />
         <Text sx={{ textAlign: "center", margin: "auto", maxWidth: 600 }}>
-            I write the notes for myself. I write the blog for people. I&apos;m focused on IT security,
-            low-level, Linux and Windows topics. Have fun. 🧠
+            I write the notes for myself. I write the blog for people. I&apos;m focused on IT
+            security, low-level, Linux and Windows topics. Have fun. 🧠
         </Text>
         <Space h="lg" />
         <Divider label="IT security" variant="dashed" labelPosition="center" />

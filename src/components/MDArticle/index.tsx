@@ -23,23 +23,29 @@ const Return: FC<{ href: string }> = ({ href }) => (
     </Link>
 )
 
-const useStyles = createStyles(() => ({
+const useStyles = createStyles(t => ({
     markdown: {
         textAlign: "justify",
         fontFamily: "Helvetica",
+
+        "p, code, pre, ul, li, blockquote": {
+            fontSize: "1rem",
+        },
         ul: {
             marginLeft: 16,
             paddingLeft: 0,
         },
         blockquote: {
-            fontSize: "1rem",
-        },
-        p: {
-            marginBottom: 10,
+            padding: 0,
+            paddingLeft: 12,
+            paddingTop: 3,
+            paddingBottom: 0,
+            margin: 0,
+            borderLeft: `4px solid ${t.colors.brand[4]}`,
         },
         code: {
-            fontSize: "0.92em",
-        },
+            fontSize: "0.92rem"
+        }
     },
 }))
 

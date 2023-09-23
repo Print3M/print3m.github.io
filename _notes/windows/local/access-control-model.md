@@ -118,7 +118,7 @@ SID is a unique alphanumeric string that represents the security principal. SIDs
 
 Windows defines several well-known SIDs for built-in groups and special identities, like "Everyone" or "Administrators".
 
-> **EXAMPLE SID**: `S-1-5-21-3623811015-3361044348-30300820-1013`.
+> **Example SID**: `S-1-5-21-3623811015-3361044348-30300820-1013`.
 
 #### 2.2.2. Rights (privileges)
 [Full list of Windows rights](https://learn.microsoft.com/en-us/windows/security/threat-protection/security-policy-settings/user-rights-assignment).
