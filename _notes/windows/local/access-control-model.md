@@ -154,7 +154,7 @@ During logon, non-administrators receive a single access token with medium IL. A
 ## 4. Special accounts
 
 ### 4.1. SYSTEM
-SYSTEM is internal account which doesn't show up in User Manager.
+SYSTEM is an internal account which doesn't show up in User Manager.
 
 - the highest privilege level in the Windows user model.
 - used by the OS and by services running under Windows.
