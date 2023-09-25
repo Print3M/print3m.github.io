@@ -1,7 +1,6 @@
-import { countries } from "./countries"
+import { CountryCode } from "./countries"
 import { maps } from "./maps"
 
-export type CountryCode = keyof typeof countries
 export type MapKey = keyof typeof maps
 
 export interface Country {

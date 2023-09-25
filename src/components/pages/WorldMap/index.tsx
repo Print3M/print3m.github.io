@@ -1,14 +1,16 @@
-/*
-    - international organizations
-    - world conflicts
-*/
-import { Box, ColorSwatch, Container, Flex, Select, Text, useMantineTheme } from "@mantine/core"
+import { ColorSwatch, Container, Flex, Select, Text, useMantineTheme } from "@mantine/core"
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from "react-simple-maps"
 import { maps } from "./maps"
 import { useState } from "react"
-import { CountryCode, MapKey } from "./types"
+import { MapKey } from "./types"
+import { CountryCode } from "./countries"
 
 const geoUrl = "https://raw.githubusercontent.com/deldersveld/topojson/master/world-countries.json"
+
+const selectData = Object.entries(maps).map(([key, value]) => ({
+    value: key,
+    label: value.label,
+}))
 
 const WorldMap = () => {
     const [map, setMap] = useState<MapKey>("CSTO")
@@ -28,7 +30,7 @@ const WorldMap = () => {
         }
 
         // Default color
-        return t.colors.brand[3]
+        return t.colors.brand[1]
     }
 
     return (
@@ -53,7 +55,7 @@ const WorldMap = () => {
             </ComposableMap>
             <Select
                 label="Select map"
-                data={Object.keys(maps)}
+                data={selectData}
                 onChange={v => setMap(v as MapKey)}
                 defaultValue={"NATO"}
             />

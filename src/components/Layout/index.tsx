@@ -1,8 +1,8 @@
 import { Center, Container, Drawer, Flex, Footer, Stack } from "@mantine/core"
 import { FC, useEffect, useState } from "react"
 import { Divider, Navbar, NavLink, Space, Text } from "@mantine/core"
-import { IconBrandGithub, IconHome, IconMarkdown, IconNews } from "@tabler/icons-react"
-import { Burger, MediaQuery, useMantineTheme } from "@mantine/core"
+import { IconBrandGithub, IconHome, IconMarkdown, IconNews, IconWorld } from "@tabler/icons-react"
+import { Burger, MediaQuery } from "@mantine/core"
 import Link from "next/link"
 import { useRouter } from "next/router"
 
@@ -59,12 +59,15 @@ const NavContent = () => (
             <Space h="md" />
             <Divider label="// IT security" />
             {/* <NavLink label="Files to loot" icon={<IconFile size={20} />} /> */}
-            {/* <NavLink label="Checklists" icon={<IconList size={20} />} /> */}
             <CustomNavLink href="/notes" title="Notes" icon={<IconMarkdown size={20} />}>
                 Notes
             </CustomNavLink>
             <CustomNavLink href="/blog" title="Blog" icon={<IconNews size={20} />}>
                 Blog
+            </CustomNavLink>
+            <Divider label="// Other" />
+            <CustomNavLink href="/world-map" title="World Map" icon={<IconWorld size={20} />}>
+                World Map
             </CustomNavLink>
         </Navbar.Section>
     </>
