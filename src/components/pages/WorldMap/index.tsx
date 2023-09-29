@@ -1,9 +1,19 @@
-import { ColorSwatch, Container, Flex, Select, Text, useMantineTheme } from "@mantine/core"
+import {
+    Box,
+    Collapse,
+    ColorSwatch,
+    Flex,
+    Select,
+    Space,
+    Switch,
+    Text,
+    useMantineTheme,
+} from "@mantine/core"
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from "react-simple-maps"
 import { maps } from "./maps"
-import { useState } from "react"
-import { MapKey } from "./types"
-import { CountryCode } from "./countries"
+import { FC, useState } from "react"
+import { DataSet, MapKey, MapView } from "./types"
+import { CountryCode, countries } from "./countries"
 
 const geoUrl = "https://raw.githubusercontent.com/deldersveld/topojson/master/world-countries.json"
 
@@ -12,8 +22,52 @@ const selectData = Object.entries(maps).map(([key, value]) => ({
     label: value.label,
 }))
 
-const WorldMap = () => {
-    const [map, setMap] = useState<MapKey>("CSTO")
+const LegendItem: FC<{ data: DataSet; opened: boolean }> = ({ data, opened }) => (
+    <Box>
+        <Flex gap={10} align="center" key={`${data.label}${data.color}`}>
+            <ColorSwatch color={data.color} size={25} />
+            <Text fw="bold">{data.label}</Text>
+        </Flex>
+
+        <Collapse in={opened}>
+            <Flex gap="xs" fz="sm" mt={10} mb={4} pl={30} wrap="wrap">
+                {data.members.map(i => (
+                    <Box key={i}>
+                        {countries[i].flag || "🚫"} {countries[i].name}
+                    </Box>
+                ))}
+            </Flex>
+        </Collapse>
+    </Box>
+)
+
+const Legend: FC<{ map: MapView; setMapKey: (v: MapKey) => void }> = ({ map, setMapKey }) => {
+    const [showCountries, setShowCountries] = useState(false)
+
+    return (
+        <Flex direction="column" gap="sm">
+            <Select
+                label="Map selection"
+                data={selectData}
+                onChange={v => setMapKey(v as MapKey)}
+                defaultValue={"NATO"}
+            />
+            <Switch
+                checked={showCountries}
+                onChange={v => setShowCountries(v.currentTarget.checked)}
+                label="Show countries"
+            />
+            <Space h="xs" />
+            <Flex direction="column" gap="sm" mih={500}>
+                {map.dataSets.map(data => (
+                    <LegendItem key={data.label} data={data} opened={showCountries} />
+                ))}
+            </Flex>
+        </Flex>
+    )
+}
+
+const Map: FC<{ map: MapView }> = ({ map }) => {
     const t = useMantineTheme()
 
     const getFillColor = (countryCode: CountryCode) => {
@@ -21,9 +75,7 @@ const WorldMap = () => {
             Find a set within the current map with the `countryCode` included.
             Return the color of that set.
         */
-        console.log(map)
-
-        for (const set of maps[map].dataSets) {
+        for (const set of map.dataSets) {
             if (set.members.includes(countryCode)) {
                 return set.color
             }
@@ -34,39 +86,34 @@ const WorldMap = () => {
     }
 
     return (
+        <ComposableMap>
+            <ZoomableGroup maxZoom={6}>
+                <Geographies geography={geoUrl}>
+                    {({ geographies }) =>
+                        geographies.map(geo => (
+                            <Geography
+                                key={geo.rsmKey}
+                                geography={geo}
+                                fill={getFillColor(geo.id)}
+                                stroke="gray"
+                                strokeWidth={0.22}
+                                onMouseOver={() => console.log(geo.id, geo.rsmKey, geo.name)}
+                            />
+                        ))
+                    }
+                </Geographies>
+            </ZoomableGroup>
+        </ComposableMap>
+    )
+}
+
+const WorldMap = () => {
+    const [mapKey, setMapKey] = useState<MapKey>("CSTO")
+
+    return (
         <>
-            <ComposableMap>
-                <ZoomableGroup maxZoom={6}>
-                    <Geographies geography={geoUrl}>
-                        {({ geographies }) =>
-                            geographies.map(geo => (
-                                <Geography
-                                    key={geo.rsmKey}
-                                    geography={geo}
-                                    fill={getFillColor(geo.id)}
-                                    stroke="gray"
-                                    strokeWidth={0.22}
-                                    onMouseOver={() => console.log(geo.id, geo.rsmKey, geo.name)}
-                                />
-                            ))
-                        }
-                    </Geographies>
-                </ZoomableGroup>
-            </ComposableMap>
-            <Select
-                label="Select map"
-                data={selectData}
-                onChange={v => setMap(v as MapKey)}
-                defaultValue={"NATO"}
-            />
-            <Container mt="lg">
-                {maps[map].dataSets.map(set => (
-                    <Flex gap={10} align="center" key={`${set.label}${set.color}`}>
-                        <ColorSwatch color={set.color} size={20} />
-                        <Text>{set.label}</Text>
-                    </Flex>
-                ))}
-            </Container>
+            <Map map={maps[mapKey]} />
+            <Legend map={maps[mapKey]} setMapKey={v => setMapKey(v)} />
         </>
     )
 }

@@ -1,6 +1,5 @@
-import dynamic from "next/dynamic"
-
-const WorldMap = dynamic(() => import("components/pages/WorldMap/index"), { ssr: false })
+import { Center, Loader } from "@mantine/core"
+import WorldMap from "components/pages/WorldMap"
 
 const WorldMapPage = () => <WorldMap />
 

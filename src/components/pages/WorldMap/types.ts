@@ -6,6 +6,7 @@ export type MapKey = keyof typeof maps
 export interface Country {
     code: CountryCode
     name: string
+    flag?: string
 }
 
 export interface DataSet {
