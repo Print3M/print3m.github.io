@@ -7,20 +7,23 @@ import {
     Space,
     Switch,
     Text,
+    Tooltip,
     useMantineTheme,
 } from "@mantine/core"
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from "react-simple-maps"
 import { maps } from "./maps"
-import { FC, useState } from "react"
+import { FC, useMemo, useState } from "react"
 import { DataSet, MapKey, MapView } from "./types"
 import { CountryCode, countries } from "./countries"
 
 const geoUrl = "https://raw.githubusercontent.com/deldersveld/topojson/master/world-countries.json"
 
-const selectData = Object.entries(maps).map(([key, value]) => ({
-    value: key,
-    label: value.label,
-}))
+const selectData = Object.entries(maps)
+    .sort()
+    .map(([key, value]) => ({
+        value: key,
+        label: value.label,
+    }))
 
 const LegendItem: FC<{ data: DataSet; opened: boolean }> = ({ data, opened }) => (
     <Box>
@@ -31,8 +34,8 @@ const LegendItem: FC<{ data: DataSet; opened: boolean }> = ({ data, opened }) =>
 
         <Collapse in={opened}>
             <Flex gap="xs" fz="sm" mt={10} mb={4} pl={30} wrap="wrap">
-                {data.members.map(i => (
-                    <Box key={i}>
+                {data.members.sort().map(i => (
+                    <Box key={`${i}${data.label}${data.color}`}>
                         {countries[i].flag || "🚫"} {countries[i].name}
                     </Box>
                 ))}
@@ -41,8 +44,9 @@ const LegendItem: FC<{ data: DataSet; opened: boolean }> = ({ data, opened }) =>
     </Box>
 )
 
-const Legend: FC<{ map: MapView; setMapKey: (v: MapKey) => void }> = ({ map, setMapKey }) => {
+const Legend: FC<{ mapKey: MapKey; setMapKey: (v: MapKey) => void }> = ({ mapKey, setMapKey }) => {
     const [showCountries, setShowCountries] = useState(false)
+    const map = useMemo(() => maps[mapKey], [mapKey])
 
     return (
         <Flex direction="column" gap="sm">
@@ -50,7 +54,7 @@ const Legend: FC<{ map: MapView; setMapKey: (v: MapKey) => void }> = ({ map, set
                 label="Map selection"
                 data={selectData}
                 onChange={v => setMapKey(v as MapKey)}
-                defaultValue={"NATO"}
+                defaultValue={mapKey}
             />
             <Switch
                 checked={showCountries}
@@ -60,15 +64,16 @@ const Legend: FC<{ map: MapView; setMapKey: (v: MapKey) => void }> = ({ map, set
             <Space h="xs" />
             <Flex direction="column" gap="sm" mih={500}>
                 {map.dataSets.map(data => (
-                    <LegendItem key={data.label} data={data} opened={showCountries} />
+                    <LegendItem key={`${mapKey}${data.label}`} data={data} opened={showCountries} />
                 ))}
             </Flex>
         </Flex>
     )
 }
 
-const Map: FC<{ map: MapView }> = ({ map }) => {
+const CountryShape: FC<{ geo: any; map: MapView }> = ({ geo, map }) => {
     const t = useMantineTheme()
+    const data = useMemo(() => countries[geo.id as CountryCode], [geo.id])
 
     const getFillColor = (countryCode: CountryCode) => {
         /*
@@ -85,20 +90,41 @@ const Map: FC<{ map: MapView }> = ({ map }) => {
         return t.colors.brand[1]
     }
 
+    if (!data) {
+        /*
+            Just skip these weird-fake countries which are not defined
+            in our list of countries. 
+        */
+        return <></>
+    }
+
+    return (
+        <Tooltip.Floating label={`${data.flag} ${data.name}`}>
+            <Geography
+                geography={geo}
+                style={{
+                    hover: {
+                        fill: t.colors.dark[3],
+                    },
+                    default: {
+                        fill: getFillColor(geo.id),
+                        stroke: "gray",
+                        strokeWidth: 0.22,
+                    },
+                }}
+            />
+        </Tooltip.Floating>
+    )
+}
+
+const Map: FC<{ map: MapView }> = ({ map }) => {
     return (
         <ComposableMap>
             <ZoomableGroup maxZoom={6}>
                 <Geographies geography={geoUrl}>
                     {({ geographies }) =>
                         geographies.map(geo => (
-                            <Geography
-                                key={geo.rsmKey}
-                                geography={geo}
-                                fill={getFillColor(geo.id)}
-                                stroke="gray"
-                                strokeWidth={0.22}
-                                onMouseOver={() => console.log(geo.id, geo.rsmKey, geo.name)}
-                            />
+                            <CountryShape geo={geo} map={map} key={geo.rsmKey} />
                         ))
                     }
                 </Geographies>
@@ -113,7 +139,7 @@ const WorldMap = () => {
     return (
         <>
             <Map map={maps[mapKey]} />
-            <Legend map={maps[mapKey]} setMapKey={v => setMapKey(v)} />
+            <Legend mapKey={mapKey} setMapKey={v => setMapKey(v)} />
         </>
     )
 }

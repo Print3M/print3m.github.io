@@ -53,7 +53,8 @@ const NATO: MapView = {
                 CC.ITALY, CC.CROATIA, CC.SLOVENIA, CC.SLOVAKIA, CC.CZECHIA, CC.BELGIUM,
                 CC.IRELAND, CC.PORTUGAL, CC.NETHERLANDS, CC.DENMARK, CC.CANADA, CC.HUNGARY,
                 CC.ROMANIA, CC.BULGARIA, CC.ESTONIA, CC.LATVIA, CC.LITHUANIA, CC.CYPRUS, CC.MALTA,
-                CC.MONTENEGRO, CC.TURKEY, CC.ICELAND, CC.UNITED_KINGDOM, CC.MACEDONIA
+                CC.MONTENEGRO, CC.TURKEY, CC.ICELAND, CC.UNITED_KINGDOM, CC.MACEDONIA,
+                CC.UNITED_STATES
             ],
         },
         {
@@ -116,7 +117,7 @@ const BRICS: MapView = {
             // prettier-ignore
             members: [
                 CC.BRAZIL, CC.EGYPT, CC.ETHIOPIA, CC.RUSSIA, CC.INDONESIA, CC.CHINA,
-                CC.SAUDI_ARABIA, CC.UNITED_ARAB_EMIRATES, CC.IRAN, CC.SAUDI_ARABIA, CC.ARGENTINA
+                CC.SAUDI_ARABIA, CC.UNITED_ARAB_EMIRATES, CC.IRAN, CC.ARGENTINA
             ],
         },
         {
@@ -196,10 +197,59 @@ const ARAB_LEAGUE: MapView = {
     ],
 }
 
+const OPEN_BALKAN: MapView = {
+    label: "Open Balkan",
+    fullName: "",
+    dataSets: [
+        {
+            label: "Members",
+            color: Color.GREEN_1,
+            members: [CC.MACEDONIA, CC.SERBIA, CC.ALBANIA],
+        },
+        {
+            label: "Potential candidates",
+            color: Color.BLUE_1,
+            members: [CC.MONTENEGRO, CC.BOSNIA_AND_HERZEGOVINA, CC.KOSOVO],
+        },
+    ],
+}
+
+const EFTA: MapView = {
+    label: "EFTA",
+    fullName: "European Free Trade Association",
+    dataSets: [
+        {
+            label: "Members",
+            color: Color.GREEN_1,
+            members: [CC.NORWAY, CC.ICELAND, CC.SWITZERLAND, CC.LIECHTENSTEIN],
+        },
+        {
+            label: "Former members",
+            color: Color.ORANGE_1,
+            // prettier-ignore
+            members: [
+                CC.AUSTRIA, CC.DENMARK, CC.FINLAND, CC.PORTUGAL, CC.SWEDEN, CC.UNITED_KINGDOM,
+            ],
+        },
+    ],
+}
+
+const EEU: MapView = {
+    label: "EEU",
+    fullName: "Eurasian Economic Union",
+    dataSets: [
+        {
+            label: "Members",
+            color: Color.GREEN_1,
+            members: [CC.ARMENIA, CC.BELARUS, CC.KAZAKHSTAN, CC.KYRGYZSTAN, CC.RUSSIA],
+        },
+    ],
+}
+
 /*
     - EEA
-    - EFTA
     - EUCU
+    - AFRICAN UNION
 */
 
 export const maps = {
@@ -211,4 +261,7 @@ export const maps = {
     SCHENGEN,
     OPEC,
     ARAB_LEAGUE,
+    OPEN_BALKAN,
+    EFTA,
+    EEU,
 }
