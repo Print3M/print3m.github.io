@@ -30,12 +30,12 @@ Format of _cmdlet_ command: **Verb**-**Noun**. Common verbs:
 _Powershell ISE_ is the Powershell Text Editor most often used to write longer PowerShell scripts. Most common extension of PowerShell files is `.ps1`.
 
 ### 1.2. What is a cmdlet?
-Cmdlets (pronounced: command-lets) are native PS commands, not stand-alone executables. Cmdlets are collected into **PowerShell modules** that can be loaded on demand. They can be written in any compiled .NET language or in the PS scripting language itself.  
+Cmdlets (pronounced: command-lets) are native PS commands, not stand-alone executables. Cmdlets are collected into **PowerShell modules** that can be loaded on demand. They can be written in any compiled .NET language or in the PS scripting language itself. Cmdlets return .NET objects.
 
 > **NOTE**: Cmdlets and their parameters are case-insensitive. However, Microsoft generally recommends entering a PowerShell cmdlet (or a parameter) with the first letter of each word capitalized.
 
 ## 2. Pipeline
-To pass output from one cmdlet to another the pipline is used. Instead of passing text, PowerShell passes an object to next cmdlet. Object contains methods and properties. Objects returned by the last command in a chain are printed out on the screen.
+To pass output from one cmdlet to another the pipline is used. Instead of passing text, PowerShell passes a .NET object to next cmdlet. Object contains methods and properties. Objects returned by the last command in a chain are printed out on the screen.
 
 ```powershell
 # Get members of command's output object
@@ -56,6 +56,7 @@ Operators:
     -contains                               # Property value contains
     -eq                                     # Property value equals
     -gt                                     # Property value is greater
+<command> | where [...]                     # Alias
 
 # Sort objects
 <command> | Sort-Object
@@ -80,7 +81,7 @@ if ($obj1 -<operator> $obj2) {
 
 [Full list of operators](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_comparison_operators?view=powershell-7.3&viewFallbackFrom=powershell-6)
 
-> NOTE: String comparisions are case-insensitive unless you use the explicit case-sensitive operator. To make a comparison operator case-sensitive, add a `c` after the `-` (`-ceq` is the case-sensitive version of `-eq`).
+> **NOTE**: String comparisions are case-insensitive unless you use the explicit case-sensitive operator. To make a comparison operator case-sensitive, add a `c` after the `-` (`-ceq` is the case-sensitive version of `-eq`).
 
 Most common:
 

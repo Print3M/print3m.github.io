@@ -16,7 +16,7 @@ import { FC, useMemo, useState } from "react"
 import { DataSet, MapKey, MapView } from "./types"
 import { CountryCode, countries } from "./countries"
 
-const geoUrl = "https://raw.githubusercontent.com/deldersveld/topojson/master/world-countries.json"
+const geoUrl = "/countries.json"
 
 const selectData = Object.entries(maps)
     .sort()

@@ -23,6 +23,7 @@ title: Windows lateral movement notes
   - [7.2. Pass-the-Key](#72-pass-the-key)
   - [7.3. Overpass-the-Hash](#73-overpass-the-hash)
 - [8. RDP hijacking](#8-rdp-hijacking)
+- [9. User hunting](#9-user-hunting)
 
 ## 1. Process spawning via PsExec
 PsExec is Sysinternals tool. It can execute processes remotely on any machine where we can access. PsExec uses SMB protocol (445/TCP). Target account must be a member of _Administrators_ group.
@@ -261,3 +262,8 @@ query session
 # Hijack
 tscon <id> /dest:<current-connection>
 ```
+
+## 9. User hunting
+[Read more](https://github.com/Integration-IT/Active-Directory-Exploitation-Cheat-Sheet/tree/master/D%20-%20User%20Hunting)
+
+TBD

@@ -16,7 +16,7 @@ title: Windows services notes
   - [7.3. FTP - File Transfer Protocol](#73-ftp---file-transfer-protocol)
 
 ## 1. Services and Service Control Manager (SCM)
-_Services_ are _daemons_ in the Linux world. They are managed by the **Service Control Manager** (SCM). The SCM is a special system process in charge of managing the state of services, checking their current state and providing a way to configure and enumerate them. It's started at system boot. The SCM is an RCP server, so the services can be controlled from remote machines.
+_Services_ are _daemons_ in the Linux world. They are basically standard processes (with PID associated) that run in the background, and are managed by the OS. They are managed by the **Service Control Manager** (SCM). The SCM is a special system process in charge of managing the state of services, checking their current state and providing a way to configure and enumerate them. It's started at system boot. The SCM is an RCP server, so the services can be controlled from remote machines.
 
 SCM executable is located in: `%SystemRoot%\System32\services.exe`.
 
@@ -28,6 +28,9 @@ Services configurations are stored in the registry: `HKLM\SYSTEM\CurrentControlS
 sc.exe qc <service>                         # Show service configuration
 sc.exe stop <service>                       # Stop service
 sc.exe start <service>                      # Start service
+
+# List services - PID, Name, State and LogOnAs (StartName) values
+Get-CimInstance win32_service | select ProcessId,Name,State,StartName
 ```
 
 ## 2. SNMP (Simple Network Management Protocol)
