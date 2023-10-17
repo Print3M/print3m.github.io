@@ -12,7 +12,7 @@ title: Windows management services
   - [3.5. Windows Imaging Format (WIM)](#35-windows-imaging-format-wim)
 
 ## 1. Windows Remote Management (WinRM)
-WinRM is a web-based protocol used to send Powershell commands to Windows hosts remotely. Ports: 5985/TCP (HTTP) and 5986/TCP (HTTPS). Most Windows Server machines have WinRM enabled by default.
+WinRM is a web-based protocol used to send Powershell commands to Windows hosts remotely. Ports: 5985/TCP (HTTP) and 5986/TCP (HTTPS). Most Windows Server machines have WinRM enabled by default. It's the Microsoft implementation of the _WS-Management protocol_.
 
 ## 2. Windows Management Instrumentation (WMI)
 WMI is Windows implementation of _Web-Based Enterprise Management_ (WBEM) standard for accessing management information across devices. WMI allows administrators to perform standard management tasks. System administrators can use WMI in all Windows-based applications. WMI allows you to query and manipulate system settings, receive notifications about system events, and perform various management tasks programmatically. It offers a set of APIs containing information about various aspects of the system, such as hardware, software, network configuration, and more. Built-in `wmic` (WMI Command-line) tool is a command-line interface to access the WMI functionalities.

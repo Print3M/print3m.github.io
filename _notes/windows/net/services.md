@@ -31,6 +31,9 @@ sc.exe start <service>                      # Start service
 
 # List services - PID, Name, State and LogOnAs (StartName) values
 Get-CimInstance win32_service | select ProcessId,Name,State,StartName
+
+# List processes
+Get-CimInstance win32_process
 ```
 
 ## 2. SNMP (Simple Network Management Protocol)

