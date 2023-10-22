@@ -6,6 +6,7 @@ title: Network authentication protocols
 - [2. LDAP](#2-ldap)
   - [2.1. Anonymous bind](#21-anonymous-bind)
   - [2.2. LDAP Pass-back attack](#22-ldap-pass-back-attack)
+  - [2.3. Security](#23-security)
 - [3. NTLM (aka Net-NTML)](#3-ntlm-aka-net-ntml)
   - [3.1. Workflow of NTLM authentication](#31-workflow-of-ntlm-authentication)
   - [3.2. Security](#32-security)
@@ -13,7 +14,6 @@ title: Network authentication protocols
 - [4. Kerberos](#4-kerberos)
   - [4.1. Key Distribution Center (KDC)](#41-key-distribution-center-kdc)
   - [4.2. Ticket Granting Ticket (TGT)](#42-ticket-granting-ticket-tgt)
-  - [4.3. Security](#43-security)
 
 ## 1. General
 Using Windows domains, all credentials are stored in the DC. Every authentication is performed via DC, using (usually) one of two protocols:
@@ -29,6 +29,9 @@ Sometimes it is possible to perform LDAP anonymous bind (no authentication), exe
 
 ### 2.2. LDAP Pass-back attack
 If we can alter the LDAP configuration in the application (e.g. printer config), we can force device to try to authenticate with the attacker IP, instead of DC LDAP server. We can intercept this auth attempt and recover the LDAP credentials.
+
+### 2.3. Security
+LDAP application which is exposed on the internet might be password-sprayed as good as standard NTLM auth. But that app has its own credentials for LDAP quering DC. They are used to check if our credentials are correct. Now we don't have to hack users AD credentials. We might just hack the app AD credentials - one more vector to attack. App's credentials are most often stored in the plain text on the app's server (config files).
 
 ## 3. NTLM (aka Net-NTML)
 NTLM was the default authentication protocol used in old Windows versions. If for any reason Kerberos fails, NTLM will be used instead. It's still commonly used especially in large networks due to backward compatibility and smaller infrastructure overhead.
@@ -74,9 +77,6 @@ TGT was designed to avoid asking the user for a password all the time. It works 
 
 User sends a timestamp symetrically encrypted with the **Key** derived from the user's password. KDC has this Key as well so both sides are able to verify each other. It's used in during the pre-authentication process (it might be disabled making Kerberos prone to _Kerberoast_ attack).
 
-When the requester's identity is verified, The KDC generates a TGT. The TGT is symmetrically encrypted using the `krbtgt` account's password hash and it includes a **Session Key** (value used to identify single logon session) so the KDC doesn't need to store the Session Key (it can be rocovered by decrypting the TGT).
+When the requester's identity is verified, the KDC generates a TGT (Kerberos policy is only checked when TGT is created). The TGT is symmetrically encrypted using the `krbtgt` account's password hash and it includes a **Session Key** (value used to identify single logon session) so the KDC doesn't need to store the Session Key (it can be recovered by decrypting the TGT). TGT cannot be decrypted and manipulated by the user.
 
 > **NOTE**: `krbtgt` account acts as the service account for the KDC service, which handles all Kerberos ticket requests.
-
-### 4.3. Security
-LDAP application which is exposed on the internet might be password-sprayed as good as standard NTLM auth. But that app has its own credentials for LDAP quering DC. They are used to check if our credentials are correct. Now we don't have to hack users AD credentials. We might just hack the app AD credentials - one more vector to attack. App's credentials are most often stored in the plain text on the app's server (config files).

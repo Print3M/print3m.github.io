@@ -103,7 +103,7 @@ Get-Command | Out-File <file_path>          # Save output to :file_path
 ```
 
 ## 9. Invoke-Expression (iex)
-TBD 
+TBD
 
 ## 10. Help
 

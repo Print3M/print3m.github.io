@@ -10,10 +10,11 @@ title: Windows Access Control Model
 - [3. User Account Control (UAC)](#3-user-account-control-uac)
   - [3.1. UAC Elevation](#31-uac-elevation)
   - [3.2. Integrity Levels](#32-integrity-levels)
-- [4. Special accounts](#4-special-accounts)
-  - [4.1. SYSTEM](#41-system)
-  - [4.2. Administrator](#42-administrator)
-  - [4.3. Guest](#43-guest)
+- [4. Constrained Language Mode (CLM)](#4-constrained-language-mode-clm)
+- [5. Special accounts](#5-special-accounts)
+  - [5.1. SYSTEM](#51-system)
+  - [5.2. Administrator](#52-administrator)
+  - [5.3. Guest](#53-guest)
 
 ## 1. Securable objects
 A securable object is an object that can have a Security Descriptor:
@@ -151,9 +152,12 @@ UAC works on a basis of _Mandatory Integrity Control_ (MIC). MIC is a concept of
 
 During logon, non-administrators receive a single access token with medium IL. Administrators receive so-called _Filtered Token_ used for regular operations (medium IL) and _Elevated Token_ with full admin privileges (high IL).
 
-## 4. Special accounts
+## 4. Constrained Language Mode (CLM)
+CLM is a Powershell feature. It consists of a number of restrictions that limit unconstrained Powershell code execution on a system. There is [plenty of different restrictions](https://devblogs.microsoft.com/powershell/powershell-constrained-language-mode/#what-does-constrained-language-constrain). It's designed to support day-to-day administrative tasks, yet restrict access to sensitive language elements that can be used to invoke arbitrary Windows APIs.
 
-### 4.1. SYSTEM
+## 5. Special accounts
+
+### 5.1. SYSTEM
 SYSTEM is an internal account which doesn't show up in User Manager.
 
 - the highest privilege level in the Windows user model.
@@ -162,7 +166,7 @@ SYSTEM is an internal account which doesn't show up in User Manager.
 
 If the computer is joined to a domain, processes running as SYSTEM can access domain servers in the context of the computer's domain account without credentials.
 
-### 4.2. Administrator
+### 5.2. Administrator
 Every computer has Administrator account. It's the first account that is created during the Windows installation. Processes running as Administrator have no access to domain computers unless the credentials are explicitly provided.
 
 Administrator has following privileges:
@@ -172,5 +176,5 @@ Administrator has following privileges:
 - can't be deleted or locked out, but it can be renamed or disabled.
 - it's member of the Adminitrators group and it can't be removed from the Administrators group but it can be renamed.
 
-### 4.3. Guest
+### 5.3. Guest
 TBD

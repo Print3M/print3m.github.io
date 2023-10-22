@@ -29,6 +29,8 @@ title: Windows local privilege-escalation
   - [8.2. Scheduled tasks \& environment vars](#82-scheduled-tasks--environment-vars)
 - [9. Insecure Features](#9-insecure-features)
   - [9.1. CI/CD software](#91-cicd-software)
+- [Bypassing CLM](#bypassing-clm)
+- [Applocker](#applocker)
 
 ## 1. Automatic tools
 
@@ -264,7 +266,7 @@ Use `meterpreter` session:
 ### 7.1. From local SAM
 SAM (Security Account Manager) is a database with all the **local user** accounts and passwords. It acts as a database. Passwords, which are stored in the SAM, are hashed. SAM data is used by LSASS to verify user credentials.
 
-#### 4.1.1. Mimiktaz
+#### Mimikatz
 Mimikatz is one of the tools that are able to dump SAM file hashes.
 
 ```powershell
@@ -284,7 +286,7 @@ CrackMapExec tool is able to remotely dump SAM hashes (via SMB using credentials
 crackmapexec smb <target-ip> -u <username> -p <password> --sam
 ```
 
-#### 4.1.2. SAM dumping and offline hashes extraction
+#### SAM dumping and offline hashes extraction
 If an attacker has privileges to access any file in the system, then he can export SAM and SYSTEM keys from the Windows registry and perform the extraction of hashes offline. Windows registry stores a copy of some of the SAM database contents to be used by services.
 
 ```powershell
@@ -320,6 +322,8 @@ Tips:
 
 LSASS process might have additional security layer called _LSA protection_. It can be omitted with tools like **Mimikatz**.
 
+> **NOTE**: Usually it's worth to run Mimikatz using Powershell without touching a disk. `Invoke-Mimikatz.ps1` script run in a shell using `IEX` is a great option to do this.
+
 ```powershell
 mimikatz.exe "privilege::debug" "token::elevate" "sekurlsa::msv" "exit"
 ```
@@ -346,3 +350,19 @@ There is various software that is insecure by design. Legit features of the soft
 Most of CI/CD software allows to execute some kind of scripts. Most often they work with escaled privileges (local Administrator or even SYSTEM). After successful login to such a software an attacker is able to execute a malicious code as an administator. Credentials usually are not hard to guess or bruteforce. Jenkins doesn't even have anti-brute-force mechanisms.
 
 > **NOTE**: Sometimes direct script execution is not allowed for you but at the same time you are allowed to add an extra deployment step which executes Windows commands. The result will be the same - command execution.
+
+## Bypassing CLM
+[Powershell Constrained Language Mode bypass techniques](https://www.ired.team/offensive-security/code-execution/powershell-constrained-language-mode-bypass)
+
+```powershell
+# Check powershell session language mode
+$ExecutionContext.SessionState.LanguageMode
+```
+
+## Applocker
+TBD
+
+```powershell
+# Get Applocker rules
+Get-AppLockerPolicy -Effective | select -ExpandProperty RuleCollections
+```
