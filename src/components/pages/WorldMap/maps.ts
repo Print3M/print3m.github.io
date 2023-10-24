@@ -246,6 +246,66 @@ const EEU: MapView = {
     ],
 }
 
+const ASEAN: MapView = {
+    label: "ASEAN",
+    fullName: "Association of Southeast Asian Nations",
+    dataSets: [
+        {
+            label: "Members",
+            color: Color.GREEN_1,
+            // prettier-ignore
+            members: [
+                CC.BRUNEI, CC.CAMBODIA, CC.INDONESIA, CC.LAOS, CC.MALAYSIA, CC.MYANMAR,
+                CC.PHILIPPINES, CC.SINGAPORE, CC.THAILAND, CC.VIETNAM
+            ],
+        },
+        {
+            label: "Candidates",
+            color: Color.BLUE_1,
+            members: [CC.PAPUA_NEW_GUINEA, CC.EAST_TIMOR],
+        },
+    ],
+}
+
+const AUKUS: MapView = {
+    label: "AUKUS",
+    fullName: "AUKUS",
+    dataSets: [
+        {
+            label: "Members",
+            color: Color.GREEN_1,
+            members: [CC.UNITED_STATES, CC.UNITED_KINGDOM, CC.AUSTRALIA],
+        },
+    ],
+}
+
+const CoE: MapView = {
+    label: "CoE",
+    fullName: "Council of Europe",
+    dataSets: [
+        {
+            label: "Members",
+            color: Color.GREEN_1,
+            // prettier-ignore
+            members: [
+                CC.NETHERLANDS, CC.BELGIUM, CC.LUXEMBOURG, CC.DENMARK, CC.FRANCE, CC.NORWAY,
+                CC.SWEDEN, CC.UNITED_KINGDOM, CC.IRELAND, CC.ITALY, CC.GREECE, CC.ICELAND,
+                CC.TURKEY, CC.GERMANY, CC.AUSTRIA, CC.CYPRUS, CC.SWITZERLAND, CC.MALTA,
+                CC.PORTUGAL, CC.SPAIN, CC.LIECHTENSTEIN, CC.SAN_MARINO, CC.FINLAND, CC.HUNGARY,
+                CC.POLAND, CC.BULGARIA, CC.ESTONIA, CC.LITHUANIA, CC.SLOVENIA, CC.CZECHIA,
+                CC.SLOVAKIA, CC.ROMANIA, CC.ANDORRA, CC.LATVIA, CC.MOLDOVA, CC.ALBANIA, CC.UKRAINE,
+                CC.MACEDONIA, CC.CROATIA, CC.GEORGIA, CC.ARMENIA, CC.AZERBAIJAN,
+                CC.BOSNIA_AND_HERZEGOVINA, CC.SERBIA, CC.MONACO, CC.MONTENEGRO
+            ],
+        },
+        {
+            label: "Former members",
+            color: Color.ORANGE_1,
+            members: [CC.RUSSIA],
+        },
+    ],
+}
+
 /*
     - EEA
     - EUCU
@@ -264,4 +324,6 @@ export const maps = {
     OPEN_BALKAN,
     EFTA,
     EEU,
+    ASEAN,
+    CoE,
 }

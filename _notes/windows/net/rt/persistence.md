@@ -6,11 +6,13 @@ title: Active Directory persistence
 - [2. Golden Ticket](#2-golden-ticket)
 - [3. Silver Ticket](#3-silver-ticket)
 - [4. Skeleton Key](#4-skeleton-key)
-- [5. Certificates](#5-certificates)
-- [6. Group Membership](#6-group-membership)
-- [7. SID History](#7-sid-history)
-- [8. Group Templates](#8-group-templates)
-- [9. GPO](#9-gpo)
+- [5. DSRM Password](#5-dsrm-password)
+- [6. Custom SSP](#6-custom-ssp)
+- [7. Certificates](#7-certificates)
+- [8. Group Membership](#8-group-membership)
+- [9. SID History](#9-sid-history)
+- [10. Group Templates](#10-group-templates)
+- [11. GPO](#11-gpo)
 
 ## 1. DC Sync
 The more privileged credentials are, the sonner they will be rotated after breach detection. The goal then is to persist with near-privileged credentials, not with a super-user:
@@ -100,10 +102,31 @@ It's a technique that uses patching of the lsass process memory in a Domain Cont
 > privilege::debug misc::skeleton
 ```
 
-## 5. Certificates
+## 5. DSRM Password
+DSRM stands for _Directory Services Restore Mode_. There is a local administrator (_Administrator_ account) present on every DC. It's password is the DSRM password. DSRM password (SafeModePassword) is requred when a server wants to become a Domain Controller and it's rarely changed. This password is set when a server is promoted to the role of the Domain Controller. Nobody cares about the DSRM password so there is a pretty high chance that abusing this functionality gives a life long persistence to an attacker.
+
+By default, the DSRM password cannot be used to logon as a Administrator over the network.
+
+> **NOTE**: The operation of extracting DSRM password hash requires Domain Admin privileges.
+
+```powershell
+# Mimikatz - extract DSRM password hash
+> token::elevate
+> lsadump::sam
+
+# Allow network logon using DSRM password on a Domain Controller
+New-ItemProperty "HKLM:\System\CurrentControlSet\Control\Lsa\" -Name "DsrmAdminLogonBehavior" -Value 2 -PropertyType DWORD
+
+# Use standard pass-the-hash attack then
+```
+
+## 6. Custom SSP
 TBD
 
-## 6. Group Membership
+## 7. Certificates
+TBD
+
+## 8. Group Membership
 We can just add ourselves directly to privileged AD groups for persistence.  Remember, the most privileged groups are not always the best to use for persistence. They are always monitored. In large organizations groups are usually nested. Groups contain groups and so on. For example, an interesting "IT Support" group might have multiple subgroups with the same privileges. Here's the reduced visibility for monitoring systems. It can be exploited to achive more silent persistence.
 
 ```powershell
@@ -111,7 +134,7 @@ We can just add ourselves directly to privileged AD groups for persistence.  Rem
 Add-ADGroupMember -Identity <GROUP> -Members <USER>
 ```
 
-## 7. SID History
+## 9. SID History
 SIDs history of Security Principal allows for one account to be attached to another. It basically have all the privileges of the SIDs included in the SID history. It's especially used during migration, when a new account on a new domain could have the SID history of an old account to retain access of the old domain.
 
 It might be used in order to establish persistence in the domain. Groups' SIDs can be assigned to a user's SID history as well. This technique is a lot harder to detect than just a simple group membership persistence.
@@ -130,10 +153,10 @@ Add-ADDBSidHistory -SamAccountName <USER> -SidHistory <SID> -DatabasePath 'C:\Wi
 Start-Service ntds
 ```
 
-## 8. Group Templates
+## 10. Group Templates
 Group templates are objects which privileges are copied to some AD groups constantly (e.g. every hour). `SDProp` process takes the ACL of the `AdminSDHolder` object and applies it to all protected groups every 60 minutes. List of protected groups contains: `Administrators`, `Domain Admins`, `Schema Admins`, `Enterprise Admins` and more. By default, `AdminSDHolder` ACL is very restrictive. By modifing ACL of this object (injecting special ACEs), an attacker can change ACLs of all protected groups in the domain and gain full permissions to them.  
 
-## 9. GPO
+## 11. GPO
 GPOs are excellent tool for remote management but they can be targeted to deploy persistence. Some GPO hooks are especially interesting from the attacker's point of view:
 
 - `Restricted Group Membership` - allows to give administrative access to all hosts in the domain.
