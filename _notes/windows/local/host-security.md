@@ -11,13 +11,7 @@ title: Host security measures and evasion
 - [4. System Monitor (Sysmon)](#4-system-monitor-sysmon)
 
 ## 1. Antivirus (AV)
-Antivirus software works in real-time scanning all open and used files in the background. Full system scan is usually performed during the installation of the antivirus. AV software performs scanning, detecting and removing malicious files. Traditionally, it works only with files.
-
-Common malware detection techniques:
-
-- Signature-based detection - AV compares the scanned file with a database of known malicious signatures and patterns. The database must be up to date. It tries to find unique strings, checksums and sequence of bytes of known malicious code.
-- Heuristic-based detection - most often engages machine learning to decide whether a file is malicious. It scans and statically analyses binary and behavior in real-time.
-- Behavior-based detection - AV monitors and examines the execution of binary to find suspicious activities and API calls (e.g. register editing, process spawning, filesystem modifications, log events, web requests).
+Antivirus software works in real-time scanning all open and used files in the background. Full system scan is usually performed during the installation of the antivirus. AV software performs scanning, detecting and removing malicious files.
 
 > **NOTE**: _EICAR_ file is a special standarized file to test AV abilities (fake malware).
 > **NOTE**: Nowadays, many antivirus softwares integrate traditional AV functionalities with some of the EDR features.

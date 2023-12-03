@@ -110,10 +110,19 @@ Collection of comma-separated key and value pairs used to identify unique AD rec
 > **Example** of DN: "CN=Administrator, OU=Users, DC=amazon, DC=com"
 
 ## 10. User Principal Name (UPN)
-In AD, a User Principal Name (UPN) is the name of a system user in an email address format. It consists of the user name (logon name), separator (`@`), and domain name (UPN suffix). A UPN might not be the same as an email address. It can be used during logon process.
+User Principal Name (UPN) is the name of a system user in an email address format. It consists of the user name (logon name), separator (`@`), and domain name (UPN suffix). **A UPN might not be the same as an email address**. It can be used during logon process.
 
 ## 11. Service Principal Name (SPN)
-TBD
+Service Principal Name (SPN) is a unique (within a domain) indentifier assigned to a service in a network that uses the Kerberos authentication. SPNs are used to associate a service with its account (usually a service account). The primary purpose of an SPN is to enable Kerberos authentication to locate the service in the network. When a user requests access to a service, it uses the service's SPN to request a TGT.
+
+SPNs have standarized format `service_class/host:port/service_name`.
+
+- `service_class` - general class of the service (e.g. HTTP for web services).
+- `host` - hostname or IP address of the machine where the service is running.
+- `port` - port number on which the service is listening.
+- `service_name` - the name of the specific service.
+
+SPNs are associated with service accounts which are used to run the corresponding services.
 
 ## 12. Local workgroup
 TBD

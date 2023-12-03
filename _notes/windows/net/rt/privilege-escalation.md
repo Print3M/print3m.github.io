@@ -13,6 +13,8 @@ title: Active Directory privilege-escalation
 - [5. DNS poisoning attack](#5-dns-poisoning-attack)
 - [6. NTLM relay attack](#6-ntlm-relay-attack)
 - [7. Kerberoasting](#7-kerberoasting)
+  - [7.1. AS-REP](#71-as-rep)
+  - [7.2. SPN arbitrary set](#72-spn-arbitrary-set)
 - [8. AS-REP Roasting](#8-as-rep-roasting)
 - [9. Extracting Kerberos TGT](#9-extracting-kerberos-tgt)
 - [10. Extracting Kerberos user's key](#10-extracting-kerberos-users-key)
@@ -112,7 +114,27 @@ In some cases attacker can try to relay the challenge intead of capturing it dir
 - A little bit of guessing which account has which permissions etc. It's more useful for lateral movement and privilege escalation.
 
 ## 7. Kerberoasting
-TBD
+The Kerberos TGS contains a service data encrypted with the password hash of service account. These service tickets can only be decrypted by the service account that corresponds to the specific service.
+
+The goal of Kerberoasting is to obtain a TGS and crack the service's password hash offline to get plaintext service password.
+
+> **NOTE**: Service accounts are most often ignored by admins. Passwords are weak and rarely changed.
+
+```powershell
+# Find user accounts used as service accounts
+Get-ADUser -Filter {ServicePrincipalName -ne "$null"} -Properties ServicePrincipalName
+```
+
+### 7.1. AS-REP
+It's a variant of the classic TGS Kerberoast attack. If a user's UserAccountControl settings don't require Kerberos preauthentication, it's possible to grab user's AS-REP and crack it offline. The Kerberos Preauthentication is enabled by default.
+
+```powershell
+# Get all users with no preauthentication
+Get-ADUser -Filter {DoesNotRequirePreAuth -eq $True} -Properties DoesNotRequirePreAuth
+```
+
+### 7.2. SPN arbitrary set
+With enough right (`GenericAll`/`GenericWrite`) we are able to user's SPN to anything unique. This user is then treated by the Kerberos protocol as a service account. Because of that we can request a TGS of this new "service" without special privileges and then kerberoast obtained TGS.
 
 ## 8. AS-REP Roasting
 If Kerberos doesn't require _pre-authentication_, it's possible to retrieve password hashes performing _AS-REP Roasting_ attack.
