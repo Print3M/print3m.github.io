@@ -1,3 +1,5 @@
+"use client"
+
 import {
     Box,
     Collapse,
@@ -87,7 +89,7 @@ const CountryShape: FC<{ geo: any; map: MapView }> = ({ geo, map }) => {
         }
 
         // Default color
-        return t.colors.brand[1]
+        return t.colors[t.primaryColor]![1]
     }
 
     if (!data) {

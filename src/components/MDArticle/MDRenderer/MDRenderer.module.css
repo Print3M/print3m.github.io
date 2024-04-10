@@ -1,0 +1,12 @@
+.code {
+    background-color: transparent !important;
+    font-size: var(--mantine-font-size-sm);
+}
+
+.blockquote {
+    font-size: var(--mantine-font-size-md);
+    border-left: 3px solid var(--mantine-primary-color-filled);
+    border-radius: var(--mantine-radius-md);
+    background-color: var(--mantine-color-dark-8);
+    padding: 10px 18px;
+}

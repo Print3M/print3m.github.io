@@ -1,5 +1,5 @@
+import WorldMap from "@/components/WorldMap/WorldMap"
 import { Title } from "@mantine/core"
-import WorldMap from "components/pages/WorldMap/WorldMap"
 
 const WorldMapPage = () => (
     <>

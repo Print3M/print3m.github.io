@@ -1,13 +1,6 @@
 ---
-slug: init-post
-title: Init post
-description: Init post
-date: "1970-01-01"
-hidden: true
+title: Reversing Soundbar USB Protocol
 ---
-
-## Init post
-Init post
 
 ## How to sniff USB with usbmon and Wireshark
 The `usbmon` is a kernel module which is used to collect traces of I/O operations on the USB bus. It needs to be loaded.

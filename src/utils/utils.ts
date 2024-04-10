@@ -7,3 +7,5 @@ export const slugify = (input: string) =>
         .replace(/[\s]+/g, "-") // Replace spaces with hyphens
         .replace(/[-]+/g, "-") // Replace consecutive hyphens with a single hyphen
         .trim() // Trim leading and trailing whitespace
+
+export const getDateStr = (date: Date) => date.toLocaleDateString("en-GB")
