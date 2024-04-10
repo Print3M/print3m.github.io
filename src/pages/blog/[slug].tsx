@@ -1,9 +1,9 @@
 import { FC } from "react"
 import { getAllBlogPostSlugs, getBlogPostBySlug } from "fs/blog"
 import { MDXSource } from "utils/types"
-import MDArticle from "components/MDArticle"
 import Head from "next/head"
 import { getPageTitle } from "utils/utils"
+import MDArticle from "components/MDArticle/MDArticle"
 
 export const getStaticPaths = async () => {
     const slugs = getAllBlogPostSlugs()

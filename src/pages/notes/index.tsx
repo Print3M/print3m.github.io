@@ -1,5 +1,5 @@
 import { Box, Container, Space, Title } from "@mantine/core"
-import SearchBar from "components/pages/Notes/SearchBar"
+import SearchBar from "components/pages/Notes/SearchBar/SearchBar"
 import NotesTree from "components/pages/Notes/Tree"
 import { getNotesTree, Node_Out } from "fs/notes"
 import Head from "next/head"

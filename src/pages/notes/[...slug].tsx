@@ -1,4 +1,4 @@
-import MDArticle from "components/MDArticle"
+import MDArticle from "components/MDArticle/MDArticle"
 import { getNoteBySlug, getNotesTree } from "fs/notes"
 import Head from "next/head"
 import path from "path"

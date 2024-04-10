@@ -17,7 +17,6 @@ export interface DataSet {
 
 export interface MapView {
     label: string
-    fullName: string
     description?: string
     dataSets: DataSet[]
 }

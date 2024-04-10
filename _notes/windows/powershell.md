@@ -56,14 +56,14 @@ $null               # Null value
 ```
 
 ## 4. Calculated properties
-Using `@{}` syntax we can specify calculated properties in one-liners. Inside the `@{}` we can specify [many parameters](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_calculated_properties?view=powershell-7.3#hashtable-key-definitions). The most important ones are:
+Using `@{}` syntax we can specify calculated properties in one-liners. Inside the `@{}` we can specify [many parameters](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_calculated_properties?view=powershell-7.3#hashtable-key-definitions) (semicolon-separated). The most important ones are:
 
 - `name` (`n`) - name of the created property
 - `expression` (`e`) - script used to calculate the new property
 
 ```powershell
 # Example usage
-<command> | select name,@{n="NewProp",e={ $_.Id + 1 }}
+<command> | select name,@{n="NewProp";e={ $_.Id + 1 }}
 ```
 
 ## 5. Loops

@@ -3,8 +3,7 @@ import { Color } from "./styles"
 import { MapView } from "./types"
 
 const EU: MapView = {
-    label: "EU",
-    fullName: "European Union",
+    label: "European Union (EU)",
     dataSets: [
         {
             label: "Members",
@@ -41,8 +40,7 @@ const EU: MapView = {
 }
 
 const NATO: MapView = {
-    label: "NATO",
-    fullName: "",
+    label: "North Atlantic Treaty Organization (NATO)",
     dataSets: [
         {
             label: "Members",
@@ -71,8 +69,7 @@ const NATO: MapView = {
 }
 
 const CSTO: MapView = {
-    label: "CSTO",
-    fullName: "",
+    label: "Collective Security Treaty Organization (CSTO)",
     dataSets: [
         {
             label: "Members",
@@ -96,8 +93,7 @@ const CSTO: MapView = {
 }
 
 const V4: MapView = {
-    label: "V4",
-    fullName: "",
+    label: "Visegrád Group (V4)",
     dataSets: [
         {
             label: "Members",
@@ -109,7 +105,6 @@ const V4: MapView = {
 
 const BRICS: MapView = {
     label: "BRICS",
-    fullName: "",
     dataSets: [
         {
             label: "Members",
@@ -135,7 +130,6 @@ const BRICS: MapView = {
 
 const SCHENGEN: MapView = {
     label: "Schengen zone",
-    fullName: "",
     dataSets: [
         {
             label: "Members",
@@ -158,8 +152,7 @@ const SCHENGEN: MapView = {
 }
 
 const OPEC: MapView = {
-    label: "OPEC",
-    fullName: "Organization of the Petroleum Exporting Countries",
+    label: "Organization of the Petroleum Exporting Countries (OPEC)",
     dataSets: [
         {
             label: "Members",
@@ -180,8 +173,7 @@ const OPEC: MapView = {
 }
 
 const ARAB_LEAGUE: MapView = {
-    label: "Arab League",
-    fullName: "League of Arab States",
+    label: "League of Arab States",
     dataSets: [
         {
             label: "Members",
@@ -199,7 +191,6 @@ const ARAB_LEAGUE: MapView = {
 
 const OPEN_BALKAN: MapView = {
     label: "Open Balkan",
-    fullName: "",
     dataSets: [
         {
             label: "Members",
@@ -215,8 +206,7 @@ const OPEN_BALKAN: MapView = {
 }
 
 const EFTA: MapView = {
-    label: "EFTA",
-    fullName: "European Free Trade Association",
+    label: "European Free Trade Association (EFTA)",
     dataSets: [
         {
             label: "Members",
@@ -235,8 +225,7 @@ const EFTA: MapView = {
 }
 
 const EEU: MapView = {
-    label: "EEU",
-    fullName: "Eurasian Economic Union",
+    label: "Eurasian Economic Union (EEU)",
     dataSets: [
         {
             label: "Members",
@@ -247,8 +236,7 @@ const EEU: MapView = {
 }
 
 const ASEAN: MapView = {
-    label: "ASEAN",
-    fullName: "Association of Southeast Asian Nations",
+    label: "Association of Southeast Asian Nations (ASEAN)",
     dataSets: [
         {
             label: "Members",
@@ -269,7 +257,6 @@ const ASEAN: MapView = {
 
 const AUKUS: MapView = {
     label: "AUKUS",
-    fullName: "AUKUS",
     dataSets: [
         {
             label: "Members",
@@ -280,8 +267,7 @@ const AUKUS: MapView = {
 }
 
 const CoE: MapView = {
-    label: "CoE",
-    fullName: "Council of Europe",
+    label: "Council of Europe",
     dataSets: [
         {
             label: "Members",
@@ -326,4 +312,5 @@ export const maps = {
     EEU,
     ASEAN,
     CoE,
+    AUKUS
 }
