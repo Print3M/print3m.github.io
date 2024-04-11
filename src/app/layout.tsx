@@ -10,7 +10,7 @@ import RootLayout from "@/components/RootLayout/RootLayout"
 export const metadata: Metadata = {
     title: "Print3M's Hub - blog & notes",
     description: "IT security research blog, notes.",
-    authors: [{ name: "Print3M", url: GlobalData.print3mUrl }],
+    authors: [{ name: "Print3M", url: GlobalData.url }],
     applicationName: "Print3M's Hub",
     keywords: [
         "IT",

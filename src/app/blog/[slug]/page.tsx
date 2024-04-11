@@ -1,14 +1,15 @@
 import MDArticle from "@/components/MDArticle/MDArticle"
 import { getPostBySlug } from "./_fs/posts"
 import { FC } from "react"
-import { getAllPostsMetadata } from "../_fs/posts"
+import { getAllPosts } from "../_fs/posts"
+import { convertISOtoDateStr } from "@/utils/utils"
 
 interface Params {
     slug: string
 }
 
 export const generateStaticParams = async (): Promise<Params[]> => {
-    const posts = await getAllPostsMetadata()
+    const posts = await getAllPosts()
 
     return posts.map(i => ({ slug: i.slug }))
 }
@@ -19,9 +20,12 @@ const Page: FC<{ params: Params }> = async ({ params }) => {
     return (
         <MDArticle
             mdx={post.mdx}
-            info={`Created at: ${post.createdAt}`}
+            info={`Created at: ${convertISOtoDateStr(post.createdAtISO)}`}
             title={post.title}
-            returnHref="/blog"
+            returnButton={{
+                text: "All posts",
+                href: "/blog",
+            }}
         />
     )
 }

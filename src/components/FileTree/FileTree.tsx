@@ -1,11 +1,10 @@
-import { Directory, NoteMetadata, TreeNode } from "@/app/notes/fs/types"
-import { Flex } from "@mantine/core"
-import Link from "next/link"
+import { Directory, NoteMetadata, TreeNode, isDirectory } from "@/app/notes/fs/types"
+import { Anchor, Flex } from "@mantine/core"
 import { FC } from "react"
+import classes from "./FileTree.module.css"
 
-const INDENT = 2
+const INDENT = 1
 
-const isDir = (obj: TreeNode): obj is Directory => "children" in obj
 const isLast = (index: number, list: any[]) => index === list.length - 1
 const space = (num: number) => "&nbsp;".repeat(num)
 
@@ -25,7 +24,7 @@ const getLines = (nested: NestedData, empty: boolean = false) => {
             if (empty) {
                 return result + (isContinued ? `│${space(INDENT)}` : `${space(INDENT - 1)}`)
             }
-            return result + (isContinued ? "├" : "└") + "─".repeat(INDENT - 1)
+            return result + (isContinued ? "├" : "└") + "".repeat(INDENT - 1)
         }
 
         result += isContinued ? `│${space(INDENT)}` : `${space(INDENT + 1)}`
@@ -35,7 +34,7 @@ const getLines = (nested: NestedData, empty: boolean = false) => {
 }
 
 const Node: FC<{ node: TreeNode; nested: NestedData }> = ({ node, nested }) => {
-    if (isDir(node)) {
+    if (isDirectory(node)) {
         return <TreeNodeDir node={node} nested={nested} />
     } else {
         return <TreeNodeNote node={node} nested={nested} />
@@ -45,7 +44,9 @@ const Node: FC<{ node: TreeNode; nested: NestedData }> = ({ node, nested }) => {
 const TreeNodeNote: FC<{ node: NoteMetadata; nested: NestedData }> = ({ node, nested }) => (
     <div>
         <span dangerouslySetInnerHTML={{ __html: getLines(nested) }} />{" "}
-        <Link href={`/notes/${node.slug}`}>{node.title}</Link>
+        <Anchor href={`/notes/${node.slug}`} title={node.title}>
+            {node.name}
+        </Anchor>
     </div>
 )
 
@@ -74,7 +75,9 @@ const TreeNodeDir: FC<{ node: Directory; nested: NestedData }> = ({ node, nested
 )
 
 const FileTree: FC<{ tree: TreeNode }> = ({ tree }) => (
-    <Node node={tree} nested={{ num: 0, continued: new Set() }} />
+    <div className={classes.wrapper}>
+        <Node node={tree} nested={{ num: 0, continued: new Set() }} />
+    </div>
 )
 
 export default FileTree

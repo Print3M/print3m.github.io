@@ -1,9 +1,0 @@
-# *
-User-agent: *
-Allow: /
-
-# Host
-Host: https://print3m.github.io
-
-# Sitemaps
-Sitemap: https://print3m.github.io/sitemap.xml

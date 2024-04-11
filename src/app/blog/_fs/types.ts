@@ -1,5 +1,5 @@
 export interface PostMetadata {
-    createdAt: string
+    createdAtISO: string
     slug: string
     title: string
 }

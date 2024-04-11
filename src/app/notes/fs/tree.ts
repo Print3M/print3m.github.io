@@ -1,23 +1,9 @@
 import * as dree from "dree"
-import matter from "gray-matter"
-import { Directory, NoteMetadata, TreeNode } from "./types"
-
-interface Frontmatter {
-    title: string
-}
-
-const getNoteMetadata = (path: string) => {
-    const metadata = matter.read(path).data as Frontmatter
-    const dirs = path.replace(".md", "").split("_notes/")[1]!.split("/")
-
-    return {
-        title: metadata.title,
-        slug: dirs.join("-"),
-    } satisfies NoteMetadata
-}
+import { Directory, NoteMetadata, TreeNode, isDirectory } from "./types"
+import { getNoteMetadataByPath } from "./note"
 
 const _convertDreeToTree = async (dreeData: dree.Dree) => {
-    if (dreeData.type == dree.Type.FILE) return getNoteMetadata(dreeData.path)
+    if (dreeData.type == dree.Type.FILE) return getNoteMetadataByPath(dreeData.path)
 
     let children: TreeNode[] = []
     for (const child of dreeData.children || []) {
@@ -40,4 +26,23 @@ export const getTree = async () => {
     })
 
     return await _convertDreeToTree(dreeRoot)
+}
+
+const _getAllNotes = (node: TreeNode): NoteMetadata[] => {
+    if (!isDirectory(node)) return [node]
+
+    let children: NoteMetadata[] = []
+    for (const child of node.children) {
+        for (const item of _getAllNotes(child)) {
+            children.push(item)
+        }
+    }
+
+    return children
+}
+
+export const getAllNotes = async () => {
+    const tree = await getTree()
+
+    return _getAllNotes(tree)
 }

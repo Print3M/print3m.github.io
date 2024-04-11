@@ -1,6 +1,8 @@
 "use client"
 
-import { AppShell, Box, Button, Flex, Group, Text, rem } from "@mantine/core"
+import { GlobalData } from "@/config"
+import { ActionIcon, AppShell, Box, Button, Flex, Group, Text, rem } from "@mantine/core"
+import { IconBrandGithub } from "@tabler/icons-react"
 import Link from "next/link"
 import { FC, PropsWithChildren } from "react"
 
@@ -25,7 +27,33 @@ const RootLayout: FC<PropsWithChildren> = ({ children }) => (
                     <Button component={Link} title="Blog" href="/blog" variant="subtle">
                         Blog
                     </Button>
-                    <Button variant="subtle">Notes</Button>
+                    <Button
+                        component={Link}
+                        title="Notes & cheat-sheets"
+                        href="/notes"
+                        variant="subtle"
+                    >
+                        Notes
+                    </Button>
+                    <Button
+                        component={Link}
+                        color="orange"
+                        title="SecuriTree.xyz"
+                        href={GlobalData.securitreeUrl}
+                        variant="subtle"
+                    >
+                        SecuriTree
+                    </Button>
+                    <ActionIcon
+                        component={Link}
+                        href={GlobalData.githubUrl}
+                        title="Print3M GitHub"
+                        variant="subtle"
+                        w={32}
+                        h={32}
+                    >
+                        <IconBrandGithub color="white" />
+                    </ActionIcon>
                 </Group>
             </Group>
         </AppShell.Header>

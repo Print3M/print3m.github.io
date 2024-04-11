@@ -1,9 +1,10 @@
-import { Box, Button, Title } from "@mantine/core"
-import { getAllPostsMetadata } from "./_fs/posts"
+import { Button, Text, Title } from "@mantine/core"
+import { getAllPosts } from "./_fs/posts"
 import Link from "next/link"
+import { convertISOtoDateStr } from "@/utils/utils"
 
 const Page = async () => {
-    const posts = await getAllPostsMetadata()
+    const posts = await getAllPosts()
 
     // TODO: CreatedAt
 
@@ -20,11 +21,15 @@ const Page = async () => {
                     href={`/blog/${i.slug}`}
                     w="100%"
                     variant="subtle"
-                    mb="xs"
+                    mb={2}
                     fz="1.1rem"
                     justify="left"
+                    h="auto"
+                    p="xs"
+                    ta="left"
                 >
                     {i.title}
+                    <Text pl="sm">({convertISOtoDateStr(i.createdAtISO)})</Text>
                 </Button>
             ))}
         </>

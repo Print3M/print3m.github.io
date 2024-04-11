@@ -1,18 +1,9 @@
-import { Box, Flex, Space, Title } from "@mantine/core"
+import { Box, Button, Space, Title } from "@mantine/core"
 import { IconArrowBackUp } from "@tabler/icons-react"
 import Link from "next/link"
 import { FC } from "react"
 import { MDX } from "@/types"
 import MDRenderer from "./MDRenderer/MDRenderer"
-
-const Return: FC<{ href: string }> = ({ href }) => (
-    <Link href={href}>
-        <Flex align="center" gap={5}>
-            <IconArrowBackUp />
-            Return
-        </Flex>
-    </Link>
-)
 
 /*
 const useStyles = createStyles(t => ({
@@ -44,14 +35,24 @@ const useStyles = createStyles(t => ({
 
 interface MDArticleProps {
     mdx: MDX
-    returnHref: string
+    returnButton: {
+        text: string | JSX.Element
+        href: string
+    }
     title: JSX.Element | string
     info?: JSX.Element | string
 }
 
-const MDArticle: FC<MDArticleProps> = ({ mdx, returnHref, title, info }) => (
+const MDArticle: FC<MDArticleProps> = ({ mdx, title, info, returnButton }) => (
     <>
-        <Return href={returnHref} />
+        <Button
+            component={Link}
+            href={returnButton.href}
+            variant="subtle"
+            leftSection={<IconArrowBackUp />}
+        >
+            {returnButton.text}
+        </Button>
         <Space h="md" />
         <Title order={1}>{title}</Title>
         <Box pt={6} fz="md">
