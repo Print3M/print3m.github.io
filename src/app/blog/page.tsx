@@ -8,7 +8,7 @@ const Page = async () => {
     // TODO: CreatedAt
 
     return (
-        <Box maw={600} mx="auto" mt="md">
+        <>
             <Title order={1} mb="xl">
                 Blog posts
             </Title>
@@ -19,13 +19,15 @@ const Page = async () => {
                     title={i.title}
                     href={`/blog/${i.slug}`}
                     w="100%"
-                    variant="light"
-                    mb="sm"
+                    variant="subtle"
+                    mb="xs"
+                    fz="1.1rem"
+                    justify="left"
                 >
                     {i.title}
                 </Button>
             ))}
-        </Box>
+        </>
     )
 }
 

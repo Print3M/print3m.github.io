@@ -5,7 +5,7 @@ import "@mantine/core/styles/global.css"
 import "@mantine/core/styles.css"
 
 import { GlobalData } from "@/config"
-import Layout from "@/components/Layout/Layout"
+import RootLayout from "@/components/RootLayout/RootLayout"
 
 export const metadata: Metadata = {
     title: "Print3M's Hub - blog & notes",
@@ -59,7 +59,7 @@ const theme = createTheme({
 
 const colorSchema = "dark"
 
-const RootLayout: FC<PropsWithChildren> = async ({ children }) => {
+const Layout: FC<PropsWithChildren> = async ({ children }) => {
     return (
         <html lang="en" data-mantine-color-scheme={colorSchema}>
             <head>
@@ -67,11 +67,11 @@ const RootLayout: FC<PropsWithChildren> = async ({ children }) => {
             </head>
             <body style={{ backgroundColor: "#242424" }}>
                 <MantineProvider forceColorScheme={colorSchema} theme={theme}>
-                    <Layout>{children}</Layout>
+                    <RootLayout>{children}</RootLayout>
                 </MantineProvider>
             </body>
         </html>
     )
 }
 
-export default RootLayout
+export default Layout

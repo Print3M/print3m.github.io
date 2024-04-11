@@ -49,18 +49,16 @@ interface MDArticleProps {
     info?: JSX.Element | string
 }
 
-const MDArticle: FC<MDArticleProps> = ({ mdx, returnHref, title, info }) => {
-    return (
-        <Box maw={600} mx="auto">
-            <Return href={returnHref} />
-            <Space h="md" />
-            <Title order={1}>{title}</Title>
-            <Box pt={6} fz="md">
-                {info}
-            </Box>
-            <MDRenderer mdx={mdx} />
+const MDArticle: FC<MDArticleProps> = ({ mdx, returnHref, title, info }) => (
+    <>
+        <Return href={returnHref} />
+        <Space h="md" />
+        <Title order={1}>{title}</Title>
+        <Box pt={6} fz="md">
+            {info}
         </Box>
-    )
-}
+        <MDRenderer mdx={mdx} />
+    </>
+)
 
 export default MDArticle
