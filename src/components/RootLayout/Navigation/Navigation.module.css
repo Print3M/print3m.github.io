@@ -1,0 +1,5 @@
+.buttons {
+    @mixin smaller-than 650px {
+        display: none;
+    }
+}
