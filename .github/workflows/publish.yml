@@ -32,6 +32,7 @@ jobs:
 
       - name: Build with Next.js 🏗️
         run: npm run build
+        run: sleep 5
 
       - name: Debugging
         run: ls -al
