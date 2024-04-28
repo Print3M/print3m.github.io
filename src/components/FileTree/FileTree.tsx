@@ -1,5 +1,5 @@
 import { Directory, NoteMetadata, TreeNode, isDirectory } from "@/app/notes/fs/types"
-import { Anchor, Flex } from "@mantine/core"
+import { Anchor, Box, Flex } from "@mantine/core"
 import { FC } from "react"
 import classes from "./FileTree.module.css"
 
@@ -75,9 +75,9 @@ const TreeNodeDir: FC<{ node: Directory; nested: NestedData }> = ({ node, nested
 )
 
 const FileTree: FC<{ tree: TreeNode }> = ({ tree }) => (
-    <div className={classes.wrapper}>
+    <Box ff="monospace">
         <Node node={tree} nested={{ num: 0, continued: new Set() }} />
-    </div>
+    </Box>
 )
 
 export default FileTree
