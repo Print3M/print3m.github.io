@@ -24,6 +24,7 @@ Below is a set of default Windows client and server settings right after install
 * [RDP](https://securitree.xyz/windows-lateral-movement/rdp) service is disabled.
 * RDP Pass-The-Hash (Restricted Admin Mode) is disabled. [Read more here](https://securitree.xyz/windows-lateral-movement/rdp).
 * [WMI](https://securitree.xyz/windows-lateral-movement/ms-wmi) is allowed on firewall.
+* SMB is allowed on firewall. This is especially important for [RPC-named-pipe-based lateral movement techniques](https://securitree.xyz/windows-lateral-movement/ms-rpc) such as [PsExec or SmbExec](https://securitree.xyz/windows-lateral-movement/ms-scmr).
 
 Default Domain Controller (with AD DS enabled) port scan:
 
