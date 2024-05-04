@@ -1,11 +1,11 @@
 .navigation {
-    @mixin smaller-than 650px {
+    @mixin smaller-than 670px {
         display: none;
     }
 }
 
 .burger {
-    @mixin larger-than 650px {
+    @mixin larger-than 670px {
         display: none;
     }
 }

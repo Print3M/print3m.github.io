@@ -8,6 +8,7 @@ import Logo from "./Logo/Logo"
 import { DesktopNavigation } from "./Navigation/Navigation"
 import MobileDrawer from "./MobileDrawer/MobileDrawer"
 import { usePathname, useRouter } from "next/navigation"
+import { SocialIcons } from "./SocialIcons/SocialIcons"
 
 const Hamburger = () => {
     const [opened, actions] = useDisclosure(false)
@@ -46,9 +47,12 @@ const RootLayout: FC<PropsWithChildren> = ({ children }) => (
         </AppShell.Main>
 
         <AppShell.Footer ta="center" mt={100} pos="static">
-            <Text pt="xs" pb="xs">
-                Print3M&apos;s hub © {new Date().getFullYear()}
+            <Text pt="xs">
+                Print3M&apos;s Hub © {new Date().getFullYear()}
             </Text>
+            <Group justify="center" pt={4} pb="xs">
+                <SocialIcons />
+            </Group>
         </AppShell.Footer>
     </AppShell>
 )

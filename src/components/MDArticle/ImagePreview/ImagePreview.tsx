@@ -32,6 +32,7 @@ const ImagePreview: FC<Props> = ({ src, onClose }) => {
                             maw="95vw"
                             w="auto"
                             fit="contain"
+                            alt="Image Preview"
                         />
                     </Overlay>
                 </RemoveScroll>

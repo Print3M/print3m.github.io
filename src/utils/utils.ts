@@ -9,9 +9,3 @@ export const slugify = (input: string) =>
         .trim() // Trim leading and trailing whitespace
 
 export const getDateStr = (date: Date) => date.toLocaleDateString("en-GB")
-
-export const convertISOtoDateStr = (isoDate: string) => {
-    const d = new Date(isoDate)
-
-    return getDateStr(d)
-}

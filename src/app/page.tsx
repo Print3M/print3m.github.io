@@ -1,4 +1,4 @@
-import BasicLayout from "@/components/BasicLayout"
+import BasicLayout from "@/components/BasicLayout/BasicLayout"
 import { Button, Divider, Flex, Space, Text } from "@mantine/core"
 import Link from "next/link"
 import { FC } from "react"

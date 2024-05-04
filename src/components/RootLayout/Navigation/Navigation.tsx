@@ -1,10 +1,7 @@
-import { FC } from "react"
-import classes from "./Navigation.module.css"
-import { ActionIcon, Button, Group, Stack } from "@mantine/core"
+import { Button, Group, Stack } from "@mantine/core"
 import Link from "next/link"
 import { GlobalData } from "@/config"
-import { IconBrandGithub } from "@tabler/icons-react"
-import Logo from "../Logo/Logo"
+import { SocialIcons } from "../SocialIcons/SocialIcons"
 
 const HomeButton = () => (
     <Button component={Link} title="Home" href="/" variant="subtle">
@@ -36,19 +33,6 @@ const SecuritreeButton = () => (
     </Button>
 )
 
-const GitHubIcon = () => (
-    <ActionIcon
-        component={Link}
-        href={GlobalData.githubUrl}
-        title="Print3M GitHub"
-        variant="subtle"
-        w={32}
-        h={32}
-    >
-        <IconBrandGithub color="white" />
-    </ActionIcon>
-)
-
 export const DesktopNavigation = () => (
     <Group>
         <HomeButton />
@@ -56,7 +40,7 @@ export const DesktopNavigation = () => (
         <NotesButton />
         <SecuritreeButton />
         <Group>
-            <GitHubIcon />
+            <SocialIcons />
         </Group>
     </Group>
 )
@@ -68,7 +52,7 @@ export const MobileNavigation = () => (
         <NotesButton />
         <SecuritreeButton />
         <Group justify="center">
-            <GitHubIcon />
+            <SocialIcons />
         </Group>
     </Stack>
 )

@@ -2,7 +2,6 @@ import MDArticle from "@/components/MDArticle/MDArticle"
 import { getPostBySlug } from "./_fs/posts"
 import { FC } from "react"
 import { getAllPosts } from "../_fs/posts"
-import { convertISOtoDateStr } from "@/utils/utils"
 
 interface Params {
     slug: string
@@ -20,7 +19,7 @@ const Page: FC<{ params: Params }> = async ({ params }) => {
     return (
         <MDArticle
             mdx={post.mdx}
-            info={`Created at: ${convertISOtoDateStr(post.createdAtISO)}`}
+            info={`Created at: ${post.createdAt}`}
             title={post.title}
             returnButton={{
                 text: "All posts",

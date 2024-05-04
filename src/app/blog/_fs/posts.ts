@@ -2,21 +2,20 @@ import "server-only"
 
 import * as dree from "dree"
 import matter from "gray-matter"
-import fs from "fs"
 import { PostMetadata } from "./types"
 
 interface Frontmatter {
     title: string
+    createdAt: string
 }
 
 export const getPostMetadata = (path: string) => {
-    const createdAtISO = fs.statSync(path).birthtime.toISOString()
     const metadata = matter.read(path).data as Frontmatter
     const slug = path.replace(".md", "").split("/").slice(-1)[0]!
 
     return {
         slug,
-        createdAtISO,
+        createdAt: metadata.createdAt,
         title: metadata.title,
     } satisfies PostMetadata
 }
@@ -39,8 +38,8 @@ export const getAllPosts = async () => {
 
     return posts.sort((a, b) => {
         // Sort by latest
-        const dateA = new Date(a.createdAtISO)
-        const dateB = new Date(b.createdAtISO)
+        const dateA = new Date(a.createdAt)
+        const dateB = new Date(b.createdAt)
 
         return dateA > dateB ? -1 : dateA < dateB ? 1 : 0
     })

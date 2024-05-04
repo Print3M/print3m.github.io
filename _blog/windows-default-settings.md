@@ -1,5 +1,6 @@
 ---
 title: Windows default security settings
+createdAt: 29/04/2024
 ---
 
 Below is a set of default Windows client and server settings right after installing and configuring the domain. List compiled from my own observations, may vary between Windows versions. I used Windows Server 2022 Evaluation and Windows 10 Evaluation systems. This can be useful for [domain lateral movement](https://securitree.xyz/windows-lateral-movement) or [domain privilege escalation](https://securitree.xyz/windows-domain-privesc).
