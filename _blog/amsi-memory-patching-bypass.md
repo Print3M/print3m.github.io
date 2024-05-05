@@ -5,6 +5,8 @@ createdAt: 03/05/2024
 
 **DISCLAIMER**: This is not a new AMSI bypass technique. As far as I know it was discovered by [Rasta Mouse in 2021](https://rastamouse.me/memory-patching-amsi-bypass/).
 
+**TLDR**: [Repository with final PowerShell script](https://github.com/Print3M/amsi-memory-patching?tab=readme-ov-file)
+
 ## What is AMSI?
 
 AMSI stands for _Antimalware Scan Interface_. It's an antivirus-agnostic security feature introduced in the Windows OS in 2015. Basically, many different security products can listen on scan requests triggered by AMSI functions (so-called _AMSI-aware antiviruses_).
