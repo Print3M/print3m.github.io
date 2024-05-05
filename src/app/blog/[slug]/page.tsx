@@ -2,6 +2,7 @@ import MDArticle from "@/components/MDArticle/MDArticle"
 import { getPostBySlug } from "./_fs/posts"
 import { FC } from "react"
 import { getAllPosts } from "../_fs/posts"
+import { Metadata, ResolvingMetadata } from "next"
 
 interface Params {
     slug: string
@@ -11,6 +12,17 @@ export const generateStaticParams = async (): Promise<Params[]> => {
     const posts = await getAllPosts()
 
     return posts.map(i => ({ slug: i.slug }))
+}
+
+export const generateMetadata = async (
+    { params }: { params: Params },
+    _: ResolvingMetadata
+): Promise<Metadata> => {
+    const post = await getPostBySlug(params.slug)
+
+    return {
+        title: `${post.title} | Print3M`,
+    }
 }
 
 const Page: FC<{ params: Params }> = async ({ params }) => {
