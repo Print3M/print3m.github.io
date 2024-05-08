@@ -36,6 +36,8 @@ As we can see above, our action is performed only when the DLL is loaded. We hav
 
 It can also be a way to bypass certain security features as in the case of AMSI. By controlling the `AmsiScanBuffer()` function from `amsi.dll` we are able to return `0` every time and effectively disable AMSI checks. See [my previous post](/blog/amsi-memory-patching-bypass) for a better understanding of this concept.
 
+## More manual way of DLL-Wrapping
+
 So how can we do it? Well, we can create functions in our custom `fake-amsi.dll` DLL module, whose names and parameters will coincide with those of the legit `amsi.dll`. Let's see what is exported from `amsi.dll` using PE-bear program:
 
 ![PE-bear screenshot: exported functions of amsi.dll](/imgs/amsi-dll-wrapper/1.png)
