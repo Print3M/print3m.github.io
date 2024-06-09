@@ -1,5 +1,5 @@
 ---
-title: Msfvenom detection in 2024
+title: Msfvenom detection rate in 2024
 createdAt: 09/06/2024
 ---
 
