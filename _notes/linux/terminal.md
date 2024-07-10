@@ -252,6 +252,7 @@ crontab -e                              # Edit cron entries
 
 ```bash
 openssl genrsa 2048 > rsa.key           # Generate RSA key
+ssh-keygen -t rsa -N ""                 # Generate RSA key-pair
 ```
 
 ## 20. Text file manipulation
