@@ -3,6 +3,7 @@ import { getPostBySlug } from "./_fs/posts"
 import { FC } from "react"
 import { getAllPosts } from "../_fs/posts"
 import { Metadata, ResolvingMetadata } from "next"
+import { GlobalData } from "@/config"
 
 interface Params {
     slug: string
@@ -22,6 +23,21 @@ export const generateMetadata = async (
 
     return {
         title: `${post.title} | Print3M`,
+        description: post.description,
+        twitter: {
+            card: "summary_large_image",
+            title: post.title,
+            description: post.description,
+            images: `${GlobalData.url}${post.thumbnail}`,
+        },
+        openGraph: {
+            type: "article",
+            title: post.title,
+            description: post.description,
+            publishedTime: post.createdAt,
+            url: `/blog/${post.slug}`,
+            images: post.thumbnail && `${GlobalData.url}${post.thumbnail}`,
+        },
     }
 }
 

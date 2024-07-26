@@ -7,6 +7,8 @@ import { PostMetadata } from "./types"
 interface Frontmatter {
     title: string
     createdAt: string
+    thumbnail?: string
+    description?: string
 }
 
 export const getPostMetadata = (path: string) => {
@@ -17,6 +19,8 @@ export const getPostMetadata = (path: string) => {
         slug,
         createdAt: metadata.createdAt,
         title: metadata.title,
+        thumbnail: metadata.thumbnail,
+        description: metadata.description
     } satisfies PostMetadata
 }
 

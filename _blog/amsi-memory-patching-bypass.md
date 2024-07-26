@@ -1,6 +1,6 @@
 ---
 title: PowerShell AMSI bypass by Memory Patching
-createdAt: 03/05/2024
+createdAt: "2024-05-03"
 ---
 
 **DISCLAIMER**: This is not a new AMSI bypass technique. As far as I know it was discovered by [Rasta Mouse in 2021](https://rastamouse.me/memory-patching-amsi-bypass/).

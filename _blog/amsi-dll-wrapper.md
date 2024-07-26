@@ -1,6 +1,6 @@
 ---
 title: Manual DLL-Wrapping technique (AMSI DLL-Implant)
-createdAt: 08/05/2024
+createdAt: "2024-05-08"
 ---
 
 **TLDR**: [Repository with final AMSI Dll-Implant](https://github.com/Print3M/amsi-dll-wrapper)

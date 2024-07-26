@@ -7,10 +7,15 @@ import "@mantine/core/styles.css"
 import { GlobalData } from "@/config"
 import RootLayout from "@/components/RootLayout/RootLayout"
 
+const title = "Print3M's Hub - IT security blog"
+const description = "IT security research and programming: blog & notes."
+const author = "Print3M"
+
 export const metadata: Metadata = {
-    title: "Print3M's Hub - IT security blog",
-    description: "IT security research and programming: blog & notes.",
-    authors: [{ name: "Print3M", url: GlobalData.url }],
+    metadataBase: new URL(GlobalData.url),
+    title,
+    description,
+    authors: [{ name: author, url: GlobalData.url }],
     applicationName: "Print3M's Hub",
     keywords: [
         "IT",
@@ -22,6 +27,21 @@ export const metadata: Metadata = {
         "blog",
         "cheat-sheet",
     ],
+    twitter: {
+        title,
+        description,
+        card: "summary",
+        creator: GlobalData.xCreator,
+        site: GlobalData.url,
+    },
+    openGraph: {
+        title,
+        locale: "en_US",
+        determiner: "auto",
+        type: "website",
+        siteName: "Print3M's Blog",
+        url: GlobalData.url,
+    },
 }
 
 const theme = createTheme({

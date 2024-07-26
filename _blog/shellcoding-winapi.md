@@ -1,6 +1,8 @@
 ---
-title: \[Shellcode x64\] Find and execute WinAPI functions with Assembly
-thumbnail: imgs/shellcoding-winapi/giga-chad.png
+title: "[Shellcode x64] Find and execute WinAPI functions with Assembly"
+createdAt: "2024-07-26"
+thumbnail: /imgs/shellcoding-winapi/giga-chad.png
+description: We begin the adventure with assembly and shellcoding on Windows x64. In this post, we run the WinAPI function without any imports.
 ---
 
 TLDR: [NASM source code here (well documented, easy to read).](https://github.com/Print3M/shellcodes/blob/main/calc-exe.asm)
@@ -144,7 +146,9 @@ PE file structure (simplified):
 3. PE Headers (`kernel32.dll` base addr + `e_lfanew` RVA)
    - ExportTable (offset of PE Headers addr = `0x70`)
 
-# TUTAJ GRAFIKA GDZIE MUSZĘ PRZESKOCZYĆ
+This is the path we need to follow:
+
+![kernel32.dll PE format structure - path to Export Table](/imgs/shellcoding-winapi/pe-structure.png)
 
 Let's take a look at the `IMAGE_DOS_HEADER`. It's the first structure of any PE file:
 
@@ -320,11 +324,11 @@ Done, we are ready to compile!
 
 I won't elaborate much here. **I wrote a simple script in Python ([shellcoder.py](https://github.com/Print3M/shellcoder)) that compiles the NASM code into an executable EXE format**. This makes it very easy to debug our "shellcode", correct it and compile it again with one click.
 
-# Zdjęcie kompilacji
+After successful compilation, we are ready to run!
 
-After compilation, we are ready to run!
+![Shellcode compilation and calc.exe popup](/imgs/shellcoding-winapi/calc-exe-popup.png)
 
-# Zdjęcie jak zadziałało
+Nice.
 
 ## Conclusion
 
