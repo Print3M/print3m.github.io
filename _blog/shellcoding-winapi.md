@@ -1,7 +1,7 @@
 ---
 title: "[Shellcode x64] Find and execute WinAPI functions with Assembly"
 createdAt: "2024-07-26"
-thumbnail: /imgs/shellcoding-winapi/giga-chad.png
+thumbnail: /imgs/shellcoding-winapi/giga-chad-title.png
 description: We begin the adventure with assembly and shellcoding on Windows x64. In this post, we run the WinAPI function without any imports.
 ---
 
