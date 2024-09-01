@@ -1,5 +1,5 @@
 ---
-title: C standard vs implementation - platonism and compilers.
+title: C standard vs implementation - platonism and compilers
 createdAt: "2024-09-01"
 thumbnail: /imgs/c-standard-vs-implementation/thumbnail.webp
 description: The C standard is not actually read by anyone, except perhaps compiler developers. I want to define what is part of the standard and what is an implementation.
