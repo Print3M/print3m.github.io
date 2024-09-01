@@ -1,27 +1,11 @@
 ---
-title: C standard vs implementations - platonism and compilers.
+title: C standard vs implementation - platonism and compilers.
 createdAt: "2024-09-01"
 thumbnail: /imgs/c-standard-vs-implementation/thumbnail.webp
 description: The C standard is not actually read by anyone, except perhaps compiler developers. I want to define what is part of the standard and what is an implementation.
 ---
 
-- [1. Introduction](#1-introduction)
-- [2. Standarization of C Language](#2-standarization-of-c-language)
-  - [2.1. K\&R C (1972-1989)](#21-kr-c-1972-1989)
-  - [2.2. ANSI C (1989)](#22-ansi-c-1989)
-  - [2.3. ISO C (1990-now)](#23-iso-c-1990-now)
-- [3. C Naming and Implementations](#3-c-naming-and-implementations)
-- [4. C Standard Library](#4-c-standard-library)
-  - [4.1. POSIX (Unix-like) systems](#41-posix-unix-like-systems)
-  - [4.2. Windows](#42-windows)
-- [5. Compiler (implementation specifics)](#5-compiler-implementation-specifics)
-  - [5.1. Compiler-specific keywords](#51-compiler-specific-keywords)
-  - [5.2. Compiler built-in functions (intrinsics)](#52-compiler-built-in-functions-intrinsics)
-  - [5.3. Compiler-specific directives](#53-compiler-specific-directives)
-  - [5.4. Undefined behavior](#54-undefined-behavior)
-  - [5.5. Unspecified behavior](#55-unspecified-behavior)
-  - [5.6. Implementation-defined behavior](#56-implementation-defined-behavior)
-- [6. Conclusion](#6-conclusion)
+![C Standard vs Implementation banner - Dennis Ritchie](/imgs/c-standard-vs-implementation/thumbnail.webp)
 
 ## 1. Introduction
 
