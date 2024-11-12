@@ -1,12 +1,17 @@
 ---
 title: From C to shellcode (simple way)
+createdAt: "2024-11-12"
+thumbnail: /imgs/from-c-to-shellcode/thumbnail.webp
+description: In this post I demonstrate how to write and compile C code to get a pure standalone shellcode in easy way. 
 ---
 
-TL;DR; [c-to-shellcode GitHub](https://github.com/Print3M/c-to-shellcode)
+TL;DR; [c-to-shellcode.py GitHub](https://github.com/Print3M/c-to-shellcode)
 
-Shellcode (in terms of malware development) is a independent piece of machine code that can be injected anywhere and executed without worrying about dependencies, DLLs, stack layout, other kinds of adversity.
+![From C to shellcode banner](/imgs/from-c-to-shellcode/thumbnail.webp)
 
-The most obvious way to create shellcode is to use Assembly language, which is very predictable and easy to use after compilation. Dependency-free Assembly guarantees the conditions provided for a valid shellcode. However, writing extensive code in Assembly can be quite complicated. Mankind noticed this problem long ago and created the C language in the 1970s. I write about the history of the C language here: [C standard vs implementation](https://print3m.github.io/blog/c-standard-vs-implementation).
+Shellcode (in terms of malware development) is a independent piece of machine code that can be injected anywhere and executed without worrying about dependencies, DLLs, stack layout, other kinds of variables.
+
+The most obvious way to create shellcode is to use Assembly language, which is very predictable. Dependency-free Assembly guarantees the conditions provided for a valid shellcode. However, writing extensive code in Assembly can be quite complicated. Mankind noticed this problem long time ago and created the C language in the 1970s. I write about the history of the C language here: [C standard vs implementation](https://print3m.github.io/blog/c-standard-vs-implementation).
 
 C is much easier to use than Assembly but has drawbacks nonetheless. We do not have full control over the stack, the machine code produced is larger and less predictable. Compilers add a lot of their own functions and compile everything into a complex PE or ELF file structure.
 
@@ -55,7 +60,7 @@ FUNC int ThisIsExampleFunction(void) {
 }
 ```
 
-## Compilation
+## Compilation and linking
 
 For compilation I use MinGW (`x86_64-w64-mingw32-gcc-win32`) which is a port of GCC for Windows. Trying to do the same from MSVC on Windows can lead to mental breakdown. MinGW implements all necessary GCC flags to generate shellcode:
 
