@@ -238,7 +238,7 @@ Code written in C is just readable, easy to expand and maintain. In fact, it is 
 
 ## Automation script
 
-I wouldn't be myself if I didn't automate the entire process. A Python script that compiles C to shellcode and injects it right into the example loader can be found here: [https://github.com/Print3M/c-to-shellcode](c-to-shellcode.py)
+I wouldn't be myself if I didn't automate the entire process. A Python script that compiles C to shellcode and injects it right into the example loader can be found here: [c-to-shellcode.py](https://github.com/Print3M/c-to-shellcode)
 
 The script generates the following files:
 
