@@ -79,19 +79,17 @@ const theme = createTheme({
 
 const colorSchema = "dark"
 
-const Layout: FC<PropsWithChildren> = async ({ children }) => {
-    return (
-        <html lang="en" data-mantine-color-scheme={colorSchema}>
-            <head>
-                <ColorSchemeScript forceColorScheme={colorSchema} />
-            </head>
-            <body style={{ backgroundColor: "#242424" }}>
-                <MantineProvider forceColorScheme={colorSchema} theme={theme}>
-                    <RootLayout>{children}</RootLayout>
-                </MantineProvider>
-            </body>
-        </html>
-    )
-}
+const Layout: FC<PropsWithChildren> = async ({ children }) => (
+    <html lang="en" data-mantine-color-scheme={colorSchema}>
+        <head>
+            <ColorSchemeScript forceColorScheme={colorSchema} />
+        </head>
+        <body style={{ backgroundColor: "#242424" }}>
+            <MantineProvider forceColorScheme={colorSchema} theme={theme}>
+                <RootLayout>{children}</RootLayout>
+            </MantineProvider>
+        </body>
+    </html>
+)
 
 export default Layout
