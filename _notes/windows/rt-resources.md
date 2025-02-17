@@ -21,3 +21,5 @@ title: Red-team resources
 * [AD Offensive Security Cheat-sheet](https://github.com/S1ckB0y1337/Active-Directory-Exploitation-Cheat-Sheet) - Active Directory offensive security techniques.
 
 * [AD Pentesting Mind Map](https://github.com/esidate/pentesting-active-directory)
+
+* [Awesome EDR Bypass](https://github.com/tkmru/awesome-edr-bypass)

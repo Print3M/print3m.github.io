@@ -26,10 +26,10 @@ const SecuritreeButton = () => (
         component={Link}
         color="orange"
         title="SecuriTree.xyz"
-        href={GlobalData.securitreeUrl}
+        href={GlobalData.sectubeUrl}
         variant="subtle"
     >
-        SecuriTree
+        SecTube
     </Button>
 )
 
