@@ -82,7 +82,7 @@ phishlets get-hosts gmail
 - lures
 - phishlet
 
-- <https://research.aurainfosec.io/pentest/hook-line-and-phishlet/>
-- <https://breakdev.org/evilginx-3-2/>
-- <https://mrd0x.com/browser-in-the-browser-phishing-attack/>
-- <https://breakdev.org/evilginx-3-3-go-phish/>
+- https://research.aurainfosec.io/pentest/hook-line-and-phishlet/
+- https://breakdev.org/evilginx-3-2/
+- https://mrd0x.com/browser-in-the-browser-phishing-attack/
+- https://breakdev.org/evilginx-3-3-go-phish/
