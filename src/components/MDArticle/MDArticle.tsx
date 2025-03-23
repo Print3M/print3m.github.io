@@ -1,37 +1,9 @@
 import { Box, Button, Space, Title } from "@mantine/core"
 import { IconArrowBackUp } from "@tabler/icons-react"
 import Link from "next/link"
-import { FC } from "react"
+import { FC, JSX } from "react"
 import { MDX } from "@/types"
 import MDRenderer from "./MDRenderer/MDRenderer"
-
-/*
-const useStyles = createStyles(t => ({
-    markdown: {
-        textAlign: "justify",
-        fontFamily: "Helvetica",
-
-        "p, code, pre, ul, li, blockquote": {
-            fontSize: "1rem",
-        },
-        ul: {
-            marginLeft: 16,
-            paddingLeft: 0,
-        },
-        blockquote: {
-            padding: 0,
-            paddingLeft: 12,
-            paddingTop: 3,
-            paddingBottom: 0,
-            margin: 0,
-            borderLeft: `4px solid ${t.colors.brand[4]}`,
-        },
-        code: {
-            fontSize: "0.92rem"
-        }
-    },
-}))
-*/
 
 interface MDArticleProps {
     mdx: MDX

@@ -16,10 +16,11 @@ export const generateStaticParams = async (): Promise<Params[]> => {
 }
 
 export const generateMetadata = async (
-    { params }: { params: Params },
+    { params }: { params: Promise<Params> },
     _: ResolvingMetadata
 ): Promise<Metadata> => {
-    const post = await getPostBySlug(params.slug)
+    const { slug } = await params
+    const post = await getPostBySlug(slug)
 
     return {
         title: `${post.title} | Print3M`,
@@ -41,8 +42,9 @@ export const generateMetadata = async (
     }
 }
 
-const Page: FC<{ params: Params }> = async ({ params }) => {
-    const post = await getPostBySlug(params.slug)
+const Page: FC<{ params: Promise<Params> }> = async ({ params }) => {
+    const { slug } = await params
+    const post = await getPostBySlug(slug)
 
     return (
         <MDArticle

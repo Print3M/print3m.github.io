@@ -3,6 +3,8 @@ import { MetadataRoute } from "next"
 import { getAllNotes } from "./notes/fs/tree"
 import { getAllPosts } from "./blog/_fs/posts"
 
+export const dynamic = "force-static"
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const notes = await getAllNotes()
     const posts = await getAllPosts()

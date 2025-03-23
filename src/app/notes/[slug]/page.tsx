@@ -13,8 +13,9 @@ export const generateStaticParams = async () => {
     return notes.map(i => ({ slug: i.slug })) satisfies Params[]
 }
 
-const Page: FC<{ params: Params }> = async ({ params }) => {
-    const note = await getNoteBySlug(params.slug)
+const Page: FC<{ params: Promise<Params> }> = async ({ params }) => {
+    const { slug } = await params
+    const note = await getNoteBySlug(slug)
 
     return (
         <>

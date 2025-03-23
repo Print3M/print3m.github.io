@@ -36,7 +36,6 @@
         "postcss": "^8.4.35",
         "postcss-preset-mantine": "^1.13.0",
         "postcss-simple-vars": "^7.0.1",
-        "typescript": "^5",
-        "ts-node": "^10.9.2"
+        "typescript": "^5"
     }
 }

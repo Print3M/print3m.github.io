@@ -1,7 +1,7 @@
 import BasicLayout from "@/components/BasicLayout/BasicLayout"
 import { Button, Divider, Flex, Space, Text } from "@mantine/core"
 import Link from "next/link"
-import { FC } from "react"
+import { FC, JSX } from "react"
 
 const SubPageButton: FC<{ href: string; title: string; children: JSX.Element | string }> = ({
     children,
@@ -43,19 +43,6 @@ const Page = () => (
                         </SubPageButton>
                         <SubPageButton href="/blog" title="Blog">
                             Blog
-                        </SubPageButton>
-                    </Flex>
-                }
-            />
-
-            <Section
-                label="Other"
-                text="Hobby interactive political map of the world with international organizations and other
-            interesting facts. 🗺️"
-                bottom={
-                    <Flex justify="center">
-                        <SubPageButton href="/world-map" title="World Map">
-                            World Map
                         </SubPageButton>
                     </Flex>
                 }

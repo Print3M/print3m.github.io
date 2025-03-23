@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title>Print3M Blog</title>
+        <link>https://print3m.github.io/blog-rss.xml</link>
+        <description>Offensive IT security blog, redteaming and programming.</description>
+        <lastBuildDate>Sun, 23 Mar 2025 11:26:10 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <language>en</language>
+        <copyright>Print3M © 2025</copyright>
+        <item>
+            <title><![CDATA[From C to shellcode (simple way)]]></title>
+            <link>https://print3m.github.io/blog/from-c-to-shellcode</link>
+            <guid>https://print3m.github.io/blog/from-c-to-shellcode</guid>
+            <pubDate>Tue, 12 Nov 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[In this post I demonstrate how to write and compile C code to get a pure standalone shellcode in easy way.]]></description>
+            <enclosure url="https://print3m.github.io/imgs/from-c-to-shellcode/thumbnail.webp" length="0" type="image/webp"/>
+        </item>
+        <item>
+            <title><![CDATA[C standard vs implementation - platonism and compilers]]></title>
+            <link>https://print3m.github.io/blog/c-standard-vs-implementation</link>
+            <guid>https://print3m.github.io/blog/c-standard-vs-implementation</guid>
+            <pubDate>Sun, 01 Sep 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[The C standard is not actually read by anyone, except perhaps compiler developers. I want to define what is part of the standard and what is an implementation.]]></description>
+            <enclosure url="https://print3m.github.io/imgs/c-standard-vs-implementation/thumbnail.webp" length="0" type="image/webp"/>
+        </item>
+        <item>
+            <title><![CDATA[[Shellcode x64] Find and execute WinAPI functions with Assembly]]></title>
+            <link>https://print3m.github.io/blog/x64-winapi-shellcoding</link>
+            <guid>https://print3m.github.io/blog/x64-winapi-shellcoding</guid>
+            <pubDate>Fri, 26 Jul 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[We begin the adventure with assembly and shellcoding on Windows x64. In this post, we run the WinAPI function without any imports.]]></description>
+            <enclosure url="https://print3m.github.io/imgs/x64-shellcoding-winapi/giga-chad-title.png" length="0" type="image/png"/>
+        </item>
+        <item>
+            <title><![CDATA[Msfvenom detection rate in 2024]]></title>
+            <link>https://print3m.github.io/blog/msfvenom-detection-in-2024</link>
+            <guid>https://print3m.github.io/blog/msfvenom-detection-in-2024</guid>
+            <pubDate>Sun, 09 Jun 2024 00:00:00 GMT</pubDate>
+            <enclosure url="https://print3m.github.ioundefined" length="0" type="image//"/>
+        </item>
+        <item>
+            <title><![CDATA[Manual DLL-Wrapping technique (AMSI DLL-Implant)]]></title>
+            <link>https://print3m.github.io/blog/amsi-dll-wrapper</link>
+            <guid>https://print3m.github.io/blog/amsi-dll-wrapper</guid>
+            <pubDate>Wed, 08 May 2024 00:00:00 GMT</pubDate>
+            <enclosure url="https://print3m.github.ioundefined" length="0" type="image//"/>
+        </item>
+        <item>
+            <title><![CDATA[PowerShell AMSI bypass by Memory Patching]]></title>
+            <link>https://print3m.github.io/blog/amsi-memory-patching-bypass</link>
+            <guid>https://print3m.github.io/blog/amsi-memory-patching-bypass</guid>
+            <pubDate>Fri, 03 May 2024 00:00:00 GMT</pubDate>
+            <enclosure url="https://print3m.github.ioundefined" length="0" type="image//"/>
+        </item>
+        <item>
+            <title><![CDATA[Windows default security settings]]></title>
+            <link>https://print3m.github.io/blog/windows-default-settings</link>
+            <guid>https://print3m.github.io/blog/windows-default-settings</guid>
+            <pubDate>Mon, 29 Apr 2024 00:00:00 GMT</pubDate>
+            <enclosure url="https://print3m.github.ioundefined" length="0" type="image//"/>
+        </item>
+    </channel>
+</rss>

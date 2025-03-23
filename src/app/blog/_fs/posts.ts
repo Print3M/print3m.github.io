@@ -6,6 +6,7 @@ import { PostMetadata } from "./types"
 import { Feed } from "feed"
 import path from "path"
 import fs from 'fs'
+import { GlobalData } from "@/config"
 
 interface Frontmatter {
     title: string
@@ -54,7 +55,7 @@ export const getAllPosts = async () => {
 
 export const generateRss = async (posts: PostMetadata[]) => {
     const filename = "blog-rss.xml"
-    const url = `https://print3m.github.io/${filename}`
+    const url = `${GlobalData.url}/${filename}`
     const author = {
         link: "https://x.com/Print3M_",
         name: "Print3M",
@@ -71,14 +72,14 @@ export const generateRss = async (posts: PostMetadata[]) => {
     })
 
     posts.forEach(post => {
-        const url = `https://print3m.github.io/blog/${post.slug}`
+        const url = `${GlobalData.url}/blog/${post.slug}`
 
         feed.addItem({
             title: post.title,
             id: url,
             link: url,
             description: post.description,
-            image: post.thumbnail,
+            image: `${GlobalData.url}${post.thumbnail}`,
             date: new Date(post.createdAt),
             author: [author],
         })
