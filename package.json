@@ -14,6 +14,7 @@
         "@mantine/hooks": "^7.5.2",
         "@tabler/icons-react": "^2.47.0",
         "dree": "^4.7.0",
+        "feed": "^4.2.2",
         "gray-matter": "^4.0.3",
         "next": "14.1.0",
         "next-mdx-remote": "^4.4.1",
@@ -35,6 +36,7 @@
         "postcss": "^8.4.35",
         "postcss-preset-mantine": "^1.13.0",
         "postcss-simple-vars": "^7.0.1",
-        "typescript": "^5"
+        "typescript": "^5",
+        "ts-node": "^10.9.2"
     }
 }

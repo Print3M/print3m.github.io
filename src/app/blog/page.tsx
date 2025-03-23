@@ -1,9 +1,10 @@
 import { Stack, Title } from "@mantine/core"
-import { getAllPosts } from "./_fs/posts"
+import { generateRss, getAllPosts } from "./_fs/posts"
 import BlogPostButton from "@/components/BlogPostButton/BlogPostButton"
 
 const Page = async () => {
     const posts = await getAllPosts()
+    generateRss(posts)
 
     return (
         <>
