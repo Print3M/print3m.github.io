@@ -4,11 +4,19 @@
         <title>Print3M Blog</title>
         <link>https://print3m.github.io/blog-rss.xml</link>
         <description>Offensive IT security blog, redteaming and programming.</description>
-        <lastBuildDate>Sun, 23 Mar 2025 11:27:15 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 23 Mar 2025 16:17:23 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <copyright>Print3M © 2025</copyright>
+        <item>
+            <title><![CDATA[Malware Delivery via Custom Website in 2025]]></title>
+            <link>https://print3m.github.io/blog/malware-delivery-via-custom-website-2025</link>
+            <guid>https://print3m.github.io/blog/malware-delivery-via-custom-website-2025</guid>
+            <pubDate>Sun, 23 Mar 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Techniques used to host malware on a website. Tricks to remember for a good OPSEC. How to build a malicious site.]]></description>
+            <enclosure url="https://print3m.github.io/imgs/malware-delivery-via-website-2025/thumbnail.webp" length="0" type="image/webp"/>
+        </item>
         <item>
             <title><![CDATA[From C to shellcode (simple way)]]></title>
             <link>https://print3m.github.io/blog/from-c-to-shellcode</link>
