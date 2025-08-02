@@ -1,54 +1,39 @@
 import BasicLayout from "@/components/BasicLayout/BasicLayout"
-import { Button, Divider, Flex, Space, Text } from "@mantine/core"
+import { Box, Group, Stack, Title } from "@mantine/core"
 import Link from "next/link"
-import { FC, JSX } from "react"
+import { generateRss, getAllPosts } from "./blog/_fs/posts"
+import { IconRss } from "@tabler/icons-react"
+import BlogPostButton from "@/components/BlogPostButton/BlogPostButton"
 
-const SubPageButton: FC<{ href: string; title: string; children: JSX.Element | string }> = ({
-    children,
-    href,
-    title,
-}) => (
-    <Link href={href} title={title} passHref>
-        <Button variant="light" w={140}>
-            {children}
-        </Button>
-    </Link>
-)
+const Page = async () => {
+    const posts = await getAllPosts()
+    await generateRss(posts)
 
-const Section: FC<{ text: string; label: string; bottom: JSX.Element }> = ({
-    text,
-    label,
-    bottom,
-}) => (
-    <section>
-        <Divider label={label} variant="dashed" labelPosition="center" />
-        <Space h="lg" />
-        <Text ta="center">{text}</Text>
-        <Space h="lg" />
-        <div>{bottom}</div>
-    </section>
-)
+    return (
+        <>
+            <BasicLayout>
+                <Group align="baseline" justify="space-between">
+                    <Title order={1} mb="xl">
+                        Blog posts
+                    </Title>
 
-const Page = () => (
-    <BasicLayout>
-        <Flex direction="column" gap={50}>
-            <Section
-                label="IT security"
-                text="I write the notes for myself. I write the blog for people. I'm focused on IT
-            security, low-level, Linux and Windows topics. Have fun. 🧠"
-                bottom={
-                    <Flex gap={20} justify="center">
-                        <SubPageButton href="/notes" title="Notes">
-                            Notes
-                        </SubPageButton>
-                        <SubPageButton href="/blog" title="Blog">
-                            Blog
-                        </SubPageButton>
-                    </Flex>
-                }
-            />
-        </Flex>
-    </BasicLayout>
-)
+                    <Link href="/blog-rss.xml" target="_blank" style={{ textDecoration: "none" }}>
+                        <Group c="orange" gap={5}>
+                            RSS
+                            <Box pt={4}>
+                                <IconRss />
+                            </Box>
+                        </Group>
+                    </Link>
+                </Group>
+                <Stack gap="md">
+                    {posts.map(props => (
+                        <BlogPostButton {...props} key={props.slug} />
+                    ))}
+                </Stack>
+            </BasicLayout>
+        </>
+    )
+}
 
 export default Page

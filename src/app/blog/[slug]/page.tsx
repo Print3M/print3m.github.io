@@ -53,7 +53,7 @@ const Page: FC<{ params: Promise<Params> }> = async ({ params }) => {
             title={post.title}
             returnButton={{
                 text: "All posts",
-                href: "/blog",
+                href: "/",
             }}
         />
     )
