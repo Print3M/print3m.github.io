@@ -89,7 +89,7 @@ showOpenFilePicker({
 
 Another interesting feature is `startIn` property. This property allows you to define which folder File Explorer should open by default. The possible values are limited to the following: `desktop`, `documents`, `downloads`, `music`, `pictures`, `videos`. These are the default directories in the current user context. This allows you to better guide the user to where they should look.
 
-**Abuse idea**: Trick a user to "upload" or "select" some file and edit it without user's knowledge. Use some container file (`.7z`, `.zip`) and override them with your files. Use EXE, DLL, LNK or an application config file and backdoor it. This operation looks like uploading but it allows us to modify the file.
+**Abuse idea**: Trick a user to "upload" or "select" some file and edit it without user's knowledge. Use some container file (`.7z`, `.zip`) and override them with your files. Use EXE, DLL or any application config file and backdoor it. This operation looks like uploading but it allows us to modify the file.
 
 ## showSaveFilePicker()
 
