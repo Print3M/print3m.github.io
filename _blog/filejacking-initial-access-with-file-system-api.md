@@ -1,6 +1,6 @@
 ---
 title: FileJacking – Initial Access with File System API
-createdAt: "2025-08-03"
+createdAt: "2025-08-04"
 thumbnail: /imgs/filejacking-initial-access-with-file-system-api/thumbnail.webp
 description: FileJacking – Malware Initial Access technique with File System API. Backdoor files, read / write folders directly from the browser – no downloads.
 ---
