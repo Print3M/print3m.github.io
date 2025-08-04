@@ -61,6 +61,7 @@ await writable.close();
 It is possible to read and edit any file(s) - e.g. DLL, EXE, MSI - with restrictions:
 
 * The file cannot come from `RESTRICTED-PATHS-2` (see below).
+* The LNK cannot point to the binary in `RESTRICTED-PATHS-2`. If the LNK does not point to a restricted path, then you can edit the LNK structures as any other file. But if it points to a file in a restricted path, then the LNK is magically resolved and the browser returns an restriction error. Very strange.
 
 > **NOTE**: It's not possible to rename or remove the file after creation.
 
