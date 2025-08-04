@@ -58,9 +58,8 @@ await writable.close();
     <source src="/imgs/filejacking-initial-access-with-file-system-api/showOpenFilePicker-success.webm" type="video/webm" />
 </video>
 
-It is possible to read and edit any file(s) - e.g. DLL, EXE, MSI - with two restrictions:
+It is possible to read and edit any file(s) - e.g. DLL, EXE, MSI - with restrictions:
 
-* LNK files are resolved to their original file, so you don't actually have access to the LNK structures.
 * The file cannot come from `RESTRICTED-PATHS-2` (see below).
 
 > **NOTE**: It's not possible to rename or remove the file after creation.
