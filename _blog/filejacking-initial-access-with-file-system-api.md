@@ -210,8 +210,6 @@ addEventListener("drop", async (e) => {
 });
 ```
 
-![DataTransferItem demo](/imgs/filejacking-initial-access-with-file-system-api/DataTransferItem-success.gif)
-
 <video width="100%" controls autoplay loop muted playsinline>
     <source src="/imgs/filejacking-initial-access-with-file-system-api/DataTransferItem-success.webm" type="video/webm" />
 </video>
